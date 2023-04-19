@@ -1,0 +1,8 @@
+mqtt:
+  url: "mqtt://localhost:1883"
+postgresql:
+  host: localhost
+  user: postgres
+  password: postgres
+  port: 5432
+  database: hub

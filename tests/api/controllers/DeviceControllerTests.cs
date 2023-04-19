@@ -14,6 +14,7 @@ using lib.models;
 using lib.models.dto;
 using lib.models.db;
 using lib.services.auth;
+using lib.models.configuration;
 
 namespace tests.api.controllers
 {
@@ -23,8 +24,9 @@ namespace tests.api.controllers
         [Fact]
         public async Task Get_Should_ReturnEmptyList()
         {
+
             // Act
-            DeviceController controller = new DeviceController(_context, new DeviceKeyGenerator());
+            DeviceController controller = new DeviceController(_context, new DeviceKeyGenerator(), new AppConfiguration());
             var result = await controller.List(); 
             // Assert
             result.Should().BeOfType<ActionResult<IEnumerable<Device>>>();
@@ -38,8 +40,14 @@ namespace tests.api.controllers
         [Fact]
         public async Task Post_Should_CreateRecord()
         {
+
             // Arrange
-            DeviceController controller = new DeviceController(_context, new DeviceKeyGenerator());
+            var configuration = new AppConfiguration() {
+                MQTT = new MQTT() {
+                    Uri = "mqtt://localhost:1883"
+                }
+            };
+            DeviceController controller = new DeviceController(_context, new DeviceKeyGenerator(), configuration);
 
             // Act
             ActionResult<NewDevice> actionResult = await controller.Post();
@@ -50,6 +58,8 @@ namespace tests.api.controllers
                 var value = result.Value as NewDevice;
                 value.Id.Should().NotBe(Guid.Empty);
                 value.SecretKey.Should().NotBeNullOrEmpty();
+                Uri mqttUri = new Uri(configuration.MQTT.Uri);
+                value.MqttUri.Should().Be(mqttUri);
             }
         }
     }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using lib.models;
+using lib.extensions;
 using lib.services.auth;
 
 namespace api
@@ -14,9 +15,7 @@ namespace api
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
-
+            builder.AddAppConfiguration();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -25,6 +24,9 @@ namespace api
             builder.Services.AddSingleton<IDeviceKeyGenerator, DeviceKeyGenerator>();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddSingleton<IUserIdProvider, SystemUserIdProvider>();
+
+
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -43,6 +45,9 @@ namespace api
             app.Run();
 
         }
+
     }
+
+
 }
 

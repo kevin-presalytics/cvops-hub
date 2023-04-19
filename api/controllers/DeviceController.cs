@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using lib.models;
 using lib.models.db;
 using lib.models.dto;
+using lib.models.configuration;
 using lib.services.auth;
 
 namespace api.controllers
@@ -20,7 +21,7 @@ namespace api.controllers
     // contains Delete Endpoint to delete a device
     // Contains a /authorize endpoint to authorize a device connection over mqt
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [Produces("application/json")]
     [Consumes("application/json")]
     [Authorize]
@@ -28,10 +29,15 @@ namespace api.controllers
     {
         CvopsDbContext _context;
         IDeviceKeyGenerator _keyGenerator;
-        public DeviceController(CvopsDbContext context, IDeviceKeyGenerator keyGenerator) : base() 
+        AppConfiguration _configuration;
+        public DeviceController(
+            CvopsDbContext context, 
+            IDeviceKeyGenerator keyGenerator, 
+            AppConfiguration configuration) : base() 
         { 
             _context = context;
             _keyGenerator = keyGenerator;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -62,9 +68,11 @@ namespace api.controllers
 
             await _context.Devices.AddAsync(device);
             await _context.SaveChangesAsync();
+            Uri mqttUri = new Uri(_configuration.MQTT.Uri);
             NewDevice newDevice = new NewDevice() {
                 Id = device.Id,
-                SecretKey = _key.Key
+                SecretKey = _key.Key,
+                MqttUri = mqttUri,
             };
             return CreatedAtAction(nameof(Get), new { id = device.Id }, newDevice);
         }

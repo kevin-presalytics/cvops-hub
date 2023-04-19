@@ -11,4 +11,16 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <RootPath>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), hub.sln))</RootPath>
+  </PropertyGroup> 
+
+  <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
+    <Copy SourceFiles="$(RootPath)/appsettings.default.yaml" DestinationFolder="$(OutDir)" />
+  </Target>
+  <Target Name="CopyCustomContentOnPublish" AfterTargets="Publish">
+    <Copy SourceFiles="$(RootPath)/appsettings.default.yaml" DestinationFolder="$(PublishDir)" />
+  </Target>
+
 </Project>
