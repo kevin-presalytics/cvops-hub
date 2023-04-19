@@ -6,5 +6,6 @@ namespace lib.models.configuration
     {
         public MQTT MQTT { get; set; } = default!;
         public Postgresql Postgresql { get; set; } = default!;
+        public Logging Logging { get; set; } = default!;
     }
 }

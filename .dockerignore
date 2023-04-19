@@ -5,3 +5,4 @@
 .gitignore
 .vscode/
 .github/
+appsettings.local.yaml

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mqtt-controller", "mqtt-con
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{CAEC5CC6-7AFA-4B3F-8799-4FB446B02B3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "db-migrations", "db-migrations\db-migrations.csproj", "{F407F00A-78E2-41FF-AF59-7D1B2806B0E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{CAEC5CC6-7AFA-4B3F-8799-4FB446B02B3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAEC5CC6-7AFA-4B3F-8799-4FB446B02B3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAEC5CC6-7AFA-4B3F-8799-4FB446B02B3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F407F00A-78E2-41FF-AF59-7D1B2806B0E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F407F00A-78E2-41FF-AF59-7D1B2806B0E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F407F00A-78E2-41FF-AF59-7D1B2806B0E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F407F00A-78E2-41FF-AF59-7D1B2806B0E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

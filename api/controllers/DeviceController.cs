@@ -24,7 +24,7 @@ namespace api.controllers
     [Route("[controller]")]
     [Produces("application/json")]
     [Consumes("application/json")]
-    [Authorize]
+    //[Authorize]
     public class DeviceController : Controller
     {
         CvopsDbContext _context;

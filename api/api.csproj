@@ -20,7 +20,9 @@
 
   <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
     <Copy SourceFiles="$(RootPath)/appsettings.default.yaml" DestinationFolder="$(OutDir)" />
+    <Copy SourceFiles="$(RootPath)/appsettings.local.yaml" DestinationFolder="$(OutDir)" Condition="Exists( '$(RootPath)/appsettings.local.yaml' )" />
   </Target>
+  
   <Target Name="CopyCustomContentOnPublish" AfterTargets="Publish">
     <Copy SourceFiles="$(RootPath)/appsettings.default.yaml" DestinationFolder="$(PublishDir)" />
   </Target>

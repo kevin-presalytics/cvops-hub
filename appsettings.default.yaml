@@ -1,8 +1,13 @@
 mqtt:
-  url: "mqtt://localhost:1883"
+  uri: "mqtt://localhost"
+  port: 1883
 postgresql:
   host: localhost
-  user: postgres
+  username: postgres
   password: postgres
   port: 5432
   database: hub
+  sslMode: disable
+logging:
+  level: debug
+  format: text

@@ -8,19 +8,21 @@ using System.Collections.Generic;
 using System.Linq;
 using lib.models.db;
 using lib.services.auth;
+using lib.models.configuration;
+using lib.extensions;
 
 namespace lib.models
 {
 
     public class CvopsDbContext : DbContext
     {
-        private IConfiguration _configuration { get; }
+        private AppConfiguration _configuration { get; }
         private IUserIdProvider _userIdProvider {get; }
 
 
         public DbSet<Device> Devices => Set<Device>();
 
-        public CvopsDbContext(IConfiguration configuration, IUserIdProvider userIdProvider)
+        public CvopsDbContext(AppConfiguration configuration, IUserIdProvider userIdProvider)
         {
             _configuration = configuration;
             _userIdProvider = userIdProvider;
@@ -28,7 +30,7 @@ namespace lib.models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(_configuration.GetConnectionString("cvops"));
+            optionsBuilder.UseNpgsql(_configuration.GetPostgresqlConnectionString());
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

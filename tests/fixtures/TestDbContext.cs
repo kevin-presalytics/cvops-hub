@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using lib.models;
 using lib.services.auth;
+using lib.models.configuration;
 
 namespace tests.fixtures
 {
@@ -11,7 +12,7 @@ namespace tests.fixtures
     public class TestDbContext : CvopsDbContext
     {
         // TestDbContext constructor
-        public TestDbContext(IConfiguration configuration, IUserIdProvider userIdProvider) : base(configuration, userIdProvider) { }
+        public TestDbContext(AppConfiguration configuration, IUserIdProvider userIdProvider) : base(configuration, userIdProvider) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -29,7 +30,7 @@ namespace tests.fixtures
             IServiceCollection serviceCollection = new ServiceCollection();
 
             serviceCollection.AddDbContext<TestDbContext>();
-            serviceCollection.AddSingleton<IConfiguration>(new ConfigurationBuilder().Build());
+            serviceCollection.AddSingleton<AppConfiguration>(new AppConfiguration());
             serviceCollection.AddTransient<IUserIdProvider, SystemUserIdProvider>();
             IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 
