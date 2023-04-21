@@ -8,6 +8,9 @@ on:
     - '**.csproj'
 env:
   DOTNET_VERSION: '6.0.401' # The .NET SDK version to use
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 
 jobs:
   test:
