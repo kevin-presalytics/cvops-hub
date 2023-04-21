@@ -6,6 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using lib.services.auth;
 using Utility.Extensions.Configuration.Yaml;
 using lib.models.configuration;
@@ -17,10 +20,11 @@ namespace db_migrations
     {
         public static IServiceProvider ConfigureServices()
         {
+            var workingDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var config = new ConfigurationBuilder()
-                .AddYamlFile("appsettings.default.yaml", optional: false, reloadOnChange: true)
-                .AddYamlFile("appsettings.yaml", optional: true, reloadOnChange: true)
-                .AddYamlFile("appsettings.local.yaml", optional: true, reloadOnChange: true)
+                .AddYamlFile(Path.Join(workingDir, "appsettings.default.yaml"), optional: false, reloadOnChange: true)
+                .AddYamlFile(Path.Join(workingDir, "appsettings.yaml"), optional: true, reloadOnChange: true)
+                .AddYamlFile(Path.Join(workingDir, "appsettings.local.yaml"), optional: true, reloadOnChange: true)
                 .Build();
 
             AppConfiguration appConfiguration = new AppConfiguration();
