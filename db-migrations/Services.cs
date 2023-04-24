@@ -1,17 +1,10 @@
-using db_migrations;
 using lib.models.configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Metadata;
-using System;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using lib.services.auth;
 using Utility.Extensions.Configuration.Yaml;
-using lib.models.configuration;
 using lib.extensions;
 
 namespace db_migrations

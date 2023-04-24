@@ -35,6 +35,12 @@ namespace api
             builder.Services.AddSingleton<IDeviceKeyGenerator, DeviceKeyGenerator>();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddSingleton<IUserIdProvider, SystemUserIdProvider>();
+            builder.Services.AddHttpClient();
+
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                options.ListenAnyIP(config.Hub.Api.Port);
+            });
 
             var app = builder.Build();
 

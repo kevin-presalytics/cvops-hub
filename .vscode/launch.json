@@ -39,7 +39,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/mqtt-controller/bin/Debug/net6.0/api.dll",
+            "program": "${workspaceFolder}/mqtt-controller/bin/Debug/net6.0/mqtt-controller.dll",
             "args": [],
             "cwd": "${workspaceFolder}/mqtt-controller",
             "stopAtEntry": false,

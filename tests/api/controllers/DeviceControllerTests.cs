@@ -54,6 +54,7 @@ namespace tests.api.controllers
             // Assert
             var result = actionResult.Result as CreatedAtActionResult;
             result.Should().NotBeNull();
+            #nullable disable
             if (result.Value != null) {
                 var value = result.Value as NewDevice;
                 value.Id.Should().NotBe(Guid.Empty);
@@ -61,6 +62,7 @@ namespace tests.api.controllers
                 Uri mqttUri = new Uri(configuration.MQTT.Uri);
                 value.MqttUri.Should().Be(mqttUri);
             }
+            #nullable enable
         }
     }
 }

@@ -1,6 +1,10 @@
 mqtt:
-  uri: "mqtt://localhost"
+  uri: localhost
   port: 1883
+  adminUsername: debug
+  adminPassword: Password@1
+  adminPort: 18083
+  authUrl: http://localhost:5100/mqtt/auth
 postgresql:
   host: localhost
   username: postgres
@@ -11,3 +15,10 @@ postgresql:
 logging:
   level: debug
   format: text
+hub:
+  api:
+    port: 5000
+    host: localhost
+  mqttController:
+    port: 5100
+    host: localhost

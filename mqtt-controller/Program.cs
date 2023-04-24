@@ -1,7 +1,14 @@
-using mqtt_controller;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
+using lib.extensions;
+using lib.models;
+using lib.services.mqtt;
+using lib.services.auth;
+using Serilog;
+using mqtt_controller.workers;
 
 namespace mqtt_controller
 {
@@ -9,14 +16,35 @@ namespace mqtt_controller
     {
         public static async Task Main(string[] args)
         {
-            IHost host = Host.CreateDefaultBuilder(args)
-                .ConfigureServices(services =>
-                {
-                    services.AddHostedService<Worker>();
-                })
-                .Build();
+            var builder = WebApplication.CreateBuilder(args);
+            
 
-            await host.RunAsync();
+            var appConfig = builder.AddAppConfiguration();
+            ILogger logger = builder.AddSerilogLogger(appConfig);
+            logger.Information("Starting MQTT Controller...");
+            logger.Information("Adding MQTT Controller services...");
+
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddHostedService<MqttAdminSetupWorker>();
+
+            builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));
+            builder.Services.AddMQTTAdmin(appConfig);
+            builder.Services.AddHubMQTTClient();
+            builder.Services.AddSingleton<IUserIdProvider, SystemUserIdProvider>();
+
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                options.ListenAnyIP(appConfig.Hub.MqttController.Port);
+            });
+
+
+            var app = builder.Build();
+
+            app.MapControllers();
+
+            logger.Information("Launching MQTT Controller...");
+            await app.RunAsync();
         }
     }
 }
