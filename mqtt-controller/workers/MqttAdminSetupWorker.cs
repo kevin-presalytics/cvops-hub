@@ -22,7 +22,12 @@ namespace mqtt_controller.workers
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _logger.Information("Setting up MQTT Admin...");
-            await _mqttAdmin.Setup();
+            try{
+                await _mqttAdmin.Setup();
+            } catch (Exception e) {
+                _logger.Fatal(e, "Error setting up MQTT Admin. Exiting...");
+                Environment.Exit(1);
+            }
             _logger.Information("MQTT Admin setup complete.");
         }
     }

@@ -7,10 +7,11 @@ using MQTTnet.Formatter;
 using MQTTnet.Protocol;
 using Serilog;
 using lib.models.configuration;
+using lib.services.mqtt.queue;
 
 namespace lib.services.mqtt
 {
-    interface IHubMQTTClient
+    public interface IHubMQTTClient
     {
         Task Connect();
         Task Disconnect();
@@ -25,13 +26,15 @@ namespace lib.services.mqtt
         private IMqttClient _mqttClient;
         private string _mqttUri;
         private int _mqttPort;
-        public HubMQTTClient(ILogger logger, AppConfiguration configuration)
+        private IQueueBroker _queueBroker;
+        public HubMQTTClient(ILogger logger, AppConfiguration configuration, IQueueBroker queueBroker)
         {
             _logger = logger;
             _mqttUri = configuration.MQTT.Uri;
             _mqttPort = configuration.MQTT.Port;
             var mqttFactory = new MqttFactory();
             _mqttClient = mqttFactory.CreateMqttClient();
+            _queueBroker = queueBroker;
         }
 
         public async Task Disconnect()
@@ -81,7 +84,9 @@ namespace lib.services.mqtt
                     .WithTcpServer(this._mqttUri, this._mqttPort)
                     .WithProtocolVersion(MqttProtocolVersion.V500)
                     .Build();
-
+                
+                mqttClient.ApplicationMessageReceivedAsync += e => _queueBroker.handleApplicationMessage(e.ApplicationMessage);
+ 
                 _ = Task.Run(
                     async () =>
                     {
@@ -138,7 +143,11 @@ namespace lib.services.mqtt
                 await this.Connect();
             }
 
-            await this._mqttClient.SubscribeAsync(topic, MqttQualityOfServiceLevel.AtLeastOnce);
+            var subscribeOptions = new MqttClientSubscribeOptionsBuilder()
+                                    .WithTopicFilter(topic)
+                                    .Build();
+
+            await this._mqttClient.SubscribeAsync(subscribeOptions);
         }
 
         public async Task Unsubscribe(string topic)

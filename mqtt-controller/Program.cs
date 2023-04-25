@@ -7,6 +7,7 @@ using lib.extensions;
 using lib.models;
 using lib.services.mqtt;
 using lib.services.auth;
+using lib.services.mqtt.queue;
 using Serilog;
 using mqtt_controller.workers;
 
@@ -32,6 +33,10 @@ namespace mqtt_controller
             builder.Services.AddMQTTAdmin(appConfig);
             builder.Services.AddHubMQTTClient();
             builder.Services.AddSingleton<IUserIdProvider, SystemUserIdProvider>();
+            builder.Services.AddTransient<IQueueBroker, QueueBroker>();
+            builder.Services.AddTransient<IDeviceKeyVerifier, DeviceKeyVerifier>();
+            builder.Services.AddTransient<IDeviceKeyGenerator, DeviceKeyGenerator>();
+
 
             builder.WebHost.ConfigureKestrel(options =>
             {
