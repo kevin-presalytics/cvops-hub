@@ -46,13 +46,13 @@ namespace lib.models.mqtt
         public long PoolSize { get; set; } = 8;
 
         [JsonPropertyName("connect_timeout")]
-        public string ConnectTimeout { get; set; } = "15s";
+        public string ConnectTimeout { get; set; } = "10s";
 
         [JsonPropertyName("request_timeout")]
         public string RequestTimeout { get; set; } = "5s";
 
         [JsonPropertyName("enable_pipelining")]
-        public long EnablePipelining { get; set; } = 100;
+        public long EnablePipelining { get; set; } = 10;
 
         [JsonPropertyName("ssl")]
         public EqmxSslConfiguration Ssl { get; set; } = new EqmxSslConfiguration();

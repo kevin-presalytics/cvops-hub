@@ -2,46 +2,51 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Linq;
+using lib.models.configuration;
 
 namespace lib.services.auth
 {
 
     public interface IUserIdProvider
     {
-        Guid GetUserId();
-        void SetUserId(Guid userId);
+        Guid? GetUserId();
+        void SetUserId(Guid? userId);
     }
 
     public class ScopedUserIdProvider : IUserIdProvider
     {
-        private IHttpContextAccessor httpContextAccessor;
-        private Guid? ScopedUserId { get; set;}
-        public ScopedUserIdProvider(IHttpContextAccessor contextAccessor)
+        private IHttpContextAccessor _httpContextAccessor;
+        private Guid? _scopedUserId { get; set;}
+        private string _userIdJwtClaim;
+        public ScopedUserIdProvider(IHttpContextAccessor contextAccessor, AppConfiguration appConfig)
         {
-            httpContextAccessor = contextAccessor;
-            ScopedUserId = null;
+            _httpContextAccessor = contextAccessor;
+            _scopedUserId = null;
+            _userIdJwtClaim = appConfig.Auth.UserIdJwtClaim;
         }
 
-        public Guid GetUserId()
+        public Guid? GetUserId()
         {
-            if (ScopedUserId != null)
+            if (_scopedUserId != null  && _scopedUserId != Guid.Empty)
             {
-                return (Guid)ScopedUserId;
+                return _scopedUserId;
             } else {
-                if (httpContextAccessor?.HttpContext != null)
+                if (_httpContextAccessor?.HttpContext != null)
                 {
-                    if (httpContextAccessor?.HttpContext.User.Claims.FirstOrDefault(i => i.Type == "https://api.presalytics.io/api_user_id") != null) {
-                        ScopedUserId = Guid.NewGuid(); //Guid.Parse(httpContextAccessor?.HttpContext.User.Claims.First(i => i.Type == "https://api.presalytics.io/api_user_id").Value);
-                        return (Guid)ScopedUserId;                        
+                    if (_httpContextAccessor?.HttpContext.User.Claims.FirstOrDefault(i => i.Type == _userIdJwtClaim) != null) {
+                        #pragma warning disable CS8604, CS8629
+                        _scopedUserId = Guid.Parse(_httpContextAccessor?.HttpContext.User.Claims.First(i => i.Type == _userIdJwtClaim).Value);
+                        if (_scopedUserId != Guid.Empty) return _scopedUserId; else return null;    
+                        #pragma warning restore CS8604, CS8629
                     }
                 }
-                return Guid.Empty;
+                return null;
             }
         }
 
-        public void SetUserId(Guid userId)
+        public void SetUserId(Guid? userId)
         {
-            ScopedUserId = userId;
+            _scopedUserId = userId;
         }
     }
 
@@ -55,24 +60,10 @@ namespace lib.services.auth
                 userId = userIdProvider.GetUserId(); 
             }
             IServiceScope scope = serviceProvider.CreateScope();
-            IUserIdProvider newUserIdProvider = scope.ServiceProvider.GetRequiredService<IUserIdProvider>();
-            newUserIdProvider.SetUserId((Guid)userId);
+            IUserIdProvider newUserIdProvider = scope.ServiceProvider.GetRequiredService<IUserIdProvider>();    
+            newUserIdProvider.SetUserId((Guid?)userId);
             return scope;
 
         }
-    }
-
-    public class SystemUserIdProvider : IUserIdProvider
-    {
-        public Guid GetUserId()
-        {
-            return Guid.Empty;
-        }
-
-        public void SetUserId(Guid userId)
-        {
-            // Do nothing
-        }
-    }
-    
+    }    
 }

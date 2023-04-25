@@ -26,7 +26,7 @@ namespace db_migrations
             IServiceCollection services = new ServiceCollection();
             services.AddDbContext<MigrationsDbContext>(options => options.UseNpgsql(appConfiguration.GetPostgresqlConnectionString()));
             services.AddSingleton<AppConfiguration>(appConfiguration);
-            services.AddSingleton<IUserIdProvider, SystemUserIdProvider>();
+            services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();
 
             IServiceProvider serviceProvider = services.BuildServiceProvider();
             return serviceProvider;

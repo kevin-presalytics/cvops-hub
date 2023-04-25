@@ -10,6 +10,7 @@ using lib.services.auth;
 using lib.services.mqtt.queue;
 using Serilog;
 using mqtt_controller.workers;
+using lib.services.mqtt.workers;
 
 namespace mqtt_controller
 {
@@ -28,14 +29,17 @@ namespace mqtt_controller
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddHostedService<MqttAdminSetupWorker>();
+            builder.Services.AddHostedService<MqttClientWorker>();
 
             builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));
             builder.Services.AddMQTTAdmin(appConfig);
             builder.Services.AddHubMQTTClient();
-            builder.Services.AddSingleton<IUserIdProvider, SystemUserIdProvider>();
+            builder.Services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();
             builder.Services.AddTransient<IQueueBroker, QueueBroker>();
             builder.Services.AddTransient<IDeviceKeyVerifier, DeviceKeyVerifier>();
             builder.Services.AddTransient<IDeviceKeyGenerator, DeviceKeyGenerator>();
+            builder.Services.AddScoped<IMqttHttpAuthenticator, MqttHttpAuthenticator>();
+            builder.Services.AddHttpContextAccessor();
 
 
             builder.WebHost.ConfigureKestrel(options =>
@@ -49,6 +53,7 @@ namespace mqtt_controller
             app.MapControllers();
 
             logger.Information("Launching MQTT Controller...");
+            logger.Debug("Launching MQTT Controller on in Debug mode.");
             await app.RunAsync();
         }
     }

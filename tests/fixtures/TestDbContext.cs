@@ -31,7 +31,7 @@ namespace tests.fixtures
 
             serviceCollection.AddDbContext<TestDbContext>();
             serviceCollection.AddSingleton<AppConfiguration>(new AppConfiguration());
-            serviceCollection.AddTransient<IUserIdProvider, SystemUserIdProvider>();
+            serviceCollection.AddTransient<IUserIdProvider, ScopedUserIdProvider>();
             IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 
             _context = serviceProvider.GetRequiredService<TestDbContext>();

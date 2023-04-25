@@ -28,7 +28,7 @@ namespace lib.extensions
 
         public static void AddHubMQTTClient(this IServiceCollection services)
         {
-            services.AddSingleton<IHubMQTTClient, HubMQTTClient>();
+            services.AddSingleton<IHubMqttClient, HubMqttClient>();
         }
 
     }

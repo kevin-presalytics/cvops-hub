@@ -1,7 +1,7 @@
 mqtt:
   uri: localhost
   port: 1883
-  adminUsername: debug
+  adminUsername: hub
   adminPassword: Password@1
   adminPort: 18083
   authUrl: http://localhost:5100/mqtt/auth
@@ -22,3 +22,5 @@ hub:
   mqttController:
     port: 5100
     host: localhost
+auth:
+  userIdJwtClaim: email

@@ -34,7 +34,7 @@ namespace api
             builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(config.GetPostgresqlConnectionString()));
             builder.Services.AddSingleton<IDeviceKeyGenerator, DeviceKeyGenerator>();
             builder.Services.AddHttpContextAccessor();
-            builder.Services.AddSingleton<IUserIdProvider, SystemUserIdProvider>();
+            builder.Services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();
             builder.Services.AddHttpClient();
 
             builder.WebHost.ConfigureKestrel(options =>

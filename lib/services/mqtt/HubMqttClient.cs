@@ -8,10 +8,11 @@ using MQTTnet.Protocol;
 using Serilog;
 using lib.models.configuration;
 using lib.services.mqtt.queue;
+using lib.models.mqtt;
 
 namespace lib.services.mqtt
 {
-    public interface IHubMQTTClient
+    public interface IHubMqttClient
     {
         Task Connect();
         Task Disconnect();
@@ -19,34 +20,43 @@ namespace lib.services.mqtt
         Task Subscribe(string topic);
         Task Unsubscribe(string topic);
         Task Publish(string topic, string payload, MqttQualityOfServiceLevel qos);
+        event EventHandler OnConnected;
+        event EventHandler<MessageEventArgs> OnMessage;
     }
-    public class HubMQTTClient : IDisposable, IHubMQTTClient
+    public class HubMqttClient : IDisposable, IHubMqttClient
     {
         private ILogger _logger;
         private IMqttClient _mqttClient;
         private string _mqttUri;
+        private string _username;
+        private string _password;
         private int _mqttPort;
-        private IQueueBroker _queueBroker;
-        public HubMQTTClient(ILogger logger, AppConfiguration configuration, IQueueBroker queueBroker)
+        public event EventHandler OnConnected;
+        public event EventHandler<MessageEventArgs> OnMessage;
+
+        #pragma warning disable CS8618
+        public HubMqttClient(ILogger logger, AppConfiguration configuration, IQueueBroker queueBroker)
         {
             _logger = logger;
             _mqttUri = configuration.MQTT.Uri;
             _mqttPort = configuration.MQTT.Port;
+            _username = configuration.MQTT.AdminUsername;
+            _password = configuration.MQTT.AdminPassword;
             var mqttFactory = new MqttFactory();
             _mqttClient = mqttFactory.CreateMqttClient();
-            _queueBroker = queueBroker;
         }
+        #pragma warning restore CS8618
 
         public async Task Disconnect()
         {
             if (!_mqttClient.IsConnected) {
-                _logger.Information("The MQTT client is not connected.");
+                _logger.Debug("The MQTT client is not connected.");
             } else {
                 // This will send the DISCONNECT packet. Calling _Dispose_ without DisconnectAsync the 
                 // connection is closed in a "not clean" way. See MQTT specification for more details.
                 await this._mqttClient.DisconnectAsync(new MqttClientDisconnectOptionsBuilder().WithReason(MqttClientDisconnectOptionsReason.NormalDisconnection).Build());
 
-                _logger.Information("The MQTT client is disconnected.");
+                _logger.Debug("The MQTT client is disconnected.");
             }
         }
         
@@ -59,7 +69,7 @@ namespace lib.services.mqtt
             */
 
             if (!_mqttClient.IsConnected) {
-                _logger.Information("The MQTT client is not connected.");
+                _logger.Debug("The MQTT client is not connected.");
                 await this.Connect();
             }
 
@@ -83,14 +93,19 @@ namespace lib.services.mqtt
                 var mqttClientOptions = new MqttClientOptionsBuilder()
                     .WithTcpServer(this._mqttUri, this._mqttPort)
                     .WithProtocolVersion(MqttProtocolVersion.V500)
+                    .WithCredentials(_username, _password)
                     .Build();
                 
-                mqttClient.ApplicationMessageReceivedAsync += e => _queueBroker.handleApplicationMessage(e.ApplicationMessage);
+                mqttClient.ApplicationMessageReceivedAsync += e => {
+                    OnMessage?.Invoke(this, new MessageEventArgs(e.ApplicationMessage));
+                    return Task.CompletedTask;
+                };
  
                 _ = Task.Run(
                     async () =>
                     {
                         // User proper cancellation and no while(true).
+                        _logger.Debug("Starting Mqtt Client Reconnect Loop...");
                         while (true)
                         {
                             try
@@ -101,12 +116,13 @@ namespace lib.services.mqtt
                                     await this._mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
 
                                     // Subscribe to topics when session is clean etc.
-                                    _logger.Information("The MQTT client is connected.");
+                                    _logger.Debug("The MQTT client is connected.");
+                                    OnConnected?.Invoke(this, EventArgs.Empty);
                                 }
                             }
                             catch
                             {
-                                _logger.Information("The MQTT client is disconnected. Retrying connection in 5 seconds..");
+                                _logger.Debug("The MQTT client is disconnected. Retrying connection in 5 seconds..");
                             }
                             finally
                             {
@@ -122,7 +138,7 @@ namespace lib.services.mqtt
         public async Task Publish(string topic, string payload, MqttQualityOfServiceLevel qos = MqttQualityOfServiceLevel.AtLeastOnce)
         {
             if (!_mqttClient.IsConnected) {
-                _logger.Information("The MQTT client is not connected.");
+                _logger.Debug("The MQTT client is not connected.");
                 await this.Connect();
             }
 
@@ -139,7 +155,7 @@ namespace lib.services.mqtt
         public async Task Subscribe(string topic)
         {
             if (!_mqttClient.IsConnected) {
-                _logger.Information("The MQTT client is not connected.");
+                _logger.Debug("The MQTT client is not connected.");
                 await this.Connect();
             }
 
@@ -153,7 +169,7 @@ namespace lib.services.mqtt
         public async Task Unsubscribe(string topic)
         {
             if (!_mqttClient.IsConnected) {
-                _logger.Information("The MQTT client is not connected.");
+                _logger.Debug("The MQTT client is not connected.");
                 await this.Connect();
             }
 

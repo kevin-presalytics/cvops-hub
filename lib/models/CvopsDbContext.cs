@@ -1,7 +1,9 @@
 // DBContext for cvops database (EntityFramework) for models int eh lib/models/db folder
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -35,7 +37,73 @@ namespace lib.models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Device>().HasKey(e => e.Id);
+             List<Type> _entityTypes = modelBuilder.Model.GetEntityTypes()
+                .Where(ent => ent.ClrType.IsSubclassOf(typeof(BaseEntity)))
+                .Select(ent => ent.ClrType)
+                .ToList();
+
+
+            foreach (Type ent in _entityTypes)
+            {
+
+                Type generic = typeof(EntitySchemaConfigurator<>).MakeGenericType(ent);
+                #pragma warning disable CS8600
+                dynamic _genericConfigurator = Activator.CreateInstance(generic);
+                #pragma warning restore CS8600
+                modelBuilder.ApplyConfiguration(_genericConfigurator);
+            }
+
+            List<Microsoft.EntityFrameworkCore.Metadata.IMutableEntityType> dbEntities = modelBuilder.Model.GetEntityTypes()
+                                .Where(e => e.ClrType.IsSubclassOf(typeof(BaseEntity)))
+                                .ToList();
+
+            foreach (Microsoft.EntityFrameworkCore.Metadata.IMutableEntityType entity in dbEntities)
+            {
+                modelBuilder.Entity(entity.Name)
+                    .Property("Id")
+                    .ValueGeneratedOnAdd();
+
+                modelBuilder.Entity(entity.Name)
+                    .HasKey("Id");
+                
+                modelBuilder.Entity(entity.Name)
+                    .Property("CreatedBy")
+                    .HasConversion(new EnumToStringConverter<EditorTypes>());
+
+                modelBuilder.Entity(entity.Name)
+                    .Property("ModifiedBy")
+                    .HasConversion(new EnumToStringConverter<EditorTypes>());
+
+                var tableName = entity.GetTableName();
+                #pragma warning disable CS8604
+                var storeObjectIdentifier = StoreObjectIdentifier.Table(tableName, null);
+                #pragma warning restore CS8604
+
+                // Replace column names            
+                foreach (Microsoft.EntityFrameworkCore.Metadata.IMutableProperty property in entity.GetProperties())
+                {
+                    property.SetColumnName(((IProperty)property).GetColumnName(storeObjectIdentifier).ToSnakeCase());
+
+                }
+
+                foreach (Microsoft.EntityFrameworkCore.Metadata.IMutableKey key in entity.GetKeys())
+                {
+                    #pragma warning disable CS8600
+                    key.SetName((string)key.GetName().ToSnakeCase());
+                    #pragma warning restore CS8600
+                }
+
+                foreach (Microsoft.EntityFrameworkCore.Metadata.IMutableForeignKey key in entity.GetForeignKeys())
+                {
+                    key.SetConstraintName(key.GetConstraintName().ToSnakeCase());
+                }
+
+                foreach (Microsoft.EntityFrameworkCore.Metadata.IMutableIndex index in entity.GetIndexes())
+                {
+                    index.SetDatabaseName(index.GetDatabaseName().ToSnakeCase());
+                }
+            }
+
         }
 
         public override int SaveChanges()
@@ -54,17 +122,34 @@ namespace lib.models
         {
             IEnumerable<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry> entities = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
 
-            Guid userId = _userIdProvider.GetUserId();
+            Guid? userId = _userIdProvider.GetUserId();
+            EditorTypes editorType = EditorTypes.User;
+            if (userId == Guid.Empty || userId == null) editorType = EditorTypes.System;
+            
             foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry entity in entities)
             {
                 if (entity.State == EntityState.Added)
                 {
                     ((BaseEntity)entity.Entity).DateCreated = DateTime.UtcNow;
                     ((BaseEntity)entity.Entity).UserCreated = userId; // Need better username method
+                    ((BaseEntity)entity.Entity).CreatedBy = editorType;
                 }
                 ((BaseEntity)entity.Entity).DateModified = DateTime.UtcNow;
                 ((BaseEntity)entity.Entity).UserModified = userId;
+                ((BaseEntity)entity.Entity).ModifiedBy = editorType;
             }
         }
     }
+
+    public class EntitySchemaConfigurator<T> : IEntityTypeConfiguration<T> where T : BaseEntity
+    {
+        public void Configure(EntityTypeBuilder<T> builder)
+        {
+            #pragma warning disable CS8600
+            string _tableName = builder.Metadata.ClrType.Name.ToSnakeCase();
+            #pragma warning restore CS8600
+            _ = builder.ToTable(_tableName);
+        }
+    }
+
 }

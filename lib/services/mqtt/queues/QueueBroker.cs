@@ -7,7 +7,7 @@ namespace lib.services.mqtt.queue
 {
     public interface IQueueBroker
     {
-        Task handleApplicationMessage(MqttApplicationMessage message);
+        Task HandleApplicationMessage(MqttApplicationMessage message);
     }
 
     public class QueueBroker : IQueueBroker
@@ -19,7 +19,7 @@ namespace lib.services.mqtt.queue
         {
             _logger = logger;
         }
-        public Task handleApplicationMessage(MqttApplicationMessage message)
+        public Task HandleApplicationMessage(MqttApplicationMessage message)
         {
             MqttTopicType topicType = message.GetTopicType();
             _logger.Debug("Received message on topic {topic}", message.Topic);

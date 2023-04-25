@@ -17,24 +17,21 @@ namespace lib.extensions
             Log.Logger = GetLoggerConfiguration(config);
             AppDomain.CurrentDomain.ProcessExit += (s, e) => Log.CloseAndFlush();
             builder.Services.AddSingleton<ILogger>(Log.Logger);
-            builder.Host.UseSerilog((context, services, configuration) => configuration
-                .ReadFrom.Configuration(context.Configuration)
-                .ReadFrom.Services(services)
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-            );
+            builder.Host.UseSerilog(Log.Logger);
             return Log.Logger;
         }
 
         public static ILogger GetLoggerConfiguration(AppConfiguration config)
         {
              var logConfig = new LoggerConfiguration()
-                .MinimumLevel.Debug()
+                .MinimumLevel.Is(config.Logging.Level)
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
                 .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
+                .MinimumLevel.Override("System", LogEventLevel.Warning)
                 .Enrich.FromLogContext();
-
+                
+            
             if (config.Logging.Format == "json")
             {
                 logConfig.WriteTo.Console(new JsonFormatter(), config.Logging.Level);

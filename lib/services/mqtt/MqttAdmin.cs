@@ -9,6 +9,7 @@ using System.Text.Json.Nodes;
 using System.IO;
 using Microsoft.Extensions.Http;
 using lib.models.mqtt;
+using Serilog;
 
 namespace lib.services.mqtt
 {
@@ -20,17 +21,21 @@ namespace lib.services.mqtt
     {
         HttpClient _httpClient;
         Uri _authUri;
-        public EqmxMqttAdmin(IHttpClientFactory clientFactory, AppConfiguration configuration)
+        ILogger _logger;
+        public EqmxMqttAdmin(IHttpClientFactory clientFactory, AppConfiguration configuration, ILogger logger)
         {
             _httpClient = clientFactory.CreateClient(MqttAdminHttpClientName.Get());
             _authUri = new Uri(configuration.MQTT.AuthUrl);
+            _logger = logger;
         }
 
         public async Task Setup()
         {
             if (!(await MQTTAuthIsConfigured()))
             {
+                _logger.Debug("MQTT authentication is not configured. Configuring...");
                 await ConfigureMqttAuth();
+                _logger.Debug("MQTT authentication configured.");
             }
         }
         private async Task<bool> MQTTAuthIsConfigured()
@@ -43,8 +48,11 @@ namespace lib.services.mqtt
                 throw new Exception("Could not retrieve authenticators from MQTT server.");
             }
             #pragma warning disable CS8602
-            return authenticators.Where(e => e["backend"].ToString() == "http").Any();
+            bool hasHttpBackend = authenticators.Where(e => e["backend"].ToString() == "http").Any();
             #pragma warning restore CS8602
+            _logger.Debug($"Http backend found: {hasHttpBackend}");
+            return hasHttpBackend;
+           
         }
 
         private async Task<bool> ConfigureMqttAuth()
