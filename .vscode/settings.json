@@ -6,6 +6,7 @@
         "Eqmx",
         "mqtt",
         "Npgsql",
+        "oidc",
         "PINGREQ",
         "Serilog",
         "xunit"

@@ -6,11 +6,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using lib.models;
 using lib.extensions;
+using lib.services;
 using lib.services.auth;
 using lib.models.configuration;
 using Serilog;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using api.controllers.options;
+using lib.middleware;
 
 namespace api
 {
@@ -36,7 +38,9 @@ namespace api
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();
             builder.Services.AddHttpClient();
-
+            builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient<IUserJwtTokenReader, UserJwtTokenReader>();
+            builder.Services.AddCVOpsAuth(config, logger);
             builder.WebHost.ConfigureKestrel(options =>
             {
                 options.ListenAnyIP(config.Hub.Api.Port);
@@ -47,9 +51,11 @@ namespace api
             // Configure the HTTP request pipeline.
         
             app.UseSwagger();
-            app.UseSwaggerUI();    
+            app.UseSwaggerUI();
 
-            // app.UseAuthorization();
+            app.UseRequestUserMiddleware();
+
+            app.UseAuthorization();
 
             app.MapControllers();
 

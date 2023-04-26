@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using lib.models;
@@ -9,6 +10,7 @@ using lib.models.db;
 using lib.models.dto;
 using lib.models.configuration;
 using lib.services.auth;
+using lib.middleware;
 
 namespace api.controllers
 {
@@ -21,10 +23,10 @@ namespace api.controllers
     // contains Delete Endpoint to delete a device
     // Contains a /authorize endpoint to authorize a device connection over mqt
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     [Produces("application/json")]
     [Consumes("application/json")]
-    //[Authorize]
     public class DeviceController : Controller
     {
         CvopsDbContext _context;
@@ -43,21 +45,34 @@ namespace api.controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Device>>> List()
         {
-            var devices = await _context.Devices.ToListAsync<Device>();
+            # pragma warning disable CS8600
+            RequestUserFeature userFeature = HttpContext.Features.Get<RequestUserFeature>();
+            # pragma warning restore CS8600
+            if (userFeature == null || userFeature.User == null)
+                return Unauthorized();
+            var devices = await _context.Devices
+                .Where(d => d.Team.Users.Any(u => u.Id == userFeature.User.Id))
+                .ToListAsync();
             return devices;
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Device>> Get(Guid id)
         {
-            var device = await _context.Devices.FirstOrDefaultAsync(e => e.Id == id);
+            # pragma warning disable CS8600
+            RequestUserFeature userFeature = HttpContext.Features.Get<RequestUserFeature>();
+            # pragma warning restore CS8600
+            if (userFeature == null || userFeature.User == null)
+                return Unauthorized();
+            var device = await _context.Devices
+                .Where(d => d.Team.Users.Any(u => u.Id == userFeature.User.Id))
+                .FirstOrDefaultAsync(e => e.Id == id);
             if (device == null)
                 return NotFound();
             return device;
         }
 
         [HttpPost]
-        [Produces("application/json")]
         public async Task<ActionResult<NewDevice>> Post()
         {
             SecureDeviceCredentials _key = _keyGenerator.GenerateKey();

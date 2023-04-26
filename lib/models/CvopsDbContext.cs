@@ -24,6 +24,13 @@ namespace lib.models
 
         public DbSet<Device> Devices => Set<Device>();
 
+        public DbSet<User> Users => Set<User>();
+
+        public DbSet<Team> Teams => Set<Team>();
+        public DbSet<TeamUserMap> TeamUserMaps => Set<TeamUserMap>();
+
+
+
         public CvopsDbContext(AppConfiguration configuration, IUserIdProvider userIdProvider)
         {
             _configuration = configuration;
@@ -103,6 +110,33 @@ namespace lib.models
                     index.SetDatabaseName(index.GetDatabaseName().ToSnakeCase());
                 }
             }
+
+            // Indexes
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+            
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.JwtSubject)
+                .IsUnique();
+
+
+            modelBuilder.Entity<Device>()
+                .HasIndex(d => d.Id)
+                .IsUnique();
+
+            // Foreign Keys
+            modelBuilder.Entity<Team>()
+                .HasMany(t => t.Users)
+                .WithMany(u => u.Teams)
+                .UsingEntity<TeamUserMap>();
+
+            modelBuilder.Entity<Team>()
+                .HasMany(t => t.Devices)
+                .WithOne(d => d.Team)
+                .HasForeignKey(d => d.TeamId);
+            
+
 
         }
 

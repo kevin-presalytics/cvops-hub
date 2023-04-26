@@ -22,29 +22,11 @@ namespace db_migrations
 
             using (var context = serviceProvider.GetRequiredService<MigrationsDbContext>())
             {
-                // Console.WriteLine("Checking Database Connection...");
-                // if (context.Database.CanConnect())
-                // {
-                //     Console.WriteLine("Database Connection is OK");
-                // }
-                // else
-                // {
-                //     Console.WriteLine("Database Connection is Unavailable");
-                //     return;
-                // }
 
                 Console.WriteLine("Checking for Database Existence...");
-                //context.Database.EnsureCreated();
-                
-                // var migrationsAssembly = context.Database.GetRelationalService<IMigrationsAssembly>();
-
-                // Console.WriteLine("Checking for Database Migrations...");
-                // var differ = context.Database.GetRelationalService<IMigrationsModelDiffer>();
 
                 var pendingMigrations = context.Database.GetPendingMigrations();
             
-                // bool hasDifferences = differ.HasDifferences(migrationsAssembly.ModelSnapshot?.Model as IRelationalModel, context.Model as IRelationalModel);
-
                 if (pendingMigrations.Any()) {
                     Console.WriteLine($"{pendingMigrations.Count()} Database Migrations are required");
                     var currentMigration = context.Database.GetAppliedMigrations().LastOrDefault();
