@@ -34,8 +34,11 @@ namespace lib.extensions
     
             services.AddSingleton<IConfigurationManager<OpenIdConnectConfiguration>>(oidcConfigMgr);
             
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => 
+            services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme; 
+                }).AddJwtBearer(options => 
                 {
                     // options.Authority = discoveryDocument.GetAuthority();  // Not needed?
                     options.MetadataAddress = appConfig.Auth.Oidc.WellKnownEndpoint;
@@ -52,7 +55,7 @@ namespace lib.extensions
                         OnAuthenticationFailed = c => {
                             logger.Debug("Unauthorized Request. {0}", c.Exception.Message);
                             return Task.CompletedTask;
-                        },
+                         },
                         OnChallenge = c => {
                             logger.Debug(string.Format("Token Challenged"));
                             c.HandleResponse();
@@ -60,6 +63,14 @@ namespace lib.extensions
                         },
                         OnForbidden = c => {
                             logger.Information("Token forbidden");
+                            return Task.CompletedTask;
+                        },
+                        OnMessageReceived = c => {
+                            logger.Debug("Message Received");
+                            return Task.CompletedTask;
+                        },
+                        OnTokenValidated = c => {
+                            logger.Debug("Token Validated");
                             return Task.CompletedTask;
                         }
                     };

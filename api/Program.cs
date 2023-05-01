@@ -49,13 +49,16 @@ namespace api
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
+
+            app.UseSerilogRequestLogging();
+            app.UseExceptionHandler("/error");
         
             app.UseSwagger();
             app.UseSwaggerUI();
-
-            app.UseRequestUserMiddleware();
-
+            app.UseAuthentication();
             app.UseAuthorization();
+            
+            app.UseRequestUserMiddleware();
 
             app.MapControllers();
 

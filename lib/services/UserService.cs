@@ -46,8 +46,10 @@ namespace lib.services
         }
 
         public async Task<User> CreateUser(string jwtToken) {
-            string email = await _userJwtTokenReader.GetEmailFromJwtAsync(jwtToken);
+            List<string> emails = await _userJwtTokenReader.GetEmailsFromJwtAsync(jwtToken);
             string jwtSubject = await _userJwtTokenReader.GetJwtSubjectFromJwtAsync(jwtToken);
+            var email = emails.FirstOrDefault();
+            if (email == null) throw new Exception("no email found in jwt token");
             User user = await CreateUser(email, jwtSubject);
             return user;
         }

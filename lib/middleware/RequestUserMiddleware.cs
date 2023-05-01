@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
+using Serilog;
+using System;
 
 namespace lib.middleware
 {
@@ -16,13 +18,26 @@ namespace lib.middleware
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context, IUserService userService)
+        public async Task InvokeAsync(HttpContext context, IUserService userService, ILogger logger)
         {
-            string authorization = context.Request.Headers["Authorization"];
-            string jwtToken = authorization.Split(" ")[1];
-            var user = await userService.GetOrCreateUser(context.Request.Headers["Authorization"]);
-            context.Features.Set<IRequestUserFeature>(new RequestUserFeature(user));
-            await _next(context);
+            try {
+                string authorization = context.Request.Headers["Authorization"];
+                if (authorization == null) {
+                    logger.Information("Request from unauthenticated user.");
+                    await _next(context);
+                } else {
+                    string jwtToken = authorization.Split(" ")[1];
+                    var user = await userService.GetOrCreateUser(jwtToken);
+                    context.Features.Set<IRequestUserFeature>(new RequestUserFeature(user));
+                    logger.Information($"Request from user: {user.Id}");
+                }
+            } catch (Exception e) {
+                logger.Error(e, "Error Reading user Bearer Token.");
+            } finally {
+                await _next(context);
+            }
+            
+
         }
     }
 

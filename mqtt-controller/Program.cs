@@ -50,6 +50,8 @@ namespace mqtt_controller
 
             var app = builder.Build();
 
+            app.UseSerilogRequestLogging();
+
             app.MapControllers();
 
             logger.Information("Launching MQTT Controller...");

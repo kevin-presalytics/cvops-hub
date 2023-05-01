@@ -11,6 +11,7 @@ using lib.models.dto;
 using lib.models.configuration;
 using lib.services.auth;
 using lib.middleware;
+using System.Net.Mime;
 
 namespace api.controllers
 {
@@ -22,17 +23,16 @@ namespace api.controllers
     // Contains Put Endpoint to update a device
     // contains Delete Endpoint to delete a device
     // Contains a /authorize endpoint to authorize a device connection over mqt
-    [ApiController]
     [Authorize]
+    [ApiController]
+    [Produces(MediaTypeNames.Application.Json)]
     [Route("[controller]")]
-    [Produces("application/json")]
-    [Consumes("application/json")]
-    public class DeviceController : Controller
+    public class DevicesController : ControllerBase
     {
         CvopsDbContext _context;
         IDeviceKeyGenerator _keyGenerator;
         AppConfiguration _configuration;
-        public DeviceController(
+        public DevicesController(
             CvopsDbContext context, 
             IDeviceKeyGenerator keyGenerator, 
             AppConfiguration configuration) : base() 
@@ -43,20 +43,22 @@ namespace api.controllers
         }
 
         [HttpGet]
+        [Produces("application/json")]
         public async Task<ActionResult<IEnumerable<Device>>> List()
         {
             # pragma warning disable CS8600
-            RequestUserFeature userFeature = HttpContext.Features.Get<RequestUserFeature>();
+            IRequestUserFeature userFeature = HttpContext.Features.Get<IRequestUserFeature>();
             # pragma warning restore CS8600
             if (userFeature == null || userFeature.User == null)
                 return Unauthorized();
             var devices = await _context.Devices
                 .Where(d => d.Team.Users.Any(u => u.Id == userFeature.User.Id))
                 .ToListAsync();
-            return devices;
+            return Ok(devices);
         }
 
         [HttpGet("{id}")]
+        [Produces("application/json")]
         public async Task<ActionResult<Device>> Get(Guid id)
         {
             # pragma warning disable CS8600
@@ -69,10 +71,11 @@ namespace api.controllers
                 .FirstOrDefaultAsync(e => e.Id == id);
             if (device == null)
                 return NotFound();
-            return device;
+            return Ok(device);
         }
 
         [HttpPost]
+        [Produces("application/json")]
         public async Task<ActionResult<NewDevice>> Post()
         {
             SecureDeviceCredentials _key = _keyGenerator.GenerateKey();

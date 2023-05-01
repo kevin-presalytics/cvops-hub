@@ -21,7 +21,7 @@ namespace lib.services.auth
     {
         Task<User?> GetUserFromJwtAsync(string jwtToken);
         Task<ClaimsPrincipal> GetClaimsPrincipalFromJwtAsync(string jwtToken);
-        Task<string> GetEmailFromJwtAsync(string jwtToken);
+        Task<List<string>> GetEmailsFromJwtAsync(string jwtToken);
         Task<string> GetJwtSubjectFromJwtAsync(string jwtToken);
     }
 
@@ -88,24 +88,29 @@ namespace lib.services.auth
             return claimsPrincipal;
         }
 
-        public async Task<string> GetEmailFromJwtAsync(string jwtToken)
+        public async Task<List<string>> GetEmailsFromJwtAsync(string jwtToken)
         {
             ClaimsPrincipal claimsPrincipal = await GetClaimsPrincipalFromJwtAsync(jwtToken);
-            string email;
+            var emails = new List<string>();
             if (claimsPrincipal.Claims.Where(i => i.Type == "email").Any())
             {
-                email = claimsPrincipal.Claims.First(i => i.Type == "email").Value;
-            } else if (claimsPrincipal.Claims.Where(i => i.Type == "emailAddresses").Any())
+                var email = claimsPrincipal.Claims.First(i => i.Type == "email").Value;
+                if (email != null) emails.Add(email);
+            } 
+            if (claimsPrincipal.Claims.Where(i => i.Type == "emailAddresses" || i.Type == "emails").Any())
             {
-                var addressesString = claimsPrincipal.Claims.First(i => i.Type == "emailAddresses").Value;
-                # pragma warning disable CS8604
-                email = JsonSerializer.Deserialize<List<string>>(addressesString).First();
-                #pragma warning restore CS8604
-            } else
-            {
-                throw new Exception("email claim not found");
+                var newEmails = claimsPrincipal
+                    .Claims
+                    .Where(i => i.Type == "emailAddresses" || i.Type == "emails")
+                    .Select(i => i.Value)
+                    .ToList();
+                emails.AddRange(newEmails);
             }
-            return email;
+            if (emails.Count == 0)
+            {
+                throw new Exception("No email address found in jwt token");
+            }
+            return emails;
         }
 
         public async Task<string> GetJwtSubjectFromJwtAsync(string jwtToken)

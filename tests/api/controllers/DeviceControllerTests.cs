@@ -26,7 +26,7 @@ namespace tests.api.controllers
         {
 
             // Act
-            DeviceController controller = new DeviceController(_context, new DeviceKeyGenerator(), new AppConfiguration());
+            DevicesController controller = new DevicesController(_context, new DeviceKeyGenerator(), new AppConfiguration());
             var result = await controller.List(); 
             // Assert
             result.Should().BeOfType<ActionResult<IEnumerable<Device>>>();
@@ -47,7 +47,7 @@ namespace tests.api.controllers
                     Uri = "mqtt://localhost:1883"
                 }
             };
-            DeviceController controller = new DeviceController(_context, new DeviceKeyGenerator(), configuration);
+            DevicesController controller = new DevicesController(_context, new DeviceKeyGenerator(), configuration);
 
             // Act
             ActionResult<NewDevice> actionResult = await controller.Post();
