@@ -5,6 +5,7 @@ using System;
 using Serilog;
 using lib.services.mqtt;
 using lib.services.mqtt.queue;
+using System.Collections.Generic;
 
 namespace lib.services.mqtt.workers
 {
@@ -39,7 +40,10 @@ namespace lib.services.mqtt.workers
         {
            _logger.Information("Starting MQTT Client...");
             try {
-                _mqttClient.OnMessage += (s, e) => _queueBroker.HandleApplicationMessage(e.Message);
+                _mqttClient.OnMessage += async (s, e) => {
+                    _logger.Debug("Received message on topic {topic}", e.Message.Topic);
+                    await _queueBroker.HandleApplicationMessage(e.Message);
+                };
                 _mqttClient.OnConnected += async (s, e) => await this.HandleConnected();
                 await _mqttClient.Connect();
             } catch (Exception e) {
@@ -59,9 +63,15 @@ namespace lib.services.mqtt.workers
         private async Task HandleConnected()
         {
             _logger.Information("MQTT Client connected.");
-            await _mqttClient.Subscribe("hub/#");
-            await _mqttClient.Subscribe("device/#");
-            _logger.Information("MQTT Client subscribed to hub/# and device/#.");
+            foreach (var topic in GetTopics())
+            {
+                await _mqttClient.Subscribe(topic);
+                _logger.Information($"MQTT Client subscribed to {topic}.");
+            }
+        }
+
+        public virtual string[] GetTopics() {
+            return new string[]{};
         }
     }
 

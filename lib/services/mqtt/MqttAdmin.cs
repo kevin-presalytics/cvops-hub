@@ -31,11 +31,15 @@ namespace lib.services.mqtt
 
         public async Task Setup()
         {
-            if (!(await MQTTAuthIsConfigured()))
-            {
-                _logger.Debug("MQTT authentication is not configured. Configuring...");
-                await ConfigureMqttAuth();
-                _logger.Debug("MQTT authentication configured.");
+            try {
+                if (!(await MQTTAuthIsConfigured()))
+                {
+                    _logger.Debug("MQTT authentication is not configured. Configuring...");
+                    await ConfigureMqttAuth();
+                    _logger.Debug("MQTT authentication configured.");
+                }
+            } catch (Exception ex) {
+                _logger.Error(ex, "Error configuring MQTT authentication.");
             }
         }
         private async Task<bool> MQTTAuthIsConfigured()

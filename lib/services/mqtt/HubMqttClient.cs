@@ -20,6 +20,7 @@ namespace lib.services.mqtt
         Task Subscribe(string topic);
         Task Unsubscribe(string topic);
         Task Publish(string topic, string payload, MqttQualityOfServiceLevel qos);
+        Task Publish(MqttApplicationMessage message);
         event EventHandler OnConnected;
         event EventHandler<MessageEventArgs> OnMessage;
     }
@@ -81,57 +82,52 @@ namespace lib.services.mqtt
         public Task Connect()
         {
             /*
-            * This sample shows how to reconnect when the connection was dropped.
             * This approach uses a custom Task/Thread which will monitor the connection status.
             * This is the recommended way but requires more custom code!
             */
 
-            var mqttFactory = new MqttFactory();
+            var mqttClientOptions = new MqttClientOptionsBuilder()
+                .WithTcpServer(this._mqttUri, this._mqttPort)
+                .WithProtocolVersion(MqttProtocolVersion.V500)
+                .WithCredentials(_username, _password)
+                .Build();
+            
+            _mqttClient.ApplicationMessageReceivedAsync += e => {
+                _logger.Debug("Application Message Received. Topic: {topic}", e.ApplicationMessage.Topic);
+                OnMessage?.Invoke(this, new MessageEventArgs(e.ApplicationMessage));
+                return Task.CompletedTask;
+            };
 
-            using (var mqttClient = mqttFactory.CreateMqttClient())
-            {
-                var mqttClientOptions = new MqttClientOptionsBuilder()
-                    .WithTcpServer(this._mqttUri, this._mqttPort)
-                    .WithProtocolVersion(MqttProtocolVersion.V500)
-                    .WithCredentials(_username, _password)
-                    .Build();
-                
-                mqttClient.ApplicationMessageReceivedAsync += e => {
-                    OnMessage?.Invoke(this, new MessageEventArgs(e.ApplicationMessage));
-                    return Task.CompletedTask;
-                };
- 
-                _ = Task.Run(
-                    async () =>
+            _ = Task.Run(
+                async () =>
+                {
+                    // User proper cancellation and no while(true).
+                    _logger.Debug("Starting Mqtt Client Reconnect Loop...");
+                    while (true)
                     {
-                        // User proper cancellation and no while(true).
-                        _logger.Debug("Starting Mqtt Client Reconnect Loop...");
-                        while (true)
+                        try
                         {
-                            try
+                            // This code will also do the very first connect! So no call to _ConnectAsync_ is required in the first place.
+                            if (!await this._mqttClient.TryPingAsync())
                             {
-                                // This code will also do the very first connect! So no call to _ConnectAsync_ is required in the first place.
-                                if (!await this._mqttClient.TryPingAsync())
-                                {
-                                    await this._mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
+                                await this._mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
 
-                                    // Subscribe to topics when session is clean etc.
-                                    _logger.Debug("The MQTT client is connected.");
-                                    OnConnected?.Invoke(this, EventArgs.Empty);
-                                }
-                            }
-                            catch
-                            {
-                                _logger.Debug("The MQTT client is disconnected. Retrying connection in 5 seconds..");
-                            }
-                            finally
-                            {
-                                // Check the connection state every 5 seconds and perform a reconnect if required.
-                                await Task.Delay(TimeSpan.FromSeconds(5));
+                                // Subscribe to topics when session is clean etc.
+                                _logger.Debug("The MQTT client is connected.");
+                                OnConnected?.Invoke(this, EventArgs.Empty);
                             }
                         }
-                    });
-            }
+                        catch
+                        {
+                            _logger.Debug("The MQTT client is disconnected. Retrying connection in 5 seconds..");
+                        }
+                        finally
+                        {
+                            // Check the connection state every 5 seconds and perform a reconnect if required.
+                            await Task.Delay(TimeSpan.FromSeconds(5));
+                        }
+                    }
+                });
             return Task.CompletedTask;
         }
 
@@ -148,6 +144,16 @@ namespace lib.services.mqtt
                 .WithQualityOfServiceLevel(qos)
                 .WithRetainFlag()
                 .Build();
+
+            await this._mqttClient.PublishAsync(message, CancellationToken.None);
+        }
+
+        public async Task Publish(MqttApplicationMessage message)
+        {
+            if (!_mqttClient.IsConnected) {
+                _logger.Debug("The MQTT client is not connected.");
+                await this.Connect();
+            }
 
             await this._mqttClient.PublishAsync(message, CancellationToken.None);
         }

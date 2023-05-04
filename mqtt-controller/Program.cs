@@ -11,6 +11,8 @@ using lib.services.mqtt.queue;
 using Serilog;
 using mqtt_controller.workers;
 using lib.services.mqtt.workers;
+using lib.services;
+using lib.models.mqtt;
 
 namespace mqtt_controller
 {
@@ -26,10 +28,12 @@ namespace mqtt_controller
             logger.Information("Starting MQTT Controller...");
             logger.Information("Adding MQTT Controller services...");
 
-            builder.Services.AddControllers();
+            
+            builder.Services.AddControllers().ConfigureJson();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddHostedService<MqttAdminSetupWorker>();
-            builder.Services.AddHostedService<MqttClientWorker>();
+            builder.Services.AddHostedService<ControllerMqttClientWorker>();
+
 
             builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));
             builder.Services.AddMQTTAdmin(appConfig);
@@ -39,7 +43,18 @@ namespace mqtt_controller
             builder.Services.AddTransient<IDeviceKeyVerifier, DeviceKeyVerifier>();
             builder.Services.AddTransient<IDeviceKeyGenerator, DeviceKeyGenerator>();
             builder.Services.AddScoped<IMqttHttpAuthenticator, MqttHttpAuthenticator>();
+            builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient<IUserJwtTokenReader, UserJwtTokenReader>();
+            builder.Services.AddCVOpsAuth(appConfig, logger);
             builder.Services.AddHttpContextAccessor();
+            builder.Services.ConfigureJson();
+
+            // Add Queues
+            builder.Services.AddSingleton<IMqttTopicQueue<UserLoginPayload>, MqttTopicQueue<UserLoginPayload>>();
+
+            // Add Queue Workers
+            builder.Services.AddHostedService<UserLoginTopicWorker>();
+
 
 
             builder.WebHost.ConfigureKestrel(options =>

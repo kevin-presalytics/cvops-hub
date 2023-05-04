@@ -13,6 +13,8 @@ using Serilog;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using api.controllers.options;
 using lib.middleware;
+using lib.services.mqtt.workers;
+using lib.services.mqtt.queue;
 
 namespace api
 {
@@ -28,9 +30,11 @@ namespace api
                 {
                     options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyUrls()));
                 }
-            );
+            ).ConfigureJson();
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddHostedService<MqttClientWorker>();
+            builder.Services.AddHubMQTTClient();
+            builder.Services.AddSingleton<IQueueBroker, QueueBroker>();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(config.GetPostgresqlConnectionString()));
@@ -41,6 +45,8 @@ namespace api
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<IUserJwtTokenReader, UserJwtTokenReader>();
             builder.Services.AddCVOpsAuth(config, logger);
+            builder.Services.ConfigureJson();
+
             builder.WebHost.ConfigureKestrel(options =>
             {
                 options.ListenAnyIP(config.Hub.Api.Port);

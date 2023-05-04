@@ -80,8 +80,9 @@ namespace lib.services.mqtt
 
         private async Task<bool> IsValidDevice(string username, string password)
         {
-            Guid userId = Guid.Parse(username);
-            if (userId == Guid.Empty)
+            Guid userId;
+            bool usernameIsGuid = Guid.TryParse(username, out userId);
+            if (userId == Guid.Empty || !usernameIsGuid)
             {
                 return false;
             }
@@ -99,17 +100,18 @@ namespace lib.services.mqtt
             return false;
         }
 
-        private async Task<bool> IsValidUser(string username, string password)
+        private async Task<bool> IsValidUser(string username, string jwtToken)
         {
             try {
-                // Assumes users attaching directly hub are passing a jwt as thier password and
+                // Assumes users attaching directly hub are passing a jwt as their password and
                 // the jwt's subject as the username
-                User user = await _userService.GetOrCreateUser(password);
+                User user = await _userService.GetOrCreateUser(jwtToken);
                 if (user.JwtSubject == username) {
                     return true;
                 }
                 return false;
-            } catch (Exception) {
+            } catch (Exception ex) {
+                _logger.Error(ex, "Error validating user from jwt token");
                 return false;
             }
         }
