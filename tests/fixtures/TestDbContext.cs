@@ -5,6 +5,10 @@ using System;
 using lib.models;
 using lib.services.auth;
 using lib.models.configuration;
+using lib.models.db;
+using System.Text.Json;
+using Moq;
+using lib.extensions;
 
 namespace tests.fixtures
 {
@@ -19,6 +23,17 @@ namespace tests.fixtures
             string instanceId = Guid.NewGuid().ToString();
             optionsBuilder.UseInMemoryDatabase(instanceId);
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Device>()
+                .Property(d => d.DeviceInfo)
+                .HasConversion(
+                    v => v.Stringify(),
+                    v => JsonDocument.Parse(v, new JsonDocumentOptions())
+                );
+        }
     }
 
     public class DatabaseUnitTest : IDisposable
@@ -31,7 +46,12 @@ namespace tests.fixtures
 
             serviceCollection.AddDbContext<TestDbContext>();
             serviceCollection.AddSingleton<AppConfiguration>(new AppConfiguration());
-            serviceCollection.AddTransient<IUserIdProvider, ScopedUserIdProvider>();
+            var mockUserIdProvider = new Mock<IUserIdProvider>();
+            
+            serviceCollection.AddSingleton<IUserIdProvider>(mockUserIdProvider.Object);
+            serviceCollection.AddHttpContextAccessor();
+            var mockConfiguration = new Mock<AppConfiguration>();
+            serviceCollection.AddSingleton<AppConfiguration>(mockConfiguration.Object);
             IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 
             _context = serviceProvider.GetRequiredService<TestDbContext>();

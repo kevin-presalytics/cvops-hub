@@ -12,6 +12,7 @@ using lib.models.configuration;
 using lib.services.auth;
 using lib.middleware;
 using System.Net.Mime;
+using System.Text.Json;
 
 namespace api.controllers
 {
@@ -82,6 +83,8 @@ namespace api.controllers
             Device device = new Device() {
                 Salt = _key.Salt,
                 Hash = _key.Hash,
+                DeviceInfo = JsonDocument.Parse("{}"),
+                
             };
 
             await _context.Devices.AddAsync(device);

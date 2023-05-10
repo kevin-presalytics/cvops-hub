@@ -11,7 +11,7 @@ namespace lib.models.db
         public string? Name { get; set; } = default!;
         public string? Description { get; set; } =  default!;
         [Column(TypeName = "jsonb")]
-        public JsonDocument DeviceInfo { get; set; } = default!;
+        public JsonDocument DeviceInfo { get; set; } = JsonDocument.Parse("{}");
         public byte[] Salt { get; set; } = default!;
         public string Hash { get; set; } = default!;
         public Guid TeamId { get; set; } = default!;

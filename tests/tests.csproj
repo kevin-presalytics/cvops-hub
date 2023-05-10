@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\api\api.csproj" />
     <ProjectReference Include="..\lib\lib.csproj" />
+    <ProjectReference Include="..\mqtt-controller\mqtt-controller.csproj" />
   </ItemGroup>
 
 </Project>

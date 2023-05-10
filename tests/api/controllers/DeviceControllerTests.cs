@@ -15,6 +15,8 @@ using lib.models.dto;
 using lib.models.db;
 using lib.services.auth;
 using lib.models.configuration;
+using lib.middleware;
+
 
 namespace tests.api.controllers
 {
@@ -24,16 +26,28 @@ namespace tests.api.controllers
         [Fact]
         public async Task Get_Should_ReturnEmptyList()
         {
-
-            // Act
+            // assume
+            var testUser = new User() { 
+                Id = Guid.NewGuid(),
+                Email = "test@test.com",
+                JwtSubject = Guid.NewGuid().ToString()        
+            };
+            await _context.Users.AddAsync(testUser);
             DevicesController controller = new DevicesController(_context, new DeviceKeyGenerator(), new AppConfiguration());
-            var result = await controller.List(); 
+            controller.ControllerContext.HttpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
+            controller.ControllerContext.HttpContext.Features.Set<IRequestUserFeature>(new RequestUserFeature(testUser));
+            // Act
+
+            var actionResult = await controller.List(); 
             // Assert
-            result.Should().BeOfType<ActionResult<IEnumerable<Device>>>();
+
+            var result = actionResult.Result as OkObjectResult;
+
             result.Value.Should().NotBeNull();
-            if (result.Value != null) {
-                result.Value.ToList().Count.Should().Be(0);
-            }
+            result.Value.Should().BeAssignableTo<IEnumerable<Device>>();
+            
+            var devices = result.Value as IEnumerable<Device>;
+            devices.Should().BeEmpty();
 
         }
 
