@@ -2,11 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Metadata;
-using System.Linq;
-using System.Collections.Generic;
-using lib.models;
+using lib.models.configuration;
 using lib.extensions;
 
 namespace db_migrations
@@ -19,6 +15,7 @@ namespace db_migrations
             Console.WriteLine("Loading Configuration...");
 
             var serviceProvider = Services.ConfigureServices();
+            var appConfiguration = serviceProvider.GetRequiredService<AppConfiguration>();
 
             using (var context = serviceProvider.GetRequiredService<MigrationsDbContext>())
             {
@@ -26,6 +23,10 @@ namespace db_migrations
                 Console.WriteLine("Checking for Database Existence...");
 
                 var pendingMigrations = context.Database.GetPendingMigrations();
+
+                if (appConfiguration.Logging.Level.ToString() == "Debug") {
+                    Console.WriteLine("Using Connection string: {0}", appConfiguration.GetPostgresqlConnectionString());
+                }
             
                 if (pendingMigrations.Any()) {
                     Console.WriteLine($"{pendingMigrations.Count()} Database Migrations are required");
