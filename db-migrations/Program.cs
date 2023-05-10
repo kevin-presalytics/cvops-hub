@@ -22,7 +22,7 @@ namespace db_migrations
 
             using (var context = serviceProvider.GetRequiredService<MigrationsDbContext>())
             {
-
+                
                 Console.WriteLine("Checking for Database Existence...");
 
                 var pendingMigrations = context.Database.GetPendingMigrations();

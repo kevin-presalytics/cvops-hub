@@ -13,16 +13,7 @@ namespace db_migrations
     {
         public static IServiceProvider ConfigureServices()
         {
-            var workingDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var config = new ConfigurationBuilder()
-                .AddYamlFile(Path.Join(workingDir, "appsettings.default.yaml"), optional: false, reloadOnChange: true)
-                .AddYamlFile(Path.Join(workingDir, "appsettings.yaml"), optional: true, reloadOnChange: true)
-                .AddYamlFile(Path.Join(workingDir, "appsettings.local.yaml"), optional: true, reloadOnChange: true)
-                .Build();
-
-            AppConfiguration appConfiguration = new AppConfiguration();
-            config.Bind(appConfiguration);
-
+            AppConfiguration appConfiguration = new ConfigurationManager().Configure();
             IServiceCollection services = new ServiceCollection();
             services.AddDbContext<MigrationsDbContext>(options => options.UseNpgsql(appConfiguration.GetPostgresqlConnectionString()));
             services.AddSingleton<AppConfiguration>(appConfiguration);

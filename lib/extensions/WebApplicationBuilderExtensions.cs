@@ -12,15 +12,23 @@ namespace lib.extensions
     {
         public static AppConfiguration AddAppConfiguration(this WebApplicationBuilder builder)
         {
-            var workingDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            builder.Configuration.AddYamlFile(Path.Join(workingDir, "appsettings.default.yaml"), optional: false, reloadOnChange: true);
-            builder.Configuration.AddYamlFile(Path.Join(workingDir, "appsettings.yaml"), optional: true, reloadOnChange: true);
-            builder.Configuration.AddYamlFile(Path.Join(workingDir, "appsettings.local.yaml"), optional: true, reloadOnChange: true);
-            builder.Configuration.AddEnvironmentVariables();
-            AppConfiguration appConfiguration = new AppConfiguration();
-            builder.Configuration.Bind(appConfiguration);
+            var appConfiguration = builder.Configuration.Configure();
             builder.Services.AddSingleton<AppConfiguration>(appConfiguration);
             return appConfiguration;
         }
+
+        public static AppConfiguration Configure(this ConfigurationManager configManager)
+
+        {
+            var workingDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            configManager.AddYamlFile(Path.Join(workingDir, "appsettings.default.yaml"), optional: false, reloadOnChange: true);
+            configManager.AddYamlFile(Path.Join(workingDir, "appsettings.yaml"), optional: true, reloadOnChange: true);
+            configManager.AddYamlFile(Path.Join(workingDir, "appsettings.local.yaml"), optional: true, reloadOnChange: true);
+            configManager.AddEnvironmentVariables();
+            AppConfiguration appConfiguration = new AppConfiguration();
+            configManager.Bind(appConfiguration);
+            return appConfiguration;
+        }
+    
     }
 }
