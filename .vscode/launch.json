@@ -2,12 +2,24 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Attach to Db Migrations",
+            "name": "Attach Api (Kubernetes)",
             "type": "coreclr",
             "request": "attach",
-            "processId": "${command:pickProcess}",
+            "pipeTransport": {
+                "pipeProgram": "kubectl",
+                "pipeArgs": [ 
+                    "exec", 
+                    "-i", 
+                    "${command:extension.vsKubernetesSelectPod}",
+                    "--container",
+                    "db-migrations",
+                    "--"
+                ],
+                "pipeCwd": "${workspaceRoot}",
+                "debuggerPath": "/root/vsdbg",
+                "quoteArgs": false
+            }
         },
-        
         {
             "name": "Run Db Migrations",
             "type": "coreclr",
