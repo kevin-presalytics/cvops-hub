@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using lib.models.configuration;
 using lib.extensions;
+using lib.services;
 
 namespace db_migrations
 {
@@ -12,6 +13,7 @@ namespace db_migrations
     {
         public static void Main(string[] args)
         {
+            DebuggerSetup.WaitForDebugger();
             Console.WriteLine("Loading Configuration...");
 
             var serviceProvider = Services.ConfigureServices();

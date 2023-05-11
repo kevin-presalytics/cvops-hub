@@ -20,6 +20,7 @@ namespace mqtt_controller
     {
         public static async Task Main(string[] args)
         {
+            DebuggerSetup.WaitForDebugger();
             var builder = WebApplication.CreateBuilder(args);
             
 

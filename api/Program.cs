@@ -22,6 +22,7 @@ namespace api
     {
         public static void Main(string[] args)
         {
+            DebuggerSetup.WaitForDebugger();
             var builder = WebApplication.CreateBuilder(args);
             AppConfiguration config = builder.AddAppConfiguration();
             ILogger logger = builder.AddSerilogLogger(config);

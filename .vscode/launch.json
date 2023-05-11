@@ -2,6 +2,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Attach to Db Migrations",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}",
+        },
+        
+        {
             "name": "Run Db Migrations",
             "type": "coreclr",
             "request": "launch",
@@ -13,39 +20,30 @@
             "console": "internalConsole"
         },
         {
-            // Use IntelliSense to find out which attributes exist for C# debugging
-            // Use hover for the description of the existing attributes
-            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
             "name": "Run Api",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/api/bin/Debug/net6.0/api.dll",
             "args": [],
             "cwd": "${workspaceFolder}/api",
             "stopAtEntry": false,
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development",
-            },
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
         },
-        
         {
-            // Use IntelliSense to find out which attributes exist for C# debugging
-            // Use hover for the description of the existing attributes
-            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
             "name": "Run MQTT Controller",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/mqtt-controller/bin/Debug/net6.0/mqtt-controller.dll",
             "args": [],
             "cwd": "${workspaceFolder}/mqtt-controller",
             "stopAtEntry": false,
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development",
-            },
-        },
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        }
     ]
 }

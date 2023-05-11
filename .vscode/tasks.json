@@ -6,7 +6,7 @@
             "command": "dotnet",
             "type": "process",
             "args": [
-                "build",
+                "build"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -33,6 +33,26 @@
                 "${workspaceFolder}/hub/hub.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "bridge-to-kubernetes.resource",
+            "type": "bridge-to-kubernetes.resource",
+            "resource": "cvops-hub-845f57d6b",
+            "resourceType": "pod",
+            "ports": [
+                5000
+            ],
+            "targetCluster": "local-ubuntu",
+            "targetNamespace": "cvops",
+            "useKubernetesServiceEnvironmentVariables": true,
+        },
+        {
+            "label": "bridge-to-kubernetes.compound",
+            "dependsOn": [
+                "bridge-to-kubernetes.resource",
+                "build"
+            ],
+            "dependsOrder": "sequence"
         }
     ]
 }
