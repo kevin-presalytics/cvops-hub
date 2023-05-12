@@ -1,5 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+
+
   <ItemGroup>
     <ProjectReference Include="..\lib\lib.csproj" />
   </ItemGroup>
@@ -21,6 +23,7 @@
     <RootNamespace>db_migrations</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <DebugType>portable</DebugType>
   </PropertyGroup>
 
   <PropertyGroup>

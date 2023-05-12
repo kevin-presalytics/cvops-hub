@@ -10,5 +10,9 @@
         "PINGREQ",
         "Serilog",
         "xunit"
-    ]
+    ],
+    "vs-kubernetes": {
+        "vs-kubernetes.debug-just-my-code": true,
+        "vs-kubernetes.dotnet-source-file-map": "/app",
+     }
 }

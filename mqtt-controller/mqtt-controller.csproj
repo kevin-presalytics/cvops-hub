@@ -6,6 +6,7 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <UserSecretsId>dotnet-mqtt_controller-c818af54-5ad9-4f91-b7c0-aac30e31ab25</UserSecretsId>
     <RootNamespace>mqtt_controller</RootNamespace>
+    <DebugType>portable</DebugType>
   </PropertyGroup>
 
   <ItemGroup>

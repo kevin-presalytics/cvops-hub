@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Attach Api (Kubernetes)",
+            "name": "Kubernetes Attach",
             "type": "coreclr",
             "request": "attach",
             "pipeTransport": {
@@ -12,13 +12,19 @@
                     "-i", 
                     "${command:extension.vsKubernetesSelectPod}",
                     "--container",
-                    "db-migrations",
+                    "db-migrations", // Change container name here
                     "--"
                 ],
                 "pipeCwd": "${workspaceRoot}",
-                "debuggerPath": "/root/vsdbg",
-                "quoteArgs": false
-            }
+                "debuggerPath": "/root/vsdbg/vsdbg",
+                "quoteArgs": false,
+            },
+            "sourceFileMap": {
+                "/app": "${workspaceRoot}"
+            },
+            "justMyCode": true,
+            "requireExactSource": true,
+            ""
         },
         {
             "name": "Run Db Migrations",
@@ -56,6 +62,27 @@
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             }
+        },
+        {
+            // Use IntelliSense to find out which attributes exist for C# debugging
+            // Use hover for the description of the existing attributes
+            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+            "name": ".NET Core Launch (console)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/db-migrations/bin/Debug/net6.0/db-migrations.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/db-migrations",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
         }
     ]
 }
