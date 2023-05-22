@@ -2,6 +2,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            // This debug configuration is used to attach to a running process in a container
+            // it requires the "Kubernetes" vscode extension to work.
+            // 1. You must active the namespace with the pods you want in the Kubernetes extension 
+            // before this will work
+            // 2. You must also put the pod into debug mode.  Either: 
+            //    A. set the debugMode: true in the helm chart, or 
+            //    B. manually set the enviormnet variable debug=true in the container and launch a new process with "dotnet <process>.dll"
             "name": "Kubernetes Attach",
             "type": "coreclr",
             "request": "attach",
@@ -10,9 +17,9 @@
                 "pipeArgs": [ 
                     "exec", 
                     "-i", 
-                    "${command:extension.vsKubernetesSelectPod}",
+                    "${command:extension.vsKubernetesSelectPod}", // <-- A dropdown will show up to select the pod
                     "--container",
-                    "db-migrations", // Change container name here
+                    "db-migrations", // <--- Change container name here
                     "--"
                 ],
                 "pipeCwd": "${workspaceRoot}",
@@ -20,10 +27,13 @@
                 "quoteArgs": false,
             },
             "sourceFileMap": {
-                "/app": "${workspaceFolder}"
+                // This is the path to the source code on the container
+                "/app": "${workspaceFolder}",
+                // this is the path to the where the source code was built int he docker container
+                // the debugger fies use this mapping to the local copy of the source code
+                "/build": "${workspaceFolder}"
             },
             "justMyCode": false,
-            ""
         },
         {
             "name": "Run Db Migrations",

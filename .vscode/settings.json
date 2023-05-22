@@ -5,6 +5,7 @@
         "Cvops",
         "Eqmx",
         "mqtt",
+        "mqtts",
         "Npgsql",
         "oidc",
         "PINGREQ",

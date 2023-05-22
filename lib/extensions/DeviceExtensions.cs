@@ -1,5 +1,6 @@
 using lib.services.mqtt;
 using lib.models.db;
+using lib.models.dto;
 
 namespace lib.extensions
 {

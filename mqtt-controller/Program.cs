@@ -13,6 +13,7 @@ using mqtt_controller.workers;
 using lib.services.mqtt.workers;
 using lib.services;
 using lib.models.mqtt;
+using mqtt_controller.services;
 
 namespace mqtt_controller
 {
@@ -40,7 +41,7 @@ namespace mqtt_controller
             builder.Services.AddMQTTAdmin(appConfig);
             builder.Services.AddHubMQTTClient();
             builder.Services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();
-            builder.Services.AddTransient<IQueueBroker, QueueBroker>();
+            builder.Services.AddTransient<IQueueBroker, MqttControllerQueueBroker>();
             builder.Services.AddTransient<IDeviceKeyVerifier, DeviceKeyVerifier>();
             builder.Services.AddTransient<IDeviceKeyGenerator, DeviceKeyGenerator>();
             builder.Services.AddScoped<IMqttHttpAuthenticator, MqttHttpAuthenticator>();

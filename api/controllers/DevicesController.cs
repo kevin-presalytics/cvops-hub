@@ -13,6 +13,7 @@ using lib.services.auth;
 using lib.middleware;
 using System.Net.Mime;
 using System.Text.Json;
+using lib.extensions;
 
 namespace api.controllers
 {
@@ -89,11 +90,10 @@ namespace api.controllers
 
             await _context.Devices.AddAsync(device);
             await _context.SaveChangesAsync();
-            Uri mqttUri = new Uri(_configuration.MQTT.Uri);
             NewDevice newDevice = new NewDevice() {
                 Id = device.Id,
                 SecretKey = _key.Key,
-                MqttUri = mqttUri,
+                MqttUri = _configuration.GetMqttConnectionUrl()
             };
             return CreatedAtAction(nameof(Get), new { id = device.Id }, newDevice);
         }

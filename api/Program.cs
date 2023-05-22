@@ -15,6 +15,7 @@ using api.controllers.options;
 using lib.middleware;
 using lib.services.mqtt.workers;
 using lib.services.mqtt.queue;
+using api.services;
 
 namespace api
 {
@@ -33,9 +34,6 @@ namespace api
                 }
             ).ConfigureJson();
 
-            builder.Services.AddHostedService<MqttClientWorker>();
-            builder.Services.AddHubMQTTClient();
-            builder.Services.AddSingleton<IQueueBroker, QueueBroker>();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(config.GetPostgresqlConnectionString()));
@@ -52,6 +50,14 @@ namespace api
             {
                 options.ListenAnyIP(config.Hub.Api.Port);
             });
+
+            // Conifigure MQTT
+            // Base services
+            builder.Services.AddHostedService<MqttClientWorker>();
+            builder.Services.AddHubMQTTClient();
+            builder.Services.AddSingleton<IQueueBroker, ApiQueueBroker>();
+
+
 
             var app = builder.Build();
 

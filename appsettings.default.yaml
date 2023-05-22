@@ -1,3 +1,4 @@
+domain: localhost
 mqtt:
   uri: localhost
   port: 1883
@@ -5,6 +6,10 @@ mqtt:
   adminPassword: Password@1
   adminPort: 18083
   authUrl: http://localhost:5100/mqtt/auth
+  websocketProtocol: ws
+  websocketPort: 8083
+  securePort: 8883
+  useTls: false
 postgresql:
   host: localhost
   username: postgres
