@@ -118,9 +118,9 @@ namespace lib.services.mqtt
                                 OnConnected?.Invoke(this, EventArgs.Empty);
                             }
                         }
-                        catch
+                        catch (Exception ex)
                         {
-                            _logger.Debug("The MQTT client is disconnected. Retrying connection in 5 seconds..");
+                            _logger.Error(ex, "The MQTT client is disconnected. Retrying connection in 5 seconds..");
                         }
                         finally
                         {
