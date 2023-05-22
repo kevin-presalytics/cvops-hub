@@ -18,13 +18,6 @@ namespace lib.extensions
             var dbContext = app.Services.GetRequiredService<CvopsDbContext>();
             dbContext.Database.CanConnect();
         }
-
-        public static void SetupMQTT(this WebApplication app)
-        {
-            // var config = app.Services.GetRequiredService<AppConfiguration>();
-            // var mqttService = app.Services.GetRequiredService<MQTTService>();
-            // mqttService.Connect(config.MQTT.Uri, config.MQTT.Port, config.MQTT.AdminUsername, config.MQTT.AdminPassword);
-        }
     }
 
 }

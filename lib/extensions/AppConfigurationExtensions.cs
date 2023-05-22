@@ -10,7 +10,7 @@ namespace lib.extensions
             return $"Host={config.Postgresql.Host};Port={config.Postgresql.Port};Database={config.Postgresql.Database};Username={config.Postgresql.Username};Password={config.Postgresql.Password};SslMode={config.Postgresql.SslMode}";
         }
 
-        public static Uri GetMqttConnectionUrl(this AppConfiguration config)
+        public static Uri GetPublicMqttConnectionUrl(this AppConfiguration config)
         {
             string host = config.Domain == "localhost" ? "localhost" : $"mqtt.{config.Domain}";
             if (config.MQTT.useTls)

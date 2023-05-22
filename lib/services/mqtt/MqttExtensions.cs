@@ -10,7 +10,7 @@ namespace lib.extensions
         public static void AddMQTTAdmin(this IServiceCollection services, AppConfiguration config)
         {
             services.AddHttpClient(MqttAdminHttpClientName.Get(), client => {
-                client.BaseAddress = new System.Uri($"http://{config.MQTT.Uri}:{config.MQTT.AdminPort}/api/v5/");
+                client.BaseAddress = new System.Uri($"http://{config.MQTT.Host}:{config.MQTT.AdminPort}/api/v5/");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
                     System.Convert.ToBase64String(
                         System.Text.Encoding.ASCII.GetBytes($"{config.MQTT.AdminUsername}:{config.MQTT.AdminPassword}")

@@ -44,8 +44,9 @@ namespace tests.api.controllers
             // Assert
 
             var result = actionResult.Result as OkObjectResult;
-
+            # pragma warning disable CS8602
             result.Value.Should().NotBeNull();
+            # pragma warning restore CS8602
             result.Value.Should().BeAssignableTo<IEnumerable<Device>>();
             
             var devices = result.Value as IEnumerable<Device>;
@@ -77,7 +78,7 @@ namespace tests.api.controllers
                 var value = result.Value as NewDevice;
                 value.Id.Should().NotBe(Guid.Empty);
                 value.SecretKey.Should().NotBeNullOrEmpty();;
-                value.MqttUri.Should().Be(configuration.GetMqttConnectionUrl());
+                value.MqttUri.Should().Be(configuration.GetPublicMqttConnectionUrl());
             }
             #nullable enable
         }

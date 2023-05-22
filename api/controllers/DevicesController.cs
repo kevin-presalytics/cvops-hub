@@ -93,7 +93,7 @@ namespace api.controllers
             NewDevice newDevice = new NewDevice() {
                 Id = device.Id,
                 SecretKey = _key.Key,
-                MqttUri = _configuration.GetMqttConnectionUrl()
+                MqttUri = _configuration.GetPublicMqttConnectionUrl()
             };
             return CreatedAtAction(nameof(Get), new { id = device.Id }, newDevice);
         }
