@@ -16,6 +16,7 @@ using lib.models.db;
 using lib.services.auth;
 using lib.models.configuration;
 using lib.middleware;
+using lib.extensions;
 
 
 namespace tests.api.controllers
@@ -33,6 +34,7 @@ namespace tests.api.controllers
                 JwtSubject = Guid.NewGuid().ToString()        
             };
             await _context.Users.AddAsync(testUser);
+            var appConfig = new AppConfiguration();
             DevicesController controller = new DevicesController(_context, new DeviceKeyGenerator(), new AppConfiguration());
             controller.ControllerContext.HttpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext();
             controller.ControllerContext.HttpContext.Features.Set<IRequestUserFeature>(new RequestUserFeature(testUser));
@@ -57,8 +59,10 @@ namespace tests.api.controllers
 
             // Arrange
             var configuration = new AppConfiguration() {
+                Domain = "test.dev",
                 MQTT = new MQTT() {
-                    Uri = "mqtt://localhost:1883"
+                    useTls = true,
+                    SecurePort = 8883,
                 }
             };
             DevicesController controller = new DevicesController(_context, new DeviceKeyGenerator(), configuration);
@@ -72,9 +76,8 @@ namespace tests.api.controllers
             if (result.Value != null) {
                 var value = result.Value as NewDevice;
                 value.Id.Should().NotBe(Guid.Empty);
-                value.SecretKey.Should().NotBeNullOrEmpty();
-                Uri mqttUri = new Uri(configuration.MQTT.Uri);
-                value.MqttUri.Should().Be(mqttUri);
+                value.SecretKey.Should().NotBeNullOrEmpty();;
+                value.MqttUri.Should().Be(configuration.GetMqttConnectionUrl());
             }
             #nullable enable
         }
