@@ -102,6 +102,7 @@ namespace lib.services.mqtt
                 async () =>
                 {
                     // User proper cancellation and no while(true).
+                    _logger.Debug("Connection to MqTT Server at {uri}:{port}", this._mqttUri, this._mqttPort);
                     _logger.Debug("Starting Mqtt Client Reconnect Loop...");
                     while (true)
                     {
