@@ -63,6 +63,7 @@ namespace lib.services.mqtt
         {
             var authConfiguration = new EqmxAuthConfiguration();
             authConfiguration.Url = _authUri;
+            _logger.Debug($"Configuration MQTT Server to Authenticate via HTTp at URL: {authConfiguration.Url}");
             HttpResponseMessage msg = await _httpClient.PostAsJsonAsync("authentication", authConfiguration);
             if (msg.IsSuccessStatusCode)
             {
