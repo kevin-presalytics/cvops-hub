@@ -39,7 +39,7 @@ namespace lib.services.mqtt
         public HubMqttClient(ILogger logger, AppConfiguration configuration, IQueueBroker queueBroker)
         {
             _logger = logger;
-            _mqttUri = $"{configuration.MQTT.Protocol}://{configuration.MQTT.Host}";
+            _mqttUri = configuration.MQTT.Host;
             _mqttPort = configuration.MQTT.Port;
             _username = configuration.MQTT.AdminUsername;
             _password = configuration.MQTT.AdminPassword;
