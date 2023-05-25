@@ -14,7 +14,7 @@ namespace lib.models.configuration
         public int SecurePort { get; set;} = default!;
         public bool useTls { get; set;} = default!;
         public string websocketPort { get; set;} = default!;
-        public string websocketProtocol { get; set;} = default!;
+        public string secureWebsocketPort { get; set;} = default!;
         public string Protocol { get; set;} = default!;
 
     }

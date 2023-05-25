@@ -8,7 +8,7 @@ mqtt:
   adminPassword: Password@1
   adminPort: 18083
   authUrl: http://localhost:5100/mqtt/auth
-  websocketProtocol: ws
+  secureWebsocketPort: 8084
   websocketPort: 8083
   securePort: 8883
   useTls: false

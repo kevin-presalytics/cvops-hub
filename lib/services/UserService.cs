@@ -58,7 +58,7 @@ namespace lib.services
             string jwtSubject = await _userJwtTokenReader.GetJwtSubjectFromJwtAsync(jwtToken);
             User? user = await _dbContext.Users.FirstOrDefaultAsync(i => i.JwtSubject == jwtSubject);
             if (user == null) {
-                user = await CreateUser(jwtToken);
+                 user = await CreateUser(jwtToken);
             }
             return user;
         }
