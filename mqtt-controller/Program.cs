@@ -34,6 +34,7 @@ namespace mqtt_controller
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddHttpContextAccessor();
             builder.Services.ConfigureJson();
+            builder.Services.AddCVOpsAuth(appConfig, logger);
             builder.WebHost.ConfigureKestrel(options =>
             {
                 options.ListenAnyIP(appConfig.Hub.MqttController.Port);
@@ -43,6 +44,7 @@ namespace mqtt_controller
             builder.Services.AddHostedService<MqttAdminSetupWorker>();
             builder.Services.AddHostedService<ControllerMqttClientWorker>();
             builder.Services.AddSingleton<IMqttTopicRouter, MqttTopicRouter>();
+            builder.Services.AddScoped<IMqttHttpAuthenticator, MqttHttpAuthenticator>();
             builder.Services.AddMQTTAdmin(appConfig);
             builder.Services.AddHubMQTTClient();
 
@@ -53,9 +55,9 @@ namespace mqtt_controller
             builder.Services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();
             builder.Services.AddTransient<IDeviceKeyVerifier, DeviceKeyVerifier>();
             builder.Services.AddTransient<IDeviceKeyGenerator, DeviceKeyGenerator>();
-            builder.Services.AddScoped<IMqttHttpAuthenticator, MqttHttpAuthenticator>();
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<IUserJwtTokenReader, UserJwtTokenReader>();
+            builder.Services.AddTransient<IInviteUserService, InviteUserService>();
 
             // Model Layer
             builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));

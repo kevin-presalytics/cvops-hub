@@ -60,6 +60,8 @@ namespace api
             builder.Services.AddTransient<IUserJwtTokenReader, UserJwtTokenReader>();
             builder.Services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();            
             builder.Services.AddSingleton<IDeviceKeyGenerator, DeviceKeyGenerator>();
+            builder.Services.AddTransient<IDeviceKeyVerifier, DeviceKeyVerifier>();
+            builder.Services.AddTransient<IInviteUserService, InviteUserService>();
             
             // Model Layer
             builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));
