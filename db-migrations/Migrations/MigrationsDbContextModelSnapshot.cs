@@ -18,7 +18,7 @@ namespace db_migrations.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.12")
+                .HasAnnotation("ProductVersion", "6.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -71,10 +71,6 @@ namespace db_migrations.Migrations
                         .HasColumnType("bytea")
                         .HasColumnName("salt");
 
-                    b.Property<Guid>("TeamId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("team_id");
-
                     b.Property<Guid?>("UserCreated")
                         .HasColumnType("uuid")
                         .HasColumnName("user_created");
@@ -82,6 +78,10 @@ namespace db_migrations.Migrations
                     b.Property<Guid?>("UserModified")
                         .HasColumnType("uuid")
                         .HasColumnName("user_modified");
+
+                    b.Property<Guid>("WorkspaceId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("workspace_id");
 
                     b.HasKey("Id")
                         .HasName("pk_device");
@@ -89,109 +89,10 @@ namespace db_migrations.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.HasIndex("TeamId")
-                        .HasDatabaseName("ix_device_team_id");
+                    b.HasIndex("WorkspaceId")
+                        .HasDatabaseName("ix_device_workspace_id");
 
                     b.ToTable("device", (string)null);
-                });
-
-            modelBuilder.Entity("lib.models.db.Team", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("created_by");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("date_created");
-
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("date_modified");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("modified_by");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.Property<Guid?>("UserCreated")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_created");
-
-                    b.Property<Guid?>("UserModified")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_modified");
-
-                    b.Property<bool>("isDefaultTeam")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_default_team");
-
-                    b.HasKey("Id")
-                        .HasName("pk_team");
-
-                    b.ToTable("team", (string)null);
-                });
-
-            modelBuilder.Entity("lib.models.db.TeamUserMap", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("created_by");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("date_created");
-
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("date_modified");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("modified_by");
-
-                    b.Property<Guid>("TeamId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("team_id");
-
-                    b.Property<Guid?>("UserCreated")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_created");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_id");
-
-                    b.Property<Guid?>("UserModified")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_modified");
-
-                    b.HasKey("Id")
-                        .HasName("pk_team_user_map");
-
-                    b.HasIndex("TeamId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("team_user_map", (string)null);
                 });
 
             modelBuilder.Entity("lib.models.db.User", b =>
@@ -214,10 +115,18 @@ namespace db_migrations.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("date_modified");
 
+                    b.Property<Guid>("DefaultWorkspaceId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("default_workspace_id");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("email");
+
+                    b.Property<bool>("IsEmailVerified")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_email_verified");
 
                     b.Property<string>("JwtSubject")
                         .IsRequired()
@@ -228,6 +137,10 @@ namespace db_migrations.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("modified_by");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
 
                     b.Property<Guid?>("UserCreated")
                         .HasColumnType("uuid")
@@ -240,6 +153,9 @@ namespace db_migrations.Migrations
                     b.HasKey("Id")
                         .HasName("pk_user");
 
+                    b.HasIndex("DefaultWorkspaceId")
+                        .HasDatabaseName("ix_user_default_workspace_id");
+
                     b.HasIndex("Email")
                         .IsUnique();
 
@@ -249,36 +165,162 @@ namespace db_migrations.Migrations
                     b.ToTable("user", (string)null);
                 });
 
-            modelBuilder.Entity("lib.models.db.Device", b =>
+            modelBuilder.Entity("lib.models.db.Workspace", b =>
                 {
-                    b.HasOne("lib.models.db.Team", "Team")
-                        .WithMany("Devices")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_device_team_team_id");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
-                    b.Navigation("Team");
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("date_created");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("date_modified");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("modified_by");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<Guid?>("UserCreated")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_created");
+
+                    b.Property<Guid?>("UserModified")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_modified");
+
+                    b.HasKey("Id")
+                        .HasName("pk_workspace");
+
+                    b.ToTable("workspace", (string)null);
                 });
 
-            modelBuilder.Entity("lib.models.db.TeamUserMap", b =>
+            modelBuilder.Entity("lib.models.db.WorkspaceUser", b =>
                 {
-                    b.HasOne("lib.models.db.Team", null)
-                        .WithMany()
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
-                    b.HasOne("lib.models.db.User", null)
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("created_by");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("date_created");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("date_modified");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("modified_by");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer")
+                        .HasColumnName("role");
+
+                    b.Property<Guid?>("UserCreated")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_created");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.Property<Guid?>("UserModified")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_modified");
+
+                    b.Property<Guid>("WorkspaceId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("workspace_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_workspace_user");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_workspace_user_user_id");
+
+                    b.HasIndex("WorkspaceId")
+                        .HasDatabaseName("ix_workspace_user_workspace_id");
+
+                    b.ToTable("workspace_user", (string)null);
+                });
+
+            modelBuilder.Entity("lib.models.db.Device", b =>
+                {
+                    b.HasOne("lib.models.db.Workspace", "Workspace")
+                        .WithMany("Devices")
+                        .HasForeignKey("WorkspaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_device_workspace_workspace_id");
+
+                    b.Navigation("Workspace");
+                });
+
+            modelBuilder.Entity("lib.models.db.User", b =>
+                {
+                    b.HasOne("lib.models.db.Workspace", "DefaultWorkspace")
+                        .WithMany()
+                        .HasForeignKey("DefaultWorkspaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_user_workspace_default_workspace_id");
+
+                    b.Navigation("DefaultWorkspace");
+                });
+
+            modelBuilder.Entity("lib.models.db.WorkspaceUser", b =>
+                {
+                    b.HasOne("lib.models.db.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_workspace_user_user_user_id");
+
+                    b.HasOne("lib.models.db.Workspace", "Workspace")
+                        .WithMany("WorkspaceUsers")
+                        .HasForeignKey("WorkspaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_workspace_user_workspace_workspace_id");
+
+                    b.Navigation("User");
+
+                    b.Navigation("Workspace");
                 });
 
-            modelBuilder.Entity("lib.models.db.Team", b =>
+            modelBuilder.Entity("lib.models.db.Workspace", b =>
                 {
                     b.Navigation("Devices");
+
+                    b.Navigation("WorkspaceUsers");
                 });
 #pragma warning restore 612, 618
         }
