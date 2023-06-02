@@ -47,6 +47,16 @@ namespace lib.services.mqtt
             _logger.Debug($"Auto-discovered TopicListeners: {string.Join(", ", TopicListeners.Select(x => x.Value.ToString()))}");
         }
 
+        private async Task Dispatch(MqttApplicationMessage message, Type serviceType)
+        {
+            try {
+                IMqttTopicListener listener = (IMqttTopicListener)_serviceProvider.GetRequiredService(serviceType);
+                await listener.HandleMessage(message);
+            } catch (Exception ex) {
+                _logger.Error(ex, $"Error handling message for Topic: {message.Topic}");
+            }
+        }
+
         public void RouteMessage(MqttApplicationMessage message)
         {
             try {
@@ -64,14 +74,7 @@ namespace lib.services.mqtt
                     if (compareResult == MqttTopicFilterCompareResult.IsMatch)
                     {
                         if (!isMessageHandled) isMessageHandled = true;
-                        Task.Run(async () => {
-                            try {
-                                IMqttTopicListener listener = (IMqttTopicListener)_serviceProvider.GetRequiredService(topicListener.Value);
-                                await listener.HandleMessage(message);
-                            } catch (Exception ex) {
-                                _logger.Error(ex, $"Error handling message for Topic: {message.Topic}");
-                            }
-                        });
+                        Task.Run(async () => await Dispatch(message, topicListener.Value));
                     }
                 }
                 if (!isMessageHandled)
@@ -83,7 +86,6 @@ namespace lib.services.mqtt
             } catch (Exception ex) {
                 _logger.Error(ex, $"Error routing message for Topic: {message.Topic}");
             }
-
         }
     }
 }
