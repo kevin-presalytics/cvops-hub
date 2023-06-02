@@ -5,15 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 using lib.extensions;
 using lib.models;
+using lib.services;
 using lib.services.mqtt;
 using lib.services.auth;
-using lib.services.mqtt.queue;
 using Serilog;
 using mqtt_controller.workers;
-using lib.services.mqtt.workers;
-using lib.services;
-using lib.models.mqtt;
-using mqtt_controller.services;
+using lib.services.mqtt.listeners;
 
 namespace mqtt_controller
 {
@@ -21,49 +18,47 @@ namespace mqtt_controller
     {
         public static async Task Main(string[] args)
         {
+            // Setup
+            // Requires Environment Variable: DEBUG=true
             DebuggerSetup.WaitForDebugger();
             var builder = WebApplication.CreateBuilder(args);
             
-
+            // App Configuration
             var appConfig = builder.AddAppConfiguration();
             ILogger logger = builder.AddSerilogLogger(appConfig);
             logger.Information("Starting MQTT Controller...");
             logger.Information("Adding MQTT Controller services...");
 
-            
+            // Framework Services
             builder.Services.AddControllers().ConfigureJson();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddHostedService<MqttAdminSetupWorker>();
-            builder.Services.AddHostedService<ControllerMqttClientWorker>();
-
-
-            builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));
-            builder.Services.AddMQTTAdmin(appConfig);
-            builder.Services.AddHubMQTTClient();
-            builder.Services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();
-            builder.Services.AddTransient<IQueueBroker, MqttControllerQueueBroker>();
-            builder.Services.AddTransient<IDeviceKeyVerifier, DeviceKeyVerifier>();
-            builder.Services.AddTransient<IDeviceKeyGenerator, DeviceKeyGenerator>();
-            builder.Services.AddScoped<IMqttHttpAuthenticator, MqttHttpAuthenticator>();
-            builder.Services.AddTransient<IUserService, UserService>();
-            builder.Services.AddTransient<IUserJwtTokenReader, UserJwtTokenReader>();
-            builder.Services.AddCVOpsAuth(appConfig, logger);
             builder.Services.AddHttpContextAccessor();
             builder.Services.ConfigureJson();
-
-            // Add Queues
-            builder.Services.AddSingleton<IMqttTopicQueue<UserLoginPayload>, MqttTopicQueue<UserLoginPayload>>();
-
-            // Add Queue Workers
-            builder.Services.AddHostedService<UserLoginTopicWorker>();
-
-
-
             builder.WebHost.ConfigureKestrel(options =>
             {
                 options.ListenAnyIP(appConfig.Hub.MqttController.Port);
             });
 
+            // MQTT Management Services
+            builder.Services.AddHostedService<MqttAdminSetupWorker>();
+            builder.Services.AddHostedService<ControllerMqttClientWorker>();
+            builder.Services.AddSingleton<IMqttTopicRouter, MqttTopicRouter>();
+            builder.Services.AddMQTTAdmin(appConfig);
+            builder.Services.AddHubMQTTClient();
+
+            // MQTT Topic Listeners
+            builder.Services.AddTransient<IMqttTopicListener, UserLoginTopicListener>();
+            
+            // Service Layer
+            builder.Services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();
+            builder.Services.AddTransient<IDeviceKeyVerifier, DeviceKeyVerifier>();
+            builder.Services.AddTransient<IDeviceKeyGenerator, DeviceKeyGenerator>();
+            builder.Services.AddScoped<IMqttHttpAuthenticator, MqttHttpAuthenticator>();
+            builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient<IUserJwtTokenReader, UserJwtTokenReader>();
+
+            // Model Layer
+            builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));
 
             var app = builder.Build();
 

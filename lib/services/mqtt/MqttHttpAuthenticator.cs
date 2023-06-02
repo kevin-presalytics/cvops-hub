@@ -19,7 +19,7 @@ namespace lib.services.mqtt
 
     public class MqttHttpAuthenticator : IMqttHttpAuthenticator
     {
-        private readonly CvopsDbContext _dbContext;
+        private readonly CvopsDbContext _context;
         private readonly IDeviceKeyVerifier _deviceKeyVerifier;
         private readonly ILogger _logger;
         private readonly string _hubUsername;
@@ -35,7 +35,7 @@ namespace lib.services.mqtt
             IUserService userService
         )
         {
-            _dbContext = dbContext;
+            _context = dbContext;
             _deviceKeyVerifier = deviceKeyVerifier;
             _logger = logger;
             _hubUsername = appConfig.MQTT.AdminUsername;
@@ -87,7 +87,7 @@ namespace lib.services.mqtt
                 return false;
             }
             # pragma warning disable CS8600
-            Device device = await _dbContext.Devices.FindAsync(userId);
+            Device device = await _context.Devices.FindAsync(userId);
             # pragma warning restore CS8600
             if (device == null)
             {

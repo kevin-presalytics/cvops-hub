@@ -2,7 +2,6 @@ using lib.services;
 using lib.models.db;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Serilog;
 using System;
@@ -28,6 +27,9 @@ namespace lib.middleware
                 } else {
                     string jwtToken = authorization.Split(" ")[1];
                     var user = await userService.GetOrCreateUser(jwtToken);
+                    if (user.Status == UserStatus.Pending) {
+                        await userService.ActivateUser(user, jwtToken);
+                    }
                     context.Features.Set<IRequestUserFeature>(new RequestUserFeature(user));
                     logger.Information($"Request from user: {user.Id}");
                 }

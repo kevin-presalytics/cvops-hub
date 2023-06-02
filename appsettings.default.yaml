@@ -1,7 +1,7 @@
 domain: localhost
 mqtt:
   protocol: mqtt
-  host: emqx.mqtt.svc.cluster.local
+  host: localhost
   publicHost: mqtt.local.cvops.io
   port: 1883
   adminUsername: hub

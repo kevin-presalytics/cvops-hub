@@ -3,6 +3,7 @@
         "appsettings",
         "ASPNETCORE",
         "Cvops",
+        "emqx",
         "Eqmx",
         "mqtt",
         "mqtts",

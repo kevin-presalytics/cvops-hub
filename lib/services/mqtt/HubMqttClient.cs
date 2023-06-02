@@ -7,8 +7,6 @@ using MQTTnet.Formatter;
 using MQTTnet.Protocol;
 using Serilog;
 using lib.models.configuration;
-using lib.services.mqtt.queue;
-using lib.models.mqtt;
 
 namespace lib.services.mqtt
 {
@@ -22,7 +20,6 @@ namespace lib.services.mqtt
         Task Publish(string topic, string payload, MqttQualityOfServiceLevel qos);
         Task Publish(MqttApplicationMessage message);
         event EventHandler OnConnected;
-        event EventHandler<MessageEventArgs> OnMessage;
     }
     public class HubMqttClient : IDisposable, IHubMqttClient
     {
@@ -32,11 +29,13 @@ namespace lib.services.mqtt
         private string _username;
         private string _password;
         private int _mqttPort;
+
+        private IMqttTopicRouter _mqttTopicRouter;
         public event EventHandler OnConnected;
-        public event EventHandler<MessageEventArgs> OnMessage;
+        
 
         #pragma warning disable CS8618
-        public HubMqttClient(ILogger logger, AppConfiguration configuration, IQueueBroker queueBroker)
+        public HubMqttClient(ILogger logger, AppConfiguration configuration, IMqttTopicRouter mqttTopicRouter)
         {
             _logger = logger;
             _mqttUri = configuration.MQTT.Host;
@@ -45,6 +44,7 @@ namespace lib.services.mqtt
             _password = configuration.MQTT.AdminPassword;
             var mqttFactory = new MqttFactory();
             _mqttClient = mqttFactory.CreateMqttClient();
+            _mqttTopicRouter = mqttTopicRouter;
         }
         #pragma warning restore CS8618
 
@@ -94,7 +94,7 @@ namespace lib.services.mqtt
             
             _mqttClient.ApplicationMessageReceivedAsync += e => {
                 _logger.Debug("Application Message Received. Topic: {topic}", e.ApplicationMessage.Topic);
-                OnMessage?.Invoke(this, new MessageEventArgs(e.ApplicationMessage));
+                _mqttTopicRouter.RouteMessage(e.ApplicationMessage);
                 return Task.CompletedTask;
             };
 

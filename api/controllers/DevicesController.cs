@@ -7,95 +7,111 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using lib.models;
 using lib.models.db;
-using lib.models.dto;
-using lib.models.configuration;
+using dto = lib.models.dto;
 using lib.services.auth;
 using lib.middleware;
 using System.Net.Mime;
-using System.Text.Json;
 using lib.extensions;
+using lib.services;
+using lib.models.exceptions;
+using Serilog;
 
 namespace api.controllers
 {
-
-    // DeviceController class for api to create api endpoints for devices for lib/models/db/Device.cs model
-    // Contains Get Endpoint to list a users devices
-    // Contains Get Endpoint to get a single devices details
-    // Contains Post Endpoint to create a new device
-    // Contains Put Endpoint to update a device
-    // contains Delete Endpoint to delete a device
-    // Contains a /authorize endpoint to authorize a device connection over mqt
     [Authorize]
     [ApiController]
     [Produces(MediaTypeNames.Application.Json)]
     [Route("[controller]")]
     public class DevicesController : ControllerBase
     {
-        CvopsDbContext _context;
-        IDeviceKeyGenerator _keyGenerator;
-        AppConfiguration _configuration;
-        public DevicesController(
-            CvopsDbContext context, 
-            IDeviceKeyGenerator keyGenerator, 
-            AppConfiguration configuration) : base() 
-        { 
-            _context = context;
-            _keyGenerator = keyGenerator;
-            _configuration = configuration;
-        }
-
-        [HttpGet]
-        [Produces("application/json")]
-        public async Task<ActionResult<IEnumerable<Device>>> List()
-        {
-            # pragma warning disable CS8600
-            IRequestUserFeature userFeature = HttpContext.Features.Get<IRequestUserFeature>();
-            # pragma warning restore CS8600
-            if (userFeature == null || userFeature.User == null)
-                return Unauthorized();
-            var devices = await _context.Devices
-                .Where(d => d.Team.Users.Any(u => u.Id == userFeature.User.Id))
-                .ToListAsync();
-            return Ok(devices);
+        IDeviceService _deviceService;
+        IWorkspaceService _workspaceService;
+        ILogger _logger;
+        public DevicesController(IDeviceService deviceService, IWorkspaceService workspaceService, ILogger logger) { 
+            _deviceService = deviceService;
+            _workspaceService = workspaceService;
+            _logger = logger;
         }
 
         [HttpGet("{id}")]
         [Produces("application/json")]
-        public async Task<ActionResult<Device>> Get(Guid id)
+        public async Task<ActionResult<dto.Device>> Get(Guid id)
         {
-            # pragma warning disable CS8600
-            RequestUserFeature userFeature = HttpContext.Features.Get<RequestUserFeature>();
-            # pragma warning restore CS8600
-            if (userFeature == null || userFeature.User == null)
-                return Unauthorized();
-            var device = await _context.Devices
-                .Where(d => d.Team.Users.Any(u => u.Id == userFeature.User.Id))
-                .FirstOrDefaultAsync(e => e.Id == id);
-            if (device == null)
+            try {
+                # pragma warning disable CS8600
+                // Get Request User from Jwt Token
+                IRequestUserFeature userFeature = HttpContext.Features.Get<IRequestUserFeature>();
+                # pragma warning restore CS8600
+                // Get Device, 404 if missing
+                Device device = await _deviceService.GetDevice(id);
+                if (device == null)
+                    return NotFound();
+                // Get Device's workspace to test for access permissions
+                Workspace workspace = await _workspaceService.GetWorkspace(device.WorkspaceId);
+                // Logic for resource-based access controller
+                if (userFeature == null || userFeature.User == null || !_workspaceService.IsWorkspaceViewer(workspace.Id, userFeature.User))
+                    return Unauthorized();
+                // Return DeviceDTO
+                return Ok(device.ToDto());
+            } catch (DeviceNotFoundException) {
+                // Handles NotFound in child services
                 return NotFound();
-            return Ok(device);
+            } catch (Exception ex) {
+                // Handles other errors
+                // Note: Po
+                _logger.Error(ex, "Error in DevicesController.Get");
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpPost]
+        [HttpPut("{id}")]
         [Produces("application/json")]
-        public async Task<ActionResult<NewDevice>> Post()
-        {
-            SecureDeviceCredentials _key = _keyGenerator.GenerateKey();
-            Device device = new Device() {
-                Salt = _key.Salt,
-                Hash = _key.Hash,
-                DeviceInfo = JsonDocument.Parse("{}"),
-                
-            };
+        public async Task<ActionResult<dto.Device>> Put(
+            Guid id,
+            [FromBody] dto.UpdateDeviceBody body
+        ) {
+            try {
+                // Return BadRequest for Invalid Data submission
+                if (body.Id != id)
+                    return BadRequest("Primary Key in Body does not match Url Path");
+                # pragma warning disable CS8600
+                IRequestUserFeature userFeature = HttpContext.Features.Get<IRequestUserFeature>();
+                # pragma warning restore CS8600
+                Device device = await _deviceService.GetDevice(id);
+                if (device == null)
+                    return NotFound();
+                if (userFeature == null || userFeature.User == null || !_workspaceService.IsWorkspaceOwner(device.WorkspaceId, userFeature.User))
+                    return Unauthorized();
+                return Ok(device.ToDto());
+            } catch (DeviceNotFoundException) {
+                return NotFound();
+            } catch (Exception ex) {
+                _logger.Error(ex, "Error in DevicesController.Put");
+                return BadRequest(ex.Message);
+            }           
+        }
 
-            await _context.Devices.AddAsync(device);
-            await _context.SaveChangesAsync();
-            NewDevice newDevice = new NewDevice() {
-                Id = device.Id,
-                SecretKey = _key.Key,
-                MqttUri = _configuration.GetPublicMqttConnectionUrl()
-            };
-            return CreatedAtAction(nameof(Get), new { id = device.Id }, newDevice);
+        [HttpDelete("{id}")]
+        [Produces("application/json")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try {
+                # pragma warning disable CS8600
+                IRequestUserFeature userFeature = HttpContext.Features.Get<IRequestUserFeature>();
+                # pragma warning restore CS8600
+                Device device = await _deviceService.GetDevice(id);
+                if (device == null)
+                    return NotFound();
+                if (userFeature == null || userFeature.User == null || !_workspaceService.IsWorkspaceOwner(device.WorkspaceId, userFeature.User))
+                    return Unauthorized();
+                await _deviceService.DeleteDevice(device);
+                return NoContent();
+            } catch (DeviceNotFoundException) {
+                return NotFound();
+            } catch (Exception ex) {
+                _logger.Error(ex, "Error in DevicesController.Delete");
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

@@ -26,8 +26,9 @@ namespace lib.models
 
         public DbSet<User> Users => Set<User>();
 
-        public DbSet<Team> Teams => Set<Team>();
-        public DbSet<TeamUserMap> TeamUserMaps => Set<TeamUserMap>();
+        public DbSet<WorkspaceUser> WorkspaceUsers => Set<WorkspaceUser>();
+
+        public DbSet<Workspace> Workspaces => Set<Workspace>();
 
 
 
@@ -39,6 +40,7 @@ namespace lib.models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseLazyLoadingProxies();
             optionsBuilder.UseNpgsql(_configuration.GetPostgresqlConnectionString());
         }
 
@@ -126,15 +128,23 @@ namespace lib.models
                 .IsUnique();
 
             // Foreign Keys
-            modelBuilder.Entity<Team>()
-                .HasMany(t => t.Users)
-                .WithMany(u => u.Teams)
-                .UsingEntity<TeamUserMap>();
+            modelBuilder.Entity<Workspace>()
+                .HasMany(w => w.WorkspaceUsers)
+                .WithOne(wu => wu.Workspace);
 
-            modelBuilder.Entity<Team>()
+            modelBuilder.Entity<WorkspaceUser>()
+                .HasOne(wu => wu.User)
+                .WithMany();
+
+            modelBuilder.Entity<Workspace>()
                 .HasMany(t => t.Devices)
-                .WithOne(d => d.Team)
-                .HasForeignKey(d => d.TeamId);
+                .WithOne(d => d.Workspace)
+                .HasForeignKey(d => d.WorkspaceId);
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.DefaultWorkspace)
+                .WithMany()
+                .HasForeignKey(u => u.DefaultWorkspaceId);     
             
 
 

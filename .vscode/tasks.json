@@ -56,6 +56,20 @@
                 "build"
             ],
             "dependsOrder": "sequence"
+        },
+        {
+            "label": "code-coverage",
+            "command": "coverlet",
+            "type": "process",
+            "args": [
+                "./tests/bin/Debug/net6.0/tests.dll",
+                "--target",
+                "dotnet",
+                "--targetargs",
+                "test ./tests --no-build",
+                "-o",
+                "./tests/coverage.json",
+            ]
         }
     ]
 }

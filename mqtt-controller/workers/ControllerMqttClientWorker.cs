@@ -1,9 +1,6 @@
-using lib.services.mqtt.workers;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using lib.services.mqtt;
-using lib.services.mqtt.queue;
-using System.Collections.Generic;
 
 
 namespace mqtt_controller.workers
@@ -13,9 +10,8 @@ namespace mqtt_controller.workers
         public ControllerMqttClientWorker(
             IHostApplicationLifetime appLifetime,
             ILogger logger,
-            IHubMqttClient mqttClient,
-            IQueueBroker queueBroker
-        ) : base(appLifetime, logger, mqttClient, queueBroker) {}
+            IHubMqttClient mqttClient
+        ) : base(appLifetime, logger, mqttClient) {}
 
         public override string[] GetTopics() 
         {

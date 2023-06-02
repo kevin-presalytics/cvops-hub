@@ -3,30 +3,23 @@ using System.Threading.Tasks;
 using System.Threading;
 using System;
 using Serilog;
-using lib.services.mqtt;
-using lib.services.mqtt.queue;
-using System.Collections.Generic;
 
-namespace lib.services.mqtt.workers
+namespace lib.services.mqtt
 {
     public class MqttClientWorker : BackgroundService
     {
         IHubMqttClient _mqttClient;
         ILogger _logger;
-        IQueueBroker _queueBroker;
         IHostApplicationLifetime _appLifetime;
         public MqttClientWorker(
             IHostApplicationLifetime appLifetime,
             ILogger logger,
-            IHubMqttClient mqttClient,
-            IQueueBroker queueBroker
+            IHubMqttClient mqttClient
         )
         {
             _logger = logger;
             _mqttClient = mqttClient;
-            _queueBroker = queueBroker;
             _appLifetime = appLifetime;
-            
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -40,10 +33,6 @@ namespace lib.services.mqtt.workers
         {
            _logger.Information("Starting MQTT Client...");
             try {
-                _mqttClient.OnMessage += async (s, e) => {
-                    _logger.Debug("Received message on topic {topic}", e.Message.Topic);
-                    await _queueBroker.HandleApplicationMessage(e.Message);
-                };
                 _mqttClient.OnConnected += async (s, e) => await this.HandleConnected();
                 await _mqttClient.Connect();
             } catch (Exception e) {

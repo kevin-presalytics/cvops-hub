@@ -14,8 +14,8 @@ namespace lib.models.db
         public JsonDocument DeviceInfo { get; set; } = JsonDocument.Parse("{}");
         public byte[] Salt { get; set; } = default!;
         public string Hash { get; set; } = default!;
-        public Guid TeamId { get; set; } = default!;
-        public virtual Team Team { get; set; } = default!;
+        public Guid WorkspaceId { get; set; } = default!;
+        public virtual Workspace Workspace { get; set; } = default!;
 
 
     }

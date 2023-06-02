@@ -1,0 +1,6422 @@
+{
+  "mqtt-controller.dll": {
+    "/home/kevin/projects/cvez/hub/mqtt-controller/Program.cs": {
+      "mqtt_controller.Program/<>c__DisplayClass0_0": {
+        "System.Void mqtt_controller.Program/<>c__DisplayClass0_0::<Main>b__0(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)": {
+          "Lines": {
+            "40": 0
+          },
+          "Branches": []
+        },
+        "System.Void mqtt_controller.Program/<>c__DisplayClass0_0::<Main>b__1(Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions)": {
+          "Lines": {
+            "63": 0,
+            "64": 0,
+            "65": 0
+          },
+          "Branches": []
+        }
+      },
+      "mqtt_controller.Program/<Main>d__0": {
+        "System.Void mqtt_controller.Program/<Main>d__0::MoveNext()": {
+          "Lines": {
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "55": 0,
+            "58": 0,
+            "62": 0,
+            "68": 0,
+            "70": 0,
+            "72": 0,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "77": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/mqtt-controller/workers/ControllerMqttClientWorker.cs": {
+      "mqtt_controller.workers.ControllerMqttClientWorker": {
+        "System.String[] mqtt_controller.workers.ControllerMqttClientWorker::GetTopics()": {
+          "Lines": {
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0
+          },
+          "Branches": []
+        },
+        "System.Void mqtt_controller.workers.ControllerMqttClientWorker::.ctor(Microsoft.Extensions.Hosting.IHostApplicationLifetime,Serilog.ILogger,lib.services.mqtt.IHubMqttClient,lib.services.mqtt.queue.IQueueBroker)": {
+          "Lines": {
+            "18": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/mqtt-controller/workers/MqttAdminSetupWorker.cs": {
+      "mqtt_controller.workers.MqttAdminSetupWorker": {
+        "System.Void mqtt_controller.workers.MqttAdminSetupWorker::.ctor(Serilog.ILogger,lib.services.mqtt.IMqttAdmin)": {
+          "Lines": {
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0
+          },
+          "Branches": []
+        }
+      },
+      "mqtt_controller.workers.MqttAdminSetupWorker/<ExecuteAsync>d__3": {
+        "System.Void mqtt_controller.workers.MqttAdminSetupWorker/<ExecuteAsync>d__3::MoveNext()": {
+          "Lines": {
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/mqtt-controller/services/MqttControllerQueueBroker.cs": {
+      "mqtt_controller.services.MqttControllerQueueBroker": {
+        "System.Void mqtt_controller.services.MqttControllerQueueBroker::.ctor(Serilog.ILogger,lib.services.mqtt.queue.IMqttTopicQueue`1<lib.models.mqtt.UserLoginPayload>)": {
+          "Lines": {
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0
+          },
+          "Branches": []
+        }
+      },
+      "mqtt_controller.services.MqttControllerQueueBroker/<HandleApplicationMessage>d__3": {
+        "System.Void mqtt_controller.services.MqttControllerQueueBroker/<HandleApplicationMessage>d__3::MoveNext()": {
+          "Lines": {
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "31": 0,
+            "34": 0,
+            "37": 0,
+            "40": 0,
+            "43": 0,
+            "46": 0,
+            "49": 0,
+            "50": 0,
+            "52": 0,
+            "53": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0
+          },
+          "Branches": [
+            {
+              "Line": 29,
+              "Offset": 99,
+              "EndOffset": 137,
+              "Path": 4,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 99,
+              "EndOffset": 143,
+              "Path": 5,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 99,
+              "EndOffset": 149,
+              "Path": 6,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 99,
+              "EndOffset": 155,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 99,
+              "EndOffset": 161,
+              "Path": 2,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 99,
+              "EndOffset": 167,
+              "Path": 3,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 99,
+              "EndOffset": 173,
+              "Path": 7,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 99,
+              "EndOffset": 292,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/mqtt-controller/controllers/AuthController.cs": {
+      "api.controllers.MqttController": {
+        "System.Void api.controllers.MqttController::.ctor(lib.services.mqtt.IMqttHttpAuthenticator,Serilog.ILogger)": {
+          "Lines": {
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0
+          },
+          "Branches": []
+        }
+      },
+      "api.controllers.MqttController/<Post>d__3": {
+        "System.Void api.controllers.MqttController/<Post>d__3::MoveNext()": {
+          "Lines": {
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0
+          },
+          "Branches": []
+        }
+      }
+    }
+  },
+  "lib.dll": {
+    "/home/kevin/projects/cvez/hub/lib/services/Debugger.cs": {
+      "lib.services.DebuggerSetup": {
+        "System.Void lib.services.DebuggerSetup::WaitForDebugger()": {
+          "Lines": {
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "24": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "33": 0,
+            "34": 0
+          },
+          "Branches": [
+            {
+              "Line": 13,
+              "Offset": 18,
+              "EndOffset": 25,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 14,
+              "Offset": 45,
+              "EndOffset": 52,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 26,
+              "Offset": 201,
+              "EndOffset": 104,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 26,
+              "Offset": 201,
+              "EndOffset": 203,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 13,
+              "Offset": 18,
+              "EndOffset": 221,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 14,
+              "Offset": 45,
+              "EndOffset": 221,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/services/DeviceService.cs": {
+      "lib.services.DeviceService": {
+        "System.Void lib.services.DeviceService::.ctor(lib.models.CvopsDbContext,lib.services.auth.IDeviceKeyGenerator,lib.models.configuration.AppConfiguration,lib.services.auth.IDeviceKeyVerifier)": {
+          "Lines": {
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.DeviceService/<Authenticate>d__9": {
+        "System.Void lib.services.DeviceService/<Authenticate>d__9::MoveNext()": {
+          "Lines": {
+            "91": 0,
+            "92": 0,
+            "93": 0,
+            "94": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.DeviceService/<CreateNewDevice>d__7": {
+        "System.Void lib.services.DeviceService/<CreateNewDevice>d__7::MoveNext()": {
+          "Lines": {
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "82": 0
+          },
+          "Branches": [
+            {
+              "Line": 64,
+              "Offset": 62,
+              "EndOffset": 64,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 64,
+              "Offset": 62,
+              "EndOffset": 70,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.DeviceService/<DeleteDevice>d__8": {
+        "System.Void lib.services.DeviceService/<DeleteDevice>d__8::MoveNext()": {
+          "Lines": {
+            "85": 0,
+            "86": 0,
+            "87": 0,
+            "88": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.DeviceService/<GetDevice>d__5": {
+        "System.Void lib.services.DeviceService/<GetDevice>d__5::MoveNext()": {
+          "Lines": {
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0
+          },
+          "Branches": [
+            {
+              "Line": 49,
+              "Offset": 319,
+              "EndOffset": 321,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 319,
+              "EndOffset": 327,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.DeviceService/<UpdateDevice>d__6": {
+        "System.Void lib.services.DeviceService/<UpdateDevice>d__6::MoveNext()": {
+          "Lines": {
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/services/InviteUserService.cs": {
+      "lib.services.InviteUserService": {
+        "System.Threading.Tasks.Task`1<System.Boolean> lib.services.InviteUserService::SendInvite(System.String)": {
+          "Lines": {
+            "15": 0,
+            "16": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/services/UserService.cs": {
+      "lib.services.UserService": {
+        "System.Void lib.services.UserService::.ctor(Serilog.ILogger,lib.models.CvopsDbContext,lib.services.auth.IUserJwtTokenReader,lib.services.IInviteUserService)": {
+          "Lines": {
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "37": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.UserService/<ActivateUser>d__12": {
+        "System.Void lib.services.UserService/<ActivateUser>d__12::MoveNext()": {
+          "Lines": {
+            "148": 0,
+            "149": 0,
+            "150": 0,
+            "151": 0,
+            "152": 0,
+            "153": 0,
+            "154": 0,
+            "155": 0,
+            "156": 0,
+            "157": 0
+          },
+          "Branches": [
+            {
+              "Line": 149,
+              "Offset": 59,
+              "EndOffset": 61,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 149,
+              "Offset": 59,
+              "EndOffset": 66,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 152,
+              "Offset": 258,
+              "EndOffset": 263,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 152,
+              "Offset": 258,
+              "EndOffset": 435,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.UserService/<CreateDefaultWorkspace>d__9": {
+        "System.Void lib.services.UserService/<CreateDefaultWorkspace>d__9::MoveNext()": {
+          "Lines": {
+            "89": 0,
+            "90": 0,
+            "91": 0,
+            "92": 0,
+            "93": 0,
+            "94": 0,
+            "95": 0,
+            "96": 0,
+            "97": 0,
+            "98": 0,
+            "99": 0,
+            "100": 0,
+            "102": 0,
+            "103": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.UserService/<CreateUser>d__6": {
+        "System.Void lib.services.UserService/<CreateUser>d__6::MoveNext()": {
+          "Lines": {
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.UserService/<CreateUser>d__7": {
+        "System.Void lib.services.UserService/<CreateUser>d__7::MoveNext()": {
+          "Lines": {
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0
+          },
+          "Branches": [
+            {
+              "Line": 68,
+              "Offset": 345,
+              "EndOffset": 347,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 68,
+              "Offset": 345,
+              "EndOffset": 358,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.UserService/<GetOrCreateDefaultWorkspace>d__10": {
+        "System.Void lib.services.UserService/<GetOrCreateDefaultWorkspace>d__10::MoveNext()": {
+          "Lines": {
+            "105": 0,
+            "106": 0,
+            "107": 0,
+            "108": 0,
+            "109": 0,
+            "110": 0,
+            "111": 0,
+            "112": 0
+          },
+          "Branches": [
+            {
+              "Line": 106,
+              "Offset": 78,
+              "EndOffset": 80,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 106,
+              "Offset": 78,
+              "EndOffset": 102,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 108,
+              "Offset": 398,
+              "EndOffset": 403,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 108,
+              "Offset": 398,
+              "EndOffset": 545,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.UserService/<GetOrCreateUser>d__8": {
+        "System.Void lib.services.UserService/<GetOrCreateUser>d__8::MoveNext()": {
+          "Lines": {
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "84": 0,
+            "85": 0,
+            "86": 0,
+            "87": 0
+          },
+          "Branches": [
+            {
+              "Line": 76,
+              "Offset": 472,
+              "EndOffset": 477,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 78,
+              "Offset": 971,
+              "EndOffset": 652,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 80,
+              "Offset": 948,
+              "EndOffset": 952,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 80,
+              "Offset": 948,
+              "EndOffset": 976,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 78,
+              "Offset": 971,
+              "EndOffset": 976,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 82,
+              "Offset": 1026,
+              "EndOffset": 1031,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 82,
+              "Offset": 1026,
+              "EndOffset": 1167,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 76,
+              "Offset": 472,
+              "EndOffset": 1175,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.UserService/<GetUser>d__5": {
+        "System.Void lib.services.UserService/<GetUser>d__5::MoveNext()": {
+          "Lines": {
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0
+          },
+          "Branches": [
+            {
+              "Line": 41,
+              "Offset": 187,
+              "EndOffset": 189,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 41,
+              "Offset": 187,
+              "EndOffset": 239,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.UserService/<InviteUser>d__11": {
+        "System.Void lib.services.UserService/<InviteUser>d__11::MoveNext()": {
+          "Lines": {
+            "114": 0,
+            "115": 0,
+            "116": 0,
+            "117": 0,
+            "118": 0,
+            "119": 0,
+            "120": 0,
+            "121": 0,
+            "122": 0,
+            "123": 0,
+            "124": 0,
+            "125": 0,
+            "126": 0,
+            "127": 0,
+            "128": 0,
+            "129": 0,
+            "130": 0,
+            "131": 0,
+            "132": 0,
+            "133": 0,
+            "134": 0,
+            "135": 0,
+            "136": 0,
+            "137": 0,
+            "138": 0,
+            "139": 0,
+            "141": 0,
+            "142": 0,
+            "144": 0,
+            "145": 0,
+            "146": 0
+          },
+          "Branches": [
+            {
+              "Line": 115,
+              "Offset": 113,
+              "EndOffset": 115,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 115,
+              "Offset": 113,
+              "EndOffset": 126,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 116,
+              "Offset": 142,
+              "EndOffset": 144,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 116,
+              "Offset": 142,
+              "EndOffset": 155,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 118,
+              "Offset": 428,
+              "EndOffset": 433,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 120,
+              "Offset": 585,
+              "EndOffset": 587,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 120,
+              "Offset": 585,
+              "EndOffset": 619,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 118,
+              "Offset": 428,
+              "EndOffset": 748,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 131,
+              "Offset": 1151,
+              "EndOffset": 1156,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 131,
+              "Offset": 1151,
+              "EndOffset": 1309,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/services/WorkspaceService.cs": {
+      "lib.services.WorkspaceService": {
+        "System.Boolean lib.services.WorkspaceService::IsWorkspaceViewer(System.Guid,lib.models.db.User)": {
+          "Lines": {
+            "92": 0,
+            "93": 0,
+            "94": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean lib.services.WorkspaceService::IsWorkspaceEditor(System.Guid,lib.models.db.User)": {
+          "Lines": {
+            "97": 0,
+            "98": 0,
+            "99": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean lib.services.WorkspaceService::IsWorkspaceOwner(System.Guid,lib.models.db.User)": {
+          "Lines": {
+            "102": 0,
+            "103": 0,
+            "104": 0
+          },
+          "Branches": []
+        },
+        "System.Threading.Tasks.Task`1<lib.models.dto.UserWorkspace> lib.services.WorkspaceService::GetWorkspace(System.Guid,lib.models.db.User)": {
+          "Lines": {
+            "115": 0,
+            "117": 0,
+            "118": 0,
+            "119": 0,
+            "121": 0,
+            "122": 0,
+            "123": 0,
+            "124": 0
+          },
+          "Branches": [
+            {
+              "Line": 121,
+              "Offset": 208,
+              "EndOffset": 210,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 121,
+              "Offset": 208,
+              "EndOffset": 216,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 122,
+              "Offset": 236,
+              "EndOffset": 238,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 122,
+              "Offset": 236,
+              "EndOffset": 249,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void lib.services.WorkspaceService::.ctor(lib.models.CvopsDbContext,lib.services.IUserService,lib.services.IDeviceService)": {
+          "Lines": {
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0
+          },
+          "Branches": []
+        },
+        "System.Void lib.services.WorkspaceService::.cctor()": {
+          "Lines": {
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.WorkspaceService/<>c": {
+        "lib.models.dto.Device lib.services.WorkspaceService/<>c::<GetWorkspaceDevices>b__17_0(lib.models.db.Device)": {
+          "Lines": {
+            "170": 0
+          },
+          "Branches": []
+        },
+        "lib.models.dto.User lib.services.WorkspaceService/<>c::<GetWorkspaceUsers>b__19_0(lib.models.db.WorkspaceUser)": {
+          "Lines": {
+            "192": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.WorkspaceService/<>c__DisplayClass9_0": {
+        "lib.models.dto.UserWorkspace lib.services.WorkspaceService/<>c__DisplayClass9_0::<GetWorkspaces>b__0(lib.models.db.Workspace)": {
+          "Lines": {
+            "88": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.WorkspaceService/<AddWorkspaceUser>d__21": {
+        "System.Void lib.services.WorkspaceService/<AddWorkspaceUser>d__21::MoveNext()": {
+          "Lines": {
+            "211": 0,
+            "212": 0,
+            "213": 0,
+            "214": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.WorkspaceService/<AddWorkspaceUser>d__8": {
+        "System.Void lib.services.WorkspaceService/<AddWorkspaceUser>d__8::MoveNext()": {
+          "Lines": {
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.WorkspaceService/<CreateWorkspace>d__15": {
+        "System.Void lib.services.WorkspaceService/<CreateWorkspace>d__15::MoveNext()": {
+          "Lines": {
+            "127": 0,
+            "128": 0,
+            "129": 0,
+            "130": 0,
+            "131": 0,
+            "132": 0,
+            "133": 0,
+            "134": 0,
+            "135": 0,
+            "136": 0,
+            "137": 0,
+            "138": 0,
+            "139": 0,
+            "140": 0,
+            "141": 0,
+            "142": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.WorkspaceService/<CreateWorkspaceDevice>d__18": {
+        "System.Void lib.services.WorkspaceService/<CreateWorkspaceDevice>d__18::MoveNext()": {
+          "Lines": {
+            "178": 0,
+            "179": 0,
+            "180": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.WorkspaceService/<DeleteWorkspace>d__13": {
+        "System.Void lib.services.WorkspaceService/<DeleteWorkspace>d__13::MoveNext()": {
+          "Lines": {
+            "107": 0,
+            "108": 0,
+            "109": 0,
+            "110": 0,
+            "111": 0,
+            "112": 0
+          },
+          "Branches": [
+            {
+              "Line": 109,
+              "Offset": 168,
+              "EndOffset": 170,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 109,
+              "Offset": 168,
+              "EndOffset": 176,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.WorkspaceService/<GetWorkspace>d__6": {
+        "System.Void lib.services.WorkspaceService/<GetWorkspace>d__6::MoveNext()": {
+          "Lines": {
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0
+          },
+          "Branches": [
+            {
+              "Line": 63,
+              "Offset": 187,
+              "EndOffset": 189,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 63,
+              "Offset": 187,
+              "EndOffset": 195,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.WorkspaceService/<GetWorkspaceDevices>d__17": {
+        "System.Void lib.services.WorkspaceService/<GetWorkspaceDevices>d__17::MoveNext()": {
+          "Lines": {
+            "162": 0,
+            "164": 0,
+            "165": 0,
+            "166": 0,
+            "167": 0,
+            "169": 0,
+            "171": 0,
+            "172": 0,
+            "173": 0,
+            "174": 0,
+            "175": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.WorkspaceService/<GetWorkspaceUsers>d__19": {
+        "System.Void lib.services.WorkspaceService/<GetWorkspaceUsers>d__19::MoveNext()": {
+          "Lines": {
+            "183": 0,
+            "185": 0,
+            "186": 0,
+            "187": 0,
+            "188": 0,
+            "189": 0,
+            "191": 0,
+            "193": 0,
+            "194": 0,
+            "195": 0,
+            "196": 0,
+            "197": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.WorkspaceService/<GetWorkspaces>d__9": {
+        "System.Void lib.services.WorkspaceService/<GetWorkspaces>d__9::MoveNext()": {
+          "Lines": {
+            "84": 0,
+            "85": 0,
+            "86": 0,
+            "87": 0,
+            "89": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.WorkspaceService/<RemoveWorkspaceUser>d__20": {
+        "System.Void lib.services.WorkspaceService/<RemoveWorkspaceUser>d__20::MoveNext()": {
+          "Lines": {
+            "200": 0,
+            "202": 0,
+            "203": 0,
+            "205": 0,
+            "206": 0,
+            "207": 0,
+            "208": 0
+          },
+          "Branches": [
+            {
+              "Line": 205,
+              "Offset": 429,
+              "EndOffset": 431,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 205,
+              "Offset": 429,
+              "EndOffset": 442,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.WorkspaceService/<UpdateWorkspace>d__16": {
+        "System.Void lib.services.WorkspaceService/<UpdateWorkspace>d__16::MoveNext()": {
+          "Lines": {
+            "145": 0,
+            "147": 0,
+            "149": 0,
+            "150": 0,
+            "151": 0,
+            "152": 0,
+            "153": 0,
+            "154": 0,
+            "155": 0,
+            "156": 0,
+            "157": 0,
+            "158": 0,
+            "159": 0
+          },
+          "Branches": [
+            {
+              "Line": 149,
+              "Offset": 203,
+              "EndOffset": 205,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 149,
+              "Offset": 203,
+              "EndOffset": 211,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 150,
+              "Offset": 222,
+              "EndOffset": 224,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 150,
+              "Offset": 222,
+              "EndOffset": 247,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 150,
+              "Offset": 252,
+              "EndOffset": 254,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 150,
+              "Offset": 252,
+              "EndOffset": 277,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 151,
+              "Offset": 288,
+              "EndOffset": 290,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 151,
+              "Offset": 288,
+              "EndOffset": 313,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 151,
+              "Offset": 318,
+              "EndOffset": 320,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 151,
+              "Offset": 318,
+              "EndOffset": 343,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 153,
+              "Offset": 386,
+              "EndOffset": 388,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 153,
+              "Offset": 386,
+              "EndOffset": 441,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.WorkspaceService/<UpdateWorkspace>d__7": {
+        "System.Void lib.services.WorkspaceService/<UpdateWorkspace>d__7::MoveNext()": {
+          "Lines": {
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/services/mqtt/HubMqttClient.cs": {
+      "lib.services.mqtt.HubMqttClient": {
+        "System.Threading.Tasks.Task lib.services.mqtt.HubMqttClient::Connect()": {
+          "Lines": {
+            "83": 0,
+            "89": 0,
+            "90": 0,
+            "91": 0,
+            "92": 0,
+            "93": 0,
+            "95": 0,
+            "96": 0,
+            "97": 0,
+            "98": 0,
+            "99": 0,
+            "101": 0,
+            "102": 0,
+            "103": 0,
+            "104": 0,
+            "105": 0,
+            "106": 0,
+            "107": 0,
+            "108": 0,
+            "109": 0,
+            "110": 0,
+            "111": 0,
+            "112": 0,
+            "113": 0,
+            "114": 0,
+            "115": 0,
+            "116": 0,
+            "117": 0,
+            "118": 0,
+            "119": 0,
+            "120": 0,
+            "121": 0,
+            "122": 0,
+            "123": 0,
+            "124": 0,
+            "125": 0,
+            "126": 0,
+            "127": 0,
+            "128": 0,
+            "129": 0,
+            "130": 0,
+            "131": 0,
+            "132": 0,
+            "133": 0
+          },
+          "Branches": [
+            {
+              "Line": 97,
+              "Offset": 46,
+              "EndOffset": 48,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 97,
+              "Offset": 46,
+              "EndOffset": 51,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void lib.services.mqtt.HubMqttClient::System.IDisposable.Dispose()": {
+          "Lines": {
+            "187": 0,
+            "188": 0,
+            "189": 0,
+            "190": 0,
+            "191": 0,
+            "192": 0
+          },
+          "Branches": [
+            {
+              "Line": 188,
+              "Offset": 14,
+              "EndOffset": 16,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 188,
+              "Offset": 14,
+              "EndOffset": 38,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void lib.services.mqtt.HubMqttClient::.ctor(Serilog.ILogger,lib.models.configuration.AppConfiguration,lib.services.mqtt.queue.IQueueBroker)": {
+          "Lines": {
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.mqtt.HubMqttClient/<Disconnect>d__13": {
+        "System.Void lib.services.mqtt.HubMqttClient/<Disconnect>d__13::MoveNext()": {
+          "Lines": {
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "58": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0
+          },
+          "Branches": [
+            {
+              "Line": 53,
+              "Offset": 39,
+              "EndOffset": 41,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 53,
+              "Offset": 39,
+              "EndOffset": 70,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.mqtt.HubMqttClient/<PingServer>d__14": {
+        "System.Void lib.services.mqtt.HubMqttClient/<PingServer>d__14::MoveNext()": {
+          "Lines": {
+            "65": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "77": 0,
+            "79": 0,
+            "80": 0
+          },
+          "Branches": [
+            {
+              "Line": 72,
+              "Offset": 47,
+              "EndOffset": 49,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 72,
+              "Offset": 47,
+              "EndOffset": 174,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.mqtt.HubMqttClient/<Publish>d__16": {
+        "System.Void lib.services.mqtt.HubMqttClient/<Publish>d__16::MoveNext()": {
+          "Lines": {
+            "136": 0,
+            "137": 0,
+            "138": 0,
+            "139": 0,
+            "140": 0,
+            "142": 0,
+            "143": 0,
+            "144": 0,
+            "145": 0,
+            "146": 0,
+            "147": 0,
+            "149": 0,
+            "150": 0
+          },
+          "Branches": [
+            {
+              "Line": 137,
+              "Offset": 47,
+              "EndOffset": 49,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 137,
+              "Offset": 47,
+              "EndOffset": 174,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.mqtt.HubMqttClient/<Publish>d__17": {
+        "System.Void lib.services.mqtt.HubMqttClient/<Publish>d__17::MoveNext()": {
+          "Lines": {
+            "153": 0,
+            "154": 0,
+            "155": 0,
+            "156": 0,
+            "157": 0,
+            "159": 0,
+            "160": 0
+          },
+          "Branches": [
+            {
+              "Line": 154,
+              "Offset": 47,
+              "EndOffset": 49,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 154,
+              "Offset": 47,
+              "EndOffset": 174,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.mqtt.HubMqttClient/<Subscribe>d__18": {
+        "System.Void lib.services.mqtt.HubMqttClient/<Subscribe>d__18::MoveNext()": {
+          "Lines": {
+            "163": 0,
+            "164": 0,
+            "165": 0,
+            "166": 0,
+            "167": 0,
+            "169": 0,
+            "170": 0,
+            "171": 0,
+            "173": 0,
+            "174": 0
+          },
+          "Branches": [
+            {
+              "Line": 164,
+              "Offset": 47,
+              "EndOffset": 49,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 164,
+              "Offset": 47,
+              "EndOffset": 174,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.mqtt.HubMqttClient/<Unsubscribe>d__19": {
+        "System.Void lib.services.mqtt.HubMqttClient/<Unsubscribe>d__19::MoveNext()": {
+          "Lines": {
+            "177": 0,
+            "178": 0,
+            "179": 0,
+            "180": 0,
+            "181": 0,
+            "183": 0,
+            "184": 0
+          },
+          "Branches": [
+            {
+              "Line": 178,
+              "Offset": 47,
+              "EndOffset": 49,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 178,
+              "Offset": 47,
+              "EndOffset": 174,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/services/mqtt/MqttAdmin.cs": {
+      "lib.services.mqtt.EqmxMqttAdmin": {
+        "System.Void lib.services.mqtt.EqmxMqttAdmin::.ctor(System.Net.Http.IHttpClientFactory,lib.models.configuration.AppConfiguration,Serilog.ILogger)": {
+          "Lines": {
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.mqtt.EqmxMqttAdmin/<>c": {
+        "System.Boolean lib.services.mqtt.EqmxMqttAdmin/<>c::<MQTTAuthIsConfigured>b__5_0(System.Text.Json.Nodes.JsonObject)": {
+          "Lines": {
+            "55": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.mqtt.EqmxMqttAdmin/<ConfigureMqttAuth>d__6": {
+        "System.Void lib.services.mqtt.EqmxMqttAdmin/<ConfigureMqttAuth>d__6::MoveNext()": {
+          "Lines": {
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "73": 0,
+            "74": 0,
+            "77": 0
+          },
+          "Branches": [
+            {
+              "Line": 68,
+              "Offset": 285,
+              "EndOffset": 287,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 68,
+              "Offset": 285,
+              "EndOffset": 292,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.mqtt.EqmxMqttAdmin/<MQTTAuthIsConfigured>d__5": {
+        "System.Void lib.services.mqtt.EqmxMqttAdmin/<MQTTAuthIsConfigured>d__5::MoveNext()": {
+          "Lines": {
+            "46": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "57": 0,
+            "58": 0,
+            "60": 0
+          },
+          "Branches": [
+            {
+              "Line": 50,
+              "Offset": 318,
+              "EndOffset": 320,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 50,
+              "Offset": 318,
+              "EndOffset": 332,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.mqtt.EqmxMqttAdmin/<Setup>d__4": {
+        "System.Void lib.services.mqtt.EqmxMqttAdmin/<Setup>d__4::MoveNext()": {
+          "Lines": {
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0
+          },
+          "Branches": [
+            {
+              "Line": 35,
+              "Offset": 153,
+              "EndOffset": 158,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 35,
+              "Offset": 153,
+              "EndOffset": 308,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.mqtt.MqttAdminHttpClientName": {
+        "System.String lib.services.mqtt.MqttAdminHttpClientName::Get()": {
+          "Lines": {
+            "83": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/services/mqtt/MqttHttpAuthenticator.cs": {
+      "lib.services.mqtt.MqttHttpAuthenticator": {
+        "System.Void lib.services.mqtt.MqttHttpAuthenticator::.ctor(lib.models.CvopsDbContext,lib.services.auth.IDeviceKeyVerifier,Serilog.ILogger,lib.models.configuration.AppConfiguration,lib.services.IUserService)": {
+          "Lines": {
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.mqtt.MqttHttpAuthenticator/<Authenticate>d__7": {
+        "System.Void lib.services.mqtt.MqttHttpAuthenticator/<Authenticate>d__7::MoveNext()": {
+          "Lines": {
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "77": 0,
+            "79": 0
+          },
+          "Branches": [
+            {
+              "Line": 49,
+              "Offset": 61,
+              "EndOffset": 63,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 61,
+              "EndOffset": 87,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 90,
+              "EndOffset": 92,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 49,
+              "Offset": 90,
+              "EndOffset": 124,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 56,
+              "Offset": 254,
+              "EndOffset": 256,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 56,
+              "Offset": 254,
+              "EndOffset": 288,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 62,
+              "Offset": 420,
+              "EndOffset": 422,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 62,
+              "Offset": 420,
+              "EndOffset": 451,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.mqtt.MqttHttpAuthenticator/<IsValidDevice>d__8": {
+        "System.Void lib.services.mqtt.MqttHttpAuthenticator/<IsValidDevice>d__8::MoveNext()": {
+          "Lines": {
+            "82": 0,
+            "84": 0,
+            "85": 0,
+            "86": 0,
+            "87": 0,
+            "90": 0,
+            "92": 0,
+            "93": 0,
+            "94": 0,
+            "96": 0,
+            "97": 0,
+            "98": 0,
+            "100": 0,
+            "101": 0
+          },
+          "Branches": [
+            {
+              "Line": 85,
+              "Offset": 57,
+              "EndOffset": 59,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 85,
+              "Offset": 57,
+              "EndOffset": 70,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 85,
+              "Offset": 73,
+              "EndOffset": 75,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 85,
+              "Offset": 73,
+              "EndOffset": 83,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 92,
+              "Offset": 256,
+              "EndOffset": 258,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 92,
+              "Offset": 256,
+              "EndOffset": 263,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 96,
+              "Offset": 311,
+              "EndOffset": 313,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 96,
+              "Offset": 311,
+              "EndOffset": 318,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.mqtt.MqttHttpAuthenticator/<IsValidUser>d__9": {
+        "System.Void lib.services.mqtt.MqttHttpAuthenticator/<IsValidUser>d__9::MoveNext()": {
+          "Lines": {
+            "104": 0,
+            "105": 0,
+            "108": 0,
+            "109": 0,
+            "110": 0,
+            "112": 0,
+            "113": 0,
+            "114": 0,
+            "115": 0,
+            "117": 0
+          },
+          "Branches": [
+            {
+              "Line": 109,
+              "Offset": 186,
+              "EndOffset": 188,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 109,
+              "Offset": 186,
+              "EndOffset": 193,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/services/mqtt/MqttTopicManager.cs": {
+      "lib.services.mqtt.MqttTopicManager": {
+        "System.String lib.services.mqtt.MqttTopicManager::GetDeviceDataTopic(System.Guid)": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.services.mqtt.MqttTopicManager::GetDeviceCommandTopic(System.Guid)": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.services.mqtt.MqttTopicManager::GetDeviceStatusTopic(System.Guid)": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.services.mqtt.MqttTopicManager::GetHubApiTopic()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.services.mqtt.MqttTopicManager::GetHubControllerTopic()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.services.mqtt.MqttTopicManager::GetHubWorkerTopic(System.String)": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.services.mqtt.MqttTopicManager::GetUserLoginTopic(System.Guid)": {
+          "Lines": {
+            "15": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.services.mqtt.MqttTopicManager::GetUserNotificationTopic(System.Guid)": {
+          "Lines": {
+            "16": 0
+          },
+          "Branches": []
+        },
+        "lib.models.mqtt.MqttTopicType lib.services.mqtt.MqttTopicManager::GetTopicType(MQTTnet.MqttApplicationMessage)": {
+          "Lines": {
+            "18": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.mqtt.MqttTopicExtensions": {
+        "lib.models.mqtt.MqttTopicType lib.services.mqtt.MqttTopicExtensions::GetTopicType(System.String)": {
+          "Lines": {
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "44": 0
+          },
+          "Branches": [
+            {
+              "Line": 27,
+              "Offset": 26,
+              "EndOffset": 28,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 28,
+              "Offset": 44,
+              "EndOffset": 46,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 28,
+              "Offset": 44,
+              "EndOffset": 53,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 70,
+              "EndOffset": 72,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 29,
+              "Offset": 70,
+              "EndOffset": 79,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 96,
+              "EndOffset": 98,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 96,
+              "EndOffset": 105,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 26,
+              "EndOffset": 116,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 133,
+              "EndOffset": 135,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 33,
+              "Offset": 153,
+              "EndOffset": 155,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 33,
+              "Offset": 153,
+              "EndOffset": 162,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 34,
+              "Offset": 179,
+              "EndOffset": 181,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 34,
+              "Offset": 179,
+              "EndOffset": 185,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            },
+            {
+              "Line": 35,
+              "Offset": 202,
+              "EndOffset": 204,
+              "Path": 0,
+              "Ordinal": 14,
+              "Hits": 0
+            },
+            {
+              "Line": 35,
+              "Offset": 202,
+              "EndOffset": 208,
+              "Path": 1,
+              "Ordinal": 15,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 133,
+              "EndOffset": 219,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 236,
+              "EndOffset": 238,
+              "Path": 0,
+              "Ordinal": 16,
+              "Hits": 0
+            },
+            {
+              "Line": 38,
+              "Offset": 256,
+              "EndOffset": 258,
+              "Path": 0,
+              "Ordinal": 18,
+              "Hits": 0
+            },
+            {
+              "Line": 38,
+              "Offset": 256,
+              "EndOffset": 262,
+              "Path": 1,
+              "Ordinal": 19,
+              "Hits": 0
+            },
+            {
+              "Line": 39,
+              "Offset": 279,
+              "EndOffset": 281,
+              "Path": 0,
+              "Ordinal": 20,
+              "Hits": 0
+            },
+            {
+              "Line": 39,
+              "Offset": 279,
+              "EndOffset": 285,
+              "Path": 1,
+              "Ordinal": 21,
+              "Hits": 0
+            },
+            {
+              "Line": 37,
+              "Offset": 236,
+              "EndOffset": 296,
+              "Path": 1,
+              "Ordinal": 17,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/services/mqtt/workers/MqttClientWorker.cs": {
+      "lib.services.mqtt.workers.MqttClientWorker": {
+        "System.Threading.Tasks.Task lib.services.mqtt.workers.MqttClientWorker::ExecuteAsync(System.Threading.CancellationToken)": {
+          "Lines": {
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0
+          },
+          "Branches": []
+        },
+        "System.String[] lib.services.mqtt.workers.MqttClientWorker::GetTopics()": {
+          "Lines": {
+            "73": 0,
+            "74": 0,
+            "75": 0
+          },
+          "Branches": []
+        },
+        "System.Void lib.services.mqtt.workers.MqttClientWorker::.ctor(Microsoft.Extensions.Hosting.IHostApplicationLifetime,Serilog.ILogger,lib.services.mqtt.IHubMqttClient,lib.services.mqtt.queue.IQueueBroker)": {
+          "Lines": {
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "30": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.mqtt.workers.MqttClientWorker/<<OnStarted>b__6_0>d": {
+        "System.Void lib.services.mqtt.workers.MqttClientWorker/<<OnStarted>b__6_0>d::MoveNext()": {
+          "Lines": {
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.mqtt.workers.MqttClientWorker/<<OnStarted>b__6_1>d": {
+        "System.Void lib.services.mqtt.workers.MqttClientWorker/<<OnStarted>b__6_1>d::MoveNext()": {
+          "Lines": {
+            "47": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.mqtt.workers.MqttClientWorker/<HandleConnected>d__8": {
+        "System.Void lib.services.mqtt.workers.MqttClientWorker/<HandleConnected>d__8::MoveNext()": {
+          "Lines": {
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0
+          },
+          "Branches": [
+            {
+              "Line": 66,
+              "Offset": 276,
+              "EndOffset": 70,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 66,
+              "Offset": 276,
+              "EndOffset": 281,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.mqtt.workers.MqttClientWorker/<OnStarted>d__6": {
+        "System.Void lib.services.mqtt.workers.MqttClientWorker/<OnStarted>d__6::MoveNext()": {
+          "Lines": {
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.mqtt.workers.MqttClientWorker/<OnStopping>d__7": {
+        "System.Void lib.services.mqtt.workers.MqttClientWorker/<OnStopping>d__7::MoveNext()": {
+          "Lines": {
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/services/mqtt/workers/UserLoginTopicWorker.cs": {
+      "lib.services.mqtt.workers.UserLoginTopicWorker": {
+        "System.Void lib.services.mqtt.workers.UserLoginTopicWorker::.ctor(lib.services.mqtt.queue.IMqttTopicQueue`1<lib.models.mqtt.UserLoginPayload>,Serilog.ILogger,lib.services.mqtt.IHubMqttClient)": {
+          "Lines": {
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.mqtt.workers.UserLoginTopicWorker/<HandlePayload>d__2": {
+        "System.Void lib.services.mqtt.workers.UserLoginTopicWorker/<HandlePayload>d__2::MoveNext()": {
+          "Lines": {
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/services/mqtt/queues/MqttTopicQueue.cs": {
+      "lib.services.mqtt.queue.MqttTopicQueue`1": {
+        "System.Void lib.services.mqtt.queue.MqttTopicQueue`1::.ctor(System.Int32)": {
+          "Lines": {
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.mqtt.queue.MqttTopicQueue`1/<DequeueAsync>d__3": {
+        "System.Void lib.services.mqtt.queue.MqttTopicQueue`1/<DequeueAsync>d__3::MoveNext()": {
+          "Lines": {
+            "33": 0,
+            "34": 0,
+            "35": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.mqtt.queue.MqttTopicQueue`1/<EnqueueAsync>d__2": {
+        "System.Void lib.services.mqtt.queue.MqttTopicQueue`1/<EnqueueAsync>d__2::MoveNext()": {
+          "Lines": {
+            "29": 0,
+            "31": 0,
+            "32": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.mqtt.queue.MqttTopicWorker`1": {
+        "System.Void lib.services.mqtt.queue.MqttTopicWorker`1::.ctor(lib.services.mqtt.queue.IMqttTopicQueue`1<T>,Serilog.ILogger)": {
+          "Lines": {
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.mqtt.queue.MqttTopicWorker`1/<ExecuteAsync>d__3": {
+        "System.Void lib.services.mqtt.queue.MqttTopicWorker`1/<ExecuteAsync>d__3::MoveNext()": {
+          "Lines": {
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0
+          },
+          "Branches": [
+            {
+              "Line": 50,
+              "Offset": 459,
+              "EndOffset": 69,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 50,
+              "Offset": 459,
+              "EndOffset": 464,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/services/auth/DeviceKeyGenerator.cs": {
+      "lib.services.auth.DeviceKeyGenerator": {
+        "lib.models.dto.SecureDeviceCredentials lib.services.auth.DeviceKeyGenerator::GenerateKey()": {
+          "Lines": {
+            "23": 2,
+            "26": 2,
+            "27": 2,
+            "28": 2,
+            "29": 2
+          },
+          "Branches": []
+        },
+        "lib.models.dto.SecureDeviceCredentials lib.services.auth.DeviceKeyGenerator::HashPassword(System.String,System.Byte[])": {
+          "Lines": {
+            "32": 3,
+            "34": 3,
+            "36": 3,
+            "37": 3,
+            "38": 3,
+            "39": 3,
+            "40": 3,
+            "41": 3,
+            "42": 3,
+            "43": 3,
+            "44": 3,
+            "45": 3,
+            "46": 3,
+            "47": 3
+          },
+          "Branches": []
+        },
+        "System.Void lib.services.auth.DeviceKeyGenerator::.ctor()": {
+          "Lines": {
+            "20": 6
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/services/auth/DeviceKeyVerifier.cs": {
+      "lib.services.auth.DeviceKeyVerifier": {
+        "System.Boolean lib.services.auth.DeviceKeyVerifier::Verify(System.String,System.String,System.Byte[])": {
+          "Lines": {
+            "17": 1,
+            "18": 1,
+            "19": 1,
+            "20": 1
+          },
+          "Branches": []
+        },
+        "System.Void lib.services.auth.DeviceKeyVerifier::.ctor(lib.services.auth.IDeviceKeyGenerator)": {
+          "Lines": {
+            "11": 1,
+            "12": 1,
+            "13": 1,
+            "14": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/services/auth/UserIdProvider.cs": {
+      "lib.services.auth.ScopedUserIdProvider": {
+        "System.Nullable`1<System.Guid> lib.services.auth.ScopedUserIdProvider::get__scopedUserId()": {
+          "Lines": {
+            "19": 0
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.Guid> lib.services.auth.ScopedUserIdProvider::GetUserId()": {
+          "Lines": {
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "38": 0,
+            "39": 0,
+            "42": 0,
+            "43": 0,
+            "45": 0
+          },
+          "Branches": [
+            {
+              "Line": 30,
+              "Offset": 15,
+              "EndOffset": 17,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 37,
+              "EndOffset": 39,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 37,
+              "EndOffset": 42,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 49,
+              "EndOffset": 51,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 49,
+              "EndOffset": 54,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 15,
+              "EndOffset": 69,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 72,
+              "EndOffset": 74,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 72,
+              "EndOffset": 87,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 34,
+              "Offset": 95,
+              "EndOffset": 97,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 34,
+              "Offset": 95,
+              "EndOffset": 101,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 34,
+              "Offset": 113,
+              "EndOffset": 118,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 36,
+              "Offset": 126,
+              "EndOffset": 128,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            },
+            {
+              "Line": 36,
+              "Offset": 126,
+              "EndOffset": 132,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            },
+            {
+              "Line": 36,
+              "Offset": 171,
+              "EndOffset": 176,
+              "Path": 0,
+              "Ordinal": 14,
+              "Hits": 0
+            },
+            {
+              "Line": 38,
+              "Offset": 185,
+              "EndOffset": 187,
+              "Path": 0,
+              "Ordinal": 16,
+              "Hits": 0
+            },
+            {
+              "Line": 38,
+              "Offset": 185,
+              "EndOffset": 191,
+              "Path": 1,
+              "Ordinal": 17,
+              "Hits": 0
+            },
+            {
+              "Line": 39,
+              "Offset": 264,
+              "EndOffset": 266,
+              "Path": 0,
+              "Ordinal": 18,
+              "Hits": 0
+            },
+            {
+              "Line": 39,
+              "Offset": 264,
+              "EndOffset": 269,
+              "Path": 1,
+              "Ordinal": 19,
+              "Hits": 0
+            },
+            {
+              "Line": 39,
+              "Offset": 276,
+              "EndOffset": 278,
+              "Path": 0,
+              "Ordinal": 20,
+              "Hits": 0
+            },
+            {
+              "Line": 39,
+              "Offset": 276,
+              "EndOffset": 281,
+              "Path": 1,
+              "Ordinal": 21,
+              "Hits": 0
+            },
+            {
+              "Line": 39,
+              "Offset": 298,
+              "EndOffset": 300,
+              "Path": 0,
+              "Ordinal": 22,
+              "Hits": 0
+            },
+            {
+              "Line": 39,
+              "Offset": 298,
+              "EndOffset": 309,
+              "Path": 1,
+              "Ordinal": 23,
+              "Hits": 0
+            },
+            {
+              "Line": 36,
+              "Offset": 171,
+              "EndOffset": 321,
+              "Path": 1,
+              "Ordinal": 15,
+              "Hits": 0
+            },
+            {
+              "Line": 34,
+              "Offset": 113,
+              "EndOffset": 322,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void lib.services.auth.ScopedUserIdProvider::SetUserId(System.Nullable`1<System.Guid>)": {
+          "Lines": {
+            "48": 0,
+            "49": 0,
+            "50": 0
+          },
+          "Branches": []
+        },
+        "System.Void lib.services.auth.ScopedUserIdProvider::.ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,lib.models.configuration.AppConfiguration)": {
+          "Lines": {
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.auth.UserIdProviderExtensions": {
+        "Microsoft.Extensions.DependencyInjection.IServiceScope lib.services.auth.UserIdProviderExtensions::CreateUserServiceScope(System.IServiceProvider,System.Nullable`1<System.Guid>)": {
+          "Lines": {
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "67": 0
+          },
+          "Branches": [
+            {
+              "Line": 57,
+              "Offset": 13,
+              "EndOffset": 15,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 57,
+              "Offset": 13,
+              "EndOffset": 32,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/services/auth/UserJwtTokenReader.cs": {
+      "lib.services.auth.UserJwtTokenReader": {
+        "System.Boolean lib.services.auth.UserJwtTokenReader::<GetUserFromJwtAsync>b__5_0(System.Security.Claims.Claim)": {
+          "Lines": {
+            "53": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean lib.services.auth.UserJwtTokenReader::<GetUserFromJwtAsync>b__5_1(System.Security.Claims.Claim)": {
+          "Lines": {
+            "56": 0
+          },
+          "Branches": []
+        },
+        "System.Void lib.services.auth.UserJwtTokenReader::.ctor(Microsoft.Extensions.DependencyInjection.IServiceScopeFactory,Serilog.ILogger,Microsoft.IdentityModel.Protocols.IConfigurationManager`1<Microsoft.IdentityModel.Protocols.OpenIdConnect.OpenIdConnectConfiguration>,lib.models.configuration.AppConfiguration)": {
+          "Lines": {
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.auth.UserJwtTokenReader/<>c": {
+        "System.Boolean lib.services.auth.UserJwtTokenReader/<>c::<GetEmailsFromJwtAsync>b__7_0(System.Security.Claims.Claim)": {
+          "Lines": {
+            "95": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean lib.services.auth.UserJwtTokenReader/<>c::<GetEmailsFromJwtAsync>b__7_1(System.Security.Claims.Claim)": {
+          "Lines": {
+            "97": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean lib.services.auth.UserJwtTokenReader/<>c::<GetEmailsFromJwtAsync>b__7_2(System.Security.Claims.Claim)": {
+          "Lines": {
+            "100": 0
+          },
+          "Branches": [
+            {
+              "Line": 100,
+              "Offset": 16,
+              "EndOffset": 18,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 100,
+              "Offset": 16,
+              "EndOffset": 36,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Boolean lib.services.auth.UserJwtTokenReader/<>c::<GetEmailsFromJwtAsync>b__7_3(System.Security.Claims.Claim)": {
+          "Lines": {
+            "104": 0
+          },
+          "Branches": [
+            {
+              "Line": 104,
+              "Offset": 16,
+              "EndOffset": 18,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 104,
+              "Offset": 16,
+              "EndOffset": 36,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.String lib.services.auth.UserJwtTokenReader/<>c::<GetEmailsFromJwtAsync>b__7_4(System.Security.Claims.Claim)": {
+          "Lines": {
+            "105": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean lib.services.auth.UserJwtTokenReader/<>c::<GetJwtSubjectFromJwtAsync>b__8_0(System.Security.Claims.Claim)": {
+          "Lines": {
+            "119": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.auth.UserJwtTokenReader/<GetClaimsPrincipalFromJwtAsync>d__6": {
+        "System.Void lib.services.auth.UserJwtTokenReader/<GetClaimsPrincipalFromJwtAsync>d__6::MoveNext()": {
+          "Lines": {
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "77": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "84": 0,
+            "85": 0,
+            "87": 0,
+            "88": 0,
+            "89": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.auth.UserJwtTokenReader/<GetEmailsFromJwtAsync>d__7": {
+        "System.Void lib.services.auth.UserJwtTokenReader/<GetEmailsFromJwtAsync>d__7::MoveNext()": {
+          "Lines": {
+            "92": 0,
+            "93": 0,
+            "94": 0,
+            "96": 0,
+            "98": 0,
+            "99": 0,
+            "101": 0,
+            "102": 0,
+            "103": 0,
+            "106": 0,
+            "107": 0,
+            "108": 0,
+            "109": 0,
+            "110": 0,
+            "111": 0,
+            "113": 0,
+            "114": 0
+          },
+          "Branches": [
+            {
+              "Line": 95,
+              "Offset": 213,
+              "EndOffset": 215,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 98,
+              "Offset": 287,
+              "EndOffset": 289,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 98,
+              "Offset": 287,
+              "EndOffset": 307,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 95,
+              "Offset": 213,
+              "EndOffset": 315,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 100,
+              "Offset": 371,
+              "EndOffset": 373,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 100,
+              "Offset": 371,
+              "EndOffset": 494,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 109,
+              "Offset": 512,
+              "EndOffset": 514,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 109,
+              "Offset": 512,
+              "EndOffset": 526,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.services.auth.UserJwtTokenReader/<GetJwtSubjectFromJwtAsync>d__8": {
+        "System.Void lib.services.auth.UserJwtTokenReader/<GetJwtSubjectFromJwtAsync>d__8::MoveNext()": {
+          "Lines": {
+            "117": 0,
+            "118": 0,
+            "120": 0,
+            "121": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.services.auth.UserJwtTokenReader/<GetUserFromJwtAsync>d__5": {
+        "System.Void lib.services.auth.UserJwtTokenReader/<GetUserFromJwtAsync>d__5::MoveNext()": {
+          "Lines": {
+            "48": 0,
+            "49": 0,
+            "51": 0,
+            "52": 0,
+            "54": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0
+          },
+          "Branches": [
+            {
+              "Line": 53,
+              "Offset": 214,
+              "EndOffset": 219,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 53,
+              "Offset": 214,
+              "EndOffset": 512,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/CvopsDbContext.cs": {
+      "lib.models.CvopsDbContext": {
+        "lib.models.configuration.AppConfiguration lib.models.CvopsDbContext::get__configuration()": {
+          "Lines": {
+            "21": 0
+          },
+          "Branches": []
+        },
+        "lib.services.auth.IUserIdProvider lib.models.CvopsDbContext::get__userIdProvider()": {
+          "Lines": {
+            "22": 0
+          },
+          "Branches": []
+        },
+        "Microsoft.EntityFrameworkCore.DbSet`1<lib.models.db.Device> lib.models.CvopsDbContext::get_Devices()": {
+          "Lines": {
+            "25": 0
+          },
+          "Branches": []
+        },
+        "Microsoft.EntityFrameworkCore.DbSet`1<lib.models.db.User> lib.models.CvopsDbContext::get_Users()": {
+          "Lines": {
+            "27": 0
+          },
+          "Branches": []
+        },
+        "Microsoft.EntityFrameworkCore.DbSet`1<lib.models.db.WorkspaceUser> lib.models.CvopsDbContext::get_WorkspaceUsers()": {
+          "Lines": {
+            "29": 0
+          },
+          "Branches": []
+        },
+        "Microsoft.EntityFrameworkCore.DbSet`1<lib.models.db.Workspace> lib.models.CvopsDbContext::get_Workspaces()": {
+          "Lines": {
+            "31": 0
+          },
+          "Branches": []
+        },
+        "System.Void lib.models.CvopsDbContext::OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)": {
+          "Lines": {
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0
+          },
+          "Branches": []
+        },
+        "System.Void lib.models.CvopsDbContext::OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)": {
+          "Lines": {
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "55": 0,
+            "56": 0,
+            "58": 0,
+            "60": 0,
+            "62": 0,
+            "63": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "75": 0,
+            "76": 0,
+            "78": 0,
+            "79": 0,
+            "80": 0,
+            "82": 0,
+            "83": 0,
+            "84": 0,
+            "86": 0,
+            "88": 0,
+            "92": 0,
+            "93": 0,
+            "94": 0,
+            "96": 0,
+            "98": 0,
+            "99": 0,
+            "101": 0,
+            "103": 0,
+            "105": 0,
+            "106": 0,
+            "107": 0,
+            "108": 0,
+            "110": 0,
+            "111": 0,
+            "112": 0,
+            "113": 0,
+            "114": 0,
+            "117": 0,
+            "118": 0,
+            "119": 0,
+            "121": 0,
+            "122": 0,
+            "123": 0,
+            "126": 0,
+            "127": 0,
+            "128": 0,
+            "131": 0,
+            "132": 0,
+            "133": 0,
+            "135": 0,
+            "136": 0,
+            "137": 0,
+            "139": 0,
+            "140": 0,
+            "141": 0,
+            "142": 0,
+            "144": 0,
+            "145": 0,
+            "146": 0,
+            "147": 0,
+            "151": 0
+          },
+          "Branches": [
+            {
+              "Line": 55,
+              "Offset": 251,
+              "EndOffset": 103,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 62,
+              "Offset": 153,
+              "EndOffset": 157,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 62,
+              "Offset": 153,
+              "EndOffset": 219,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 55,
+              "Offset": 251,
+              "EndOffset": 256,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 69,
+              "Offset": 802,
+              "EndOffset": 340,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 0
+            },
+            {
+              "Line": 92,
+              "Offset": 561,
+              "EndOffset": 516,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 92,
+              "Offset": 561,
+              "EndOffset": 563,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 98,
+              "Offset": 633,
+              "EndOffset": 595,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 98,
+              "Offset": 633,
+              "EndOffset": 635,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 105,
+              "Offset": 705,
+              "EndOffset": 667,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 105,
+              "Offset": 705,
+              "EndOffset": 707,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 110,
+              "Offset": 777,
+              "EndOffset": 739,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 110,
+              "Offset": 777,
+              "EndOffset": 779,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 69,
+              "Offset": 802,
+              "EndOffset": 807,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Int32 lib.models.CvopsDbContext::SaveChanges()": {
+          "Lines": {
+            "154": 0,
+            "155": 0,
+            "156": 0,
+            "157": 0
+          },
+          "Branches": []
+        },
+        "System.Void lib.models.CvopsDbContext::AddTimeStamps()": {
+          "Lines": {
+            "166": 0,
+            "167": 0,
+            "169": 0,
+            "170": 0,
+            "171": 0,
+            "173": 0,
+            "174": 0,
+            "175": 0,
+            "176": 0,
+            "177": 0,
+            "178": 0,
+            "179": 0,
+            "180": 0,
+            "181": 0,
+            "182": 0,
+            "183": 0,
+            "184": 0,
+            "185": 0
+          },
+          "Branches": [
+            {
+              "Line": 171,
+              "Offset": 80,
+              "EndOffset": 82,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 171,
+              "Offset": 80,
+              "EndOffset": 85,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 171,
+              "Offset": 92,
+              "EndOffset": 94,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 171,
+              "Offset": 92,
+              "EndOffset": 97,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 171,
+              "Offset": 111,
+              "EndOffset": 113,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 171,
+              "Offset": 111,
+              "EndOffset": 125,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 171,
+              "Offset": 128,
+              "EndOffset": 130,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 171,
+              "Offset": 128,
+              "EndOffset": 132,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 173,
+              "Offset": 304,
+              "EndOffset": 146,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 0
+            },
+            {
+              "Line": 175,
+              "Offset": 170,
+              "EndOffset": 172,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 175,
+              "Offset": 170,
+              "EndOffset": 235,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 173,
+              "Offset": 304,
+              "EndOffset": 309,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 0
+            },
+            {
+              "Line": 167,
+              "Offset": 11,
+              "EndOffset": 13,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 167,
+              "Offset": 20,
+              "EndOffset": 22,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 167,
+              "Offset": 20,
+              "EndOffset": 33,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 167,
+              "Offset": 11,
+              "EndOffset": 36,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void lib.models.CvopsDbContext::.ctor(lib.models.configuration.AppConfiguration,lib.services.auth.IUserIdProvider)": {
+          "Lines": {
+            "35": 10,
+            "36": 10,
+            "37": 10,
+            "38": 10,
+            "39": 10
+          },
+          "Branches": []
+        }
+      },
+      "lib.models.CvopsDbContext/<SaveChangesAsync>d__18": {
+        "System.Void lib.models.CvopsDbContext/<SaveChangesAsync>d__18::MoveNext()": {
+          "Lines": {
+            "160": 0,
+            "161": 0,
+            "162": 0,
+            "163": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.models.EntitySchemaConfigurator`1": {
+        "System.Void lib.models.EntitySchemaConfigurator`1::Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1<T>)": {
+          "Lines": {
+            "191": 0,
+            "193": 0,
+            "195": 0,
+            "196": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/db/BaseEntity.cs": {
+      "lib.models.BaseEntity": {
+        "System.Guid lib.models.BaseEntity::get_Id()": {
+          "Lines": {
+            "21": 159
+          },
+          "Branches": []
+        },
+        "System.DateTime lib.models.BaseEntity::get_DateCreated()": {
+          "Lines": {
+            "22": 12
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.Guid> lib.models.BaseEntity::get_UserCreated()": {
+          "Lines": {
+            "23": 12
+          },
+          "Branches": []
+        },
+        "lib.models.EditorTypes lib.models.BaseEntity::get_CreatedBy()": {
+          "Lines": {
+            "24": 12
+          },
+          "Branches": []
+        },
+        "System.DateTime lib.models.BaseEntity::get_DateModified()": {
+          "Lines": {
+            "25": 12
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.Guid> lib.models.BaseEntity::get_UserModified()": {
+          "Lines": {
+            "26": 12
+          },
+          "Branches": []
+        },
+        "lib.models.EditorTypes lib.models.BaseEntity::get_ModifiedBy()": {
+          "Lines": {
+            "27": 12
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/PaginatedList.cs": {
+      "lib.models.PaginatedList`1": {
+        "System.Int32 lib.models.PaginatedList`1::get_PageIndex()": {
+          "Lines": {
+            "11": 2
+          },
+          "Branches": []
+        },
+        "System.Int32 lib.models.PaginatedList`1::get_TotalPages()": {
+          "Lines": {
+            "12": 2
+          },
+          "Branches": []
+        },
+        "System.Int32 lib.models.PaginatedList`1::get_PageSize()": {
+          "Lines": {
+            "13": 2
+          },
+          "Branches": []
+        },
+        "System.Boolean lib.models.PaginatedList`1::get_HasPreviousPage()": {
+          "Lines": {
+            "27": 0,
+            "28": 0,
+            "29": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean lib.models.PaginatedList`1::get_HasNextPage()": {
+          "Lines": {
+            "35": 0,
+            "36": 0,
+            "37": 0
+          },
+          "Branches": []
+        },
+        "System.Void lib.models.PaginatedList`1::.ctor(System.Collections.Generic.List`1<T>,System.Int32,System.Int32,System.Int32)": {
+          "Lines": {
+            "15": 2,
+            "16": 2,
+            "17": 2,
+            "18": 2,
+            "19": 2,
+            "21": 2,
+            "22": 2
+          },
+          "Branches": []
+        }
+      },
+      "lib.models.PaginatedList`1/<CreateAsync>d__17": {
+        "System.Void lib.models.PaginatedList`1/<CreateAsync>d__17::MoveNext()": {
+          "Lines": {
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.models.PaginatedListExtensions/<PaginateAsync>d__0`1": {
+        "System.Void lib.models.PaginatedListExtensions/<PaginateAsync>d__0`1::MoveNext()": {
+          "Lines": {
+            "51": 0,
+            "52": 0,
+            "53": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/mqtt/AuthConfiguration.cs": {
+      "lib.models.mqtt.EqmxAuthConfiguration": {
+        "System.String lib.models.mqtt.EqmxAuthConfiguration::get_Method()": {
+          "Lines": {
+            "34": 0
+          },
+          "Branches": []
+        },
+        "System.Uri lib.models.mqtt.EqmxAuthConfiguration::get_Url()": {
+          "Lines": {
+            "37": 0
+          },
+          "Branches": []
+        },
+        "lib.models.mqtt.EqmxAuthConfigurationHeaders lib.models.mqtt.EqmxAuthConfiguration::get_Headers()": {
+          "Lines": {
+            "40": 0
+          },
+          "Branches": []
+        },
+        "lib.models.mqtt.EqmxAuthBody lib.models.mqtt.EqmxAuthConfiguration::get_Body()": {
+          "Lines": {
+            "43": 0
+          },
+          "Branches": []
+        },
+        "System.Int64 lib.models.mqtt.EqmxAuthConfiguration::get_PoolSize()": {
+          "Lines": {
+            "46": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.mqtt.EqmxAuthConfiguration::get_ConnectTimeout()": {
+          "Lines": {
+            "49": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.mqtt.EqmxAuthConfiguration::get_RequestTimeout()": {
+          "Lines": {
+            "52": 0
+          },
+          "Branches": []
+        },
+        "System.Int64 lib.models.mqtt.EqmxAuthConfiguration::get_EnablePipelining()": {
+          "Lines": {
+            "55": 0
+          },
+          "Branches": []
+        },
+        "lib.models.mqtt.EqmxSslConfiguration lib.models.mqtt.EqmxAuthConfiguration::get_Ssl()": {
+          "Lines": {
+            "58": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.mqtt.EqmxAuthConfiguration::get_Backend()": {
+          "Lines": {
+            "61": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.mqtt.EqmxAuthConfiguration::get_Mechanism()": {
+          "Lines": {
+            "64": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.models.mqtt.EqmxAuthBody": {
+        "System.String lib.models.mqtt.EqmxAuthBody::get_Username()": {
+          "Lines": {
+            "70": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.mqtt.EqmxAuthBody::get_Password()": {
+          "Lines": {
+            "73": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.models.mqtt.EqmxAuthConfigurationHeaders": {
+        "System.String lib.models.mqtt.EqmxAuthConfigurationHeaders::get_ContentType()": {
+          "Lines": {
+            "79": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.models.mqtt.EqmxSslConfiguration": {
+        "System.Boolean lib.models.mqtt.EqmxSslConfiguration::get_Enable()": {
+          "Lines": {
+            "85": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.mqtt.EqmxSslConfiguration::get_Verify()": {
+          "Lines": {
+            "88": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/mqtt/MessageEventArgs.cs": {
+      "lib.models.mqtt.MessageEventArgs": {
+        "MQTTnet.MqttApplicationMessage lib.models.mqtt.MessageEventArgs::get_Message()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.Void lib.models.mqtt.MessageEventArgs::.ctor(MQTTnet.MqttApplicationMessage)": {
+          "Lines": {
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/mqtt/MqttAuthResponse.cs": {
+      "lib.models.mqtt.MqttAuthResponse": {
+        "System.String lib.models.mqtt.MqttAuthResponse::get_Result()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean lib.models.mqtt.MqttAuthResponse::get_IsSuperuser()": {
+          "Lines": {
+            "17": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/mqtt/MqttTopicMessage.cs": {
+      "lib.models.mqtt.MqttPayload": {
+        "System.DateTimeOffset lib.models.mqtt.MqttPayload::get_Timestamp()": {
+          "Lines": {
+            "18": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.models.mqtt.MqttPayloadExtensions": {
+        "T lib.models.mqtt.MqttPayloadExtensions::AsMqttPayload(MQTTnet.MqttApplicationMessage)": {
+          "Lines": {
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "38": 0,
+            "39": 0,
+            "41": 0,
+            "43": 0
+          },
+          "Branches": [
+            {
+              "Line": 27,
+              "Offset": 10,
+              "EndOffset": 12,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 10,
+              "EndOffset": 15,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 25,
+              "EndOffset": 27,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 27,
+              "Offset": 25,
+              "EndOffset": 39,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 38,
+              "Offset": 101,
+              "EndOffset": 103,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 38,
+              "Offset": 101,
+              "EndOffset": 126,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Byte[] lib.models.mqtt.MqttPayloadExtensions::AsPayload(T)": {
+          "Lines": {
+            "46": 0,
+            "47": 0,
+            "48": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.mqtt.MqttPayloadExtensions::ToJsonString(T)": {
+          "Lines": {
+            "51": 0,
+            "52": 0,
+            "53": 0
+          },
+          "Branches": []
+        },
+        "MQTTnet.MqttApplicationMessage lib.models.mqtt.MqttPayloadExtensions::AsApplicationMessage(T,System.String,MQTTnet.Protocol.MqttQualityOfServiceLevel)": {
+          "Lines": {
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/mqtt/UserLoginPayload.cs": {
+      "lib.models.mqtt.UserLoginPayload": {
+        "System.String lib.models.mqtt.UserLoginPayload::get_Username()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.Guid lib.models.mqtt.UserLoginPayload::get_UserId()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/mqtt/UserNotificationPayload.cs": {
+      "lib.models.mqtt.UserNotificationPayload": {
+        "System.Guid lib.models.mqtt.UserNotificationPayload::get_UserId()": {
+          "Lines": {
+            "16": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.mqtt.UserNotificationPayload::get_Title()": {
+          "Lines": {
+            "18": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.mqtt.UserNotificationPayload::get_Body()": {
+          "Lines": {
+            "20": 0
+          },
+          "Branches": []
+        },
+        "lib.models.mqtt.UserNotificationLevel lib.models.mqtt.UserNotificationPayload::get_Level()": {
+          "Lines": {
+            "22": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/exceptions/DeviceNotFoundException.cs": {
+      "lib.models.exceptions.DeviceNotFoundException": {
+        "System.Void lib.models.exceptions.DeviceNotFoundException::.ctor()": {
+          "Lines": {
+            "7": 1,
+            "8": 1,
+            "9": 1
+          },
+          "Branches": []
+        },
+        "System.Void lib.models.exceptions.DeviceNotFoundException::.ctor(System.String)": {
+          "Lines": {
+            "12": 0,
+            "13": 0,
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.Void lib.models.exceptions.DeviceNotFoundException::.ctor(System.String,System.Exception)": {
+          "Lines": {
+            "17": 0,
+            "18": 0,
+            "19": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/exceptions/InvalidEmailException.cs": {
+      "lib.models.exceptions.InvalidEmailException": {
+        "System.Void lib.models.exceptions.InvalidEmailException::.ctor()": {
+          "Lines": {
+            "7": 0,
+            "8": 0,
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.Void lib.models.exceptions.InvalidEmailException::.ctor(System.String)": {
+          "Lines": {
+            "12": 0,
+            "13": 0,
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.Void lib.models.exceptions.InvalidEmailException::.ctor(System.String,System.Exception)": {
+          "Lines": {
+            "17": 0,
+            "18": 0,
+            "19": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/exceptions/UserNotFoundException.cs": {
+      "lib.models.exceptions.UserNotFoundException": {
+        "System.Void lib.models.exceptions.UserNotFoundException::.ctor()": {
+          "Lines": {
+            "7": 1,
+            "8": 1,
+            "9": 1
+          },
+          "Branches": []
+        },
+        "System.Void lib.models.exceptions.UserNotFoundException::.ctor(System.String)": {
+          "Lines": {
+            "12": 0,
+            "13": 0,
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.Void lib.models.exceptions.UserNotFoundException::.ctor(System.String,System.Exception)": {
+          "Lines": {
+            "17": 0,
+            "18": 0,
+            "19": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/exceptions/WorkspaceNotFoundException.cs": {
+      "lib.models.exceptions.WorkspaceNotFoundException": {
+        "System.Void lib.models.exceptions.WorkspaceNotFoundException::.ctor()": {
+          "Lines": {
+            "7": 1,
+            "8": 1,
+            "9": 1
+          },
+          "Branches": []
+        },
+        "System.Void lib.models.exceptions.WorkspaceNotFoundException::.ctor(System.String)": {
+          "Lines": {
+            "12": 0,
+            "13": 0,
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.Void lib.models.exceptions.WorkspaceNotFoundException::.ctor(System.String,System.Exception)": {
+          "Lines": {
+            "17": 0,
+            "18": 0,
+            "19": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/dto/DeviceControllerDTOs.cs": {
+      "lib.models.dto.Device": {
+        "System.String lib.models.dto.Device::get_Name()": {
+          "Lines": {
+            "10": 6
+          },
+          "Branches": []
+        },
+        "System.String lib.models.dto.Device::get_Description()": {
+          "Lines": {
+            "11": 6
+          },
+          "Branches": []
+        },
+        "System.Text.Json.JsonDocument lib.models.dto.Device::get_DeviceInfo()": {
+          "Lines": {
+            "12": 6
+          },
+          "Branches": []
+        },
+        "System.Guid lib.models.dto.Device::get_WorkspaceId()": {
+          "Lines": {
+            "13": 6
+          },
+          "Branches": []
+        }
+      },
+      "lib.models.dto.NewDevice": {
+        "System.Guid lib.models.dto.NewDevice::get_Id()": {
+          "Lines": {
+            "17": 5
+          },
+          "Branches": []
+        },
+        "System.String lib.models.dto.NewDevice::get_SecretKey()": {
+          "Lines": {
+            "18": 4
+          },
+          "Branches": []
+        },
+        "System.Uri lib.models.dto.NewDevice::get_MqttUri()": {
+          "Lines": {
+            "19": 4
+          },
+          "Branches": []
+        }
+      },
+      "lib.models.dto.UpdateDeviceBody": {
+        "System.Guid lib.models.dto.UpdateDeviceBody::get_Id()": {
+          "Lines": {
+            "23": 12
+          },
+          "Branches": []
+        },
+        "System.String lib.models.dto.UpdateDeviceBody::get_Name()": {
+          "Lines": {
+            "24": 8
+          },
+          "Branches": []
+        },
+        "System.String lib.models.dto.UpdateDeviceBody::get_Description()": {
+          "Lines": {
+            "25": 4
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/dto/SecureDeviceCredentials.cs": {
+      "lib.models.dto.SecureDeviceCredentials": {
+        "System.String lib.models.dto.SecureDeviceCredentials::get_Key()": {
+          "Lines": {
+            "6": 9
+          },
+          "Branches": []
+        },
+        "System.Byte[] lib.models.dto.SecureDeviceCredentials::get_Salt()": {
+          "Lines": {
+            "7": 8
+          },
+          "Branches": []
+        },
+        "System.String lib.models.dto.SecureDeviceCredentials::get_Hash()": {
+          "Lines": {
+            "8": 9
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/dto/WorkspaceControllerDTOs.cs": {
+      "lib.models.dto.Workspace": {
+        "System.String lib.models.dto.Workspace::get_Name()": {
+          "Lines": {
+            "9": 8
+          },
+          "Branches": []
+        },
+        "System.String lib.models.dto.Workspace::get_Description()": {
+          "Lines": {
+            "10": 8
+          },
+          "Branches": []
+        }
+      },
+      "lib.models.dto.UserWorkspace": {
+        "System.Boolean lib.models.dto.UserWorkspace::get_IsDefault()": {
+          "Lines": {
+            "15": 7
+          },
+          "Branches": []
+        }
+      },
+      "lib.models.dto.NewWorkspaceRequestBody": {
+        "System.String lib.models.dto.NewWorkspaceRequestBody::get_Name()": {
+          "Lines": {
+            "20": 10
+          },
+          "Branches": []
+        },
+        "System.String lib.models.dto.NewWorkspaceRequestBody::get_Description()": {
+          "Lines": {
+            "21": 10
+          },
+          "Branches": []
+        },
+        "System.Boolean lib.models.dto.NewWorkspaceRequestBody::get_IsDefault()": {
+          "Lines": {
+            "22": 5
+          },
+          "Branches": []
+        }
+      },
+      "lib.models.dto.UpdateWorkspaceRequestBody": {
+        "System.Guid lib.models.dto.UpdateWorkspaceRequestBody::get_Id()": {
+          "Lines": {
+            "27": 8
+          },
+          "Branches": []
+        }
+      },
+      "lib.models.dto.NewUserRequestBody": {
+        "System.String lib.models.dto.NewUserRequestBody::get_Email()": {
+          "Lines": {
+            "33": 10
+          },
+          "Branches": []
+        },
+        "lib.models.db.WorkspaceUserRole lib.models.dto.NewUserRequestBody::get_Role()": {
+          "Lines": {
+            "34": 7
+          },
+          "Branches": []
+        }
+      },
+      "lib.models.dto.User": {
+        "System.Guid lib.models.dto.User::get_Id()": {
+          "Lines": {
+            "39": 7
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/db/Device.cs": {
+      "lib.models.db.Device": {
+        "System.String lib.models.db.Device::get_Name()": {
+          "Lines": {
+            "11": 5
+          },
+          "Branches": []
+        },
+        "System.String lib.models.db.Device::get_Description()": {
+          "Lines": {
+            "12": 5
+          },
+          "Branches": []
+        },
+        "System.Text.Json.JsonDocument lib.models.db.Device::get_DeviceInfo()": {
+          "Lines": {
+            "14": 5
+          },
+          "Branches": []
+        },
+        "System.Byte[] lib.models.db.Device::get_Salt()": {
+          "Lines": {
+            "15": 2
+          },
+          "Branches": []
+        },
+        "System.String lib.models.db.Device::get_Hash()": {
+          "Lines": {
+            "16": 2
+          },
+          "Branches": []
+        },
+        "System.Guid lib.models.db.Device::get_WorkspaceId()": {
+          "Lines": {
+            "17": 27
+          },
+          "Branches": []
+        },
+        "lib.models.db.Workspace lib.models.db.Device::get_Workspace()": {
+          "Lines": {
+            "18": 2
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/db/User.cs": {
+      "lib.models.db.User": {
+        "System.String lib.models.db.User::get_Email()": {
+          "Lines": {
+            "9": 29
+          },
+          "Branches": []
+        },
+        "System.String lib.models.db.User::get_JwtSubject()": {
+          "Lines": {
+            "10": 24
+          },
+          "Branches": []
+        },
+        "System.Guid lib.models.db.User::get_DefaultWorkspaceId()": {
+          "Lines": {
+            "11": 15
+          },
+          "Branches": []
+        },
+        "lib.models.db.Workspace lib.models.db.User::get_DefaultWorkspace()": {
+          "Lines": {
+            "12": 12
+          },
+          "Branches": []
+        },
+        "System.Boolean lib.models.db.User::get_IsEmailVerified()": {
+          "Lines": {
+            "13": 12
+          },
+          "Branches": []
+        },
+        "lib.models.db.UserStatus lib.models.db.User::get_Status()": {
+          "Lines": {
+            "14": 12
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/db/Workspace.cs": {
+      "lib.models.db.Workspace": {
+        "System.String lib.models.db.Workspace::get_Name()": {
+          "Lines": {
+            "8": 11
+          },
+          "Branches": []
+        },
+        "System.String lib.models.db.Workspace::get_Description()": {
+          "Lines": {
+            "9": 11
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.List`1<lib.models.db.WorkspaceUser> lib.models.db.Workspace::get_WorkspaceUsers()": {
+          "Lines": {
+            "10": 2
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.List`1<lib.models.db.Device> lib.models.db.Workspace::get_Devices()": {
+          "Lines": {
+            "11": 2
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/db/WorkspaceUser.cs": {
+      "lib.models.db.WorkspaceUser": {
+        "System.Guid lib.models.db.WorkspaceUser::get_WorkspaceId()": {
+          "Lines": {
+            "8": 4
+          },
+          "Branches": []
+        },
+        "lib.models.db.Workspace lib.models.db.WorkspaceUser::get_Workspace()": {
+          "Lines": {
+            "9": 4
+          },
+          "Branches": []
+        },
+        "System.Guid lib.models.db.WorkspaceUser::get_UserId()": {
+          "Lines": {
+            "10": 4
+          },
+          "Branches": []
+        },
+        "lib.models.db.User lib.models.db.WorkspaceUser::get_User()": {
+          "Lines": {
+            "11": 4
+          },
+          "Branches": []
+        },
+        "lib.models.db.WorkspaceUserRole lib.models.db.WorkspaceUser::get_Role()": {
+          "Lines": {
+            "12": 4
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/configuration/Api.cs": {
+      "lib.models.configuration.Api": {
+        "System.String lib.models.configuration.Api::get_Host()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 lib.models.configuration.Api::get_Port()": {
+          "Lines": {
+            "6": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/configuration/AppConfiguration.cs": {
+      "lib.models.configuration.AppConfiguration": {
+        "lib.models.configuration.MQTT lib.models.configuration.AppConfiguration::get_MQTT()": {
+          "Lines": {
+            "7": 20
+          },
+          "Branches": []
+        },
+        "lib.models.configuration.Postgresql lib.models.configuration.AppConfiguration::get_Postgresql()": {
+          "Lines": {
+            "8": 20
+          },
+          "Branches": []
+        },
+        "lib.models.configuration.Logging lib.models.configuration.AppConfiguration::get_Logging()": {
+          "Lines": {
+            "9": 20
+          },
+          "Branches": []
+        },
+        "lib.models.configuration.HubConfiguration lib.models.configuration.AppConfiguration::get_Hub()": {
+          "Lines": {
+            "10": 20
+          },
+          "Branches": []
+        },
+        "lib.models.configuration.Auth lib.models.configuration.AppConfiguration::get_Auth()": {
+          "Lines": {
+            "11": 20
+          },
+          "Branches": []
+        },
+        "System.String lib.models.configuration.AppConfiguration::get_Domain()": {
+          "Lines": {
+            "12": 20
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/configuration/Auth.cs": {
+      "lib.models.configuration.Auth": {
+        "System.String lib.models.configuration.Auth::get_UserIdJwtClaim()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "lib.models.configuration.Oidc lib.models.configuration.Auth::get_Oidc()": {
+          "Lines": {
+            "6": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/configuration/Hub.cs": {
+      "lib.models.configuration.HubConfiguration": {
+        "System.Guid lib.models.configuration.HubConfiguration::get_Id()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.configuration.HubConfiguration::get_Key()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "lib.models.configuration.Api lib.models.configuration.HubConfiguration::get_Api()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "lib.models.configuration.MqttControllerConfiguration lib.models.configuration.HubConfiguration::get_MqttController()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/configuration/Logging.cs": {
+      "lib.models.configuration.Logging": {
+        "Serilog.Events.LogEventLevel lib.models.configuration.Logging::get_Level()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.configuration.Logging::get_Format()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/configuration/MQTT.cs": {
+      "lib.models.configuration.MQTT": {
+        "System.String lib.models.configuration.MQTT::get_Host()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 lib.models.configuration.MQTT::get_Port()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.configuration.MQTT::get_AdminUsername()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.configuration.MQTT::get_AdminPassword()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.configuration.MQTT::get_AdminPort()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.configuration.MQTT::get_AuthUrl()": {
+          "Lines": {
+            "13": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 lib.models.configuration.MQTT::get_SecurePort()": {
+          "Lines": {
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean lib.models.configuration.MQTT::get_useTls()": {
+          "Lines": {
+            "15": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.configuration.MQTT::get_websocketPort()": {
+          "Lines": {
+            "16": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.configuration.MQTT::get_secureWebsocketPort()": {
+          "Lines": {
+            "17": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.configuration.MQTT::get_Protocol()": {
+          "Lines": {
+            "18": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/configuration/MqttController.cs": {
+      "lib.models.configuration.MqttControllerConfiguration": {
+        "System.String lib.models.configuration.MqttControllerConfiguration::get_Host()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 lib.models.configuration.MqttControllerConfiguration::get_Port()": {
+          "Lines": {
+            "6": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/configuration/Oidc.cs": {
+      "lib.models.configuration.Oidc": {
+        "System.String lib.models.configuration.Oidc::get_WellKnownEndpoint()": {
+          "Lines": {
+            "5": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/models/configuration/Postgresql.cs": {
+      "lib.models.configuration.Postgresql": {
+        "System.String lib.models.configuration.Postgresql::get_Database()": {
+          "Lines": {
+            "7": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.configuration.Postgresql::get_Host()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.configuration.Postgresql::get_Password()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.configuration.Postgresql::get_Username()": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.Int32 lib.models.configuration.Postgresql::get_Port()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.models.configuration.Postgresql::get_SslMode()": {
+          "Lines": {
+            "12": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/middleware/RequestUserMiddleware.cs": {
+      "lib.middleware.RequestUserMiddleware": {
+        "System.Void lib.middleware.RequestUserMiddleware::.ctor(Microsoft.AspNetCore.Http.RequestDelegate)": {
+          "Lines": {
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0
+          },
+          "Branches": []
+        }
+      },
+      "lib.middleware.RequestUserMiddleware/<InvokeAsync>d__2": {
+        "System.Void lib.middleware.RequestUserMiddleware/<InvokeAsync>d__2::MoveNext()": {
+          "Lines": {
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "43": 0
+          },
+          "Branches": [
+            {
+              "Line": 24,
+              "Offset": 135,
+              "EndOffset": 140,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 24,
+              "Offset": 135,
+              "EndOffset": 276,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 454,
+              "EndOffset": 456,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 30,
+              "Offset": 454,
+              "EndOffset": 574,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "lib.middleware.RequestUserFeature": {
+        "lib.models.db.User lib.middleware.RequestUserFeature::get_User()": {
+          "Lines": {
+            "53": 95
+          },
+          "Branches": []
+        },
+        "System.Void lib.middleware.RequestUserFeature::.ctor(lib.models.db.User)": {
+          "Lines": {
+            "55": 33,
+            "56": 33,
+            "57": 33,
+            "58": 33
+          },
+          "Branches": []
+        }
+      },
+      "lib.middleware.RequestUserMiddlewareExtensions": {
+        "Microsoft.AspNetCore.Builder.IApplicationBuilder lib.middleware.RequestUserMiddlewareExtensions::UseRequestUserMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder)": {
+          "Lines": {
+            "64": 0,
+            "65": 0,
+            "66": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/extensions/AppConfigurationExtensions.cs": {
+      "lib.extensions.AppConfigurationExtensions": {
+        "System.String lib.extensions.AppConfigurationExtensions::GetPostgresqlConnectionString(lib.models.configuration.AppConfiguration)": {
+          "Lines": {
+            "9": 0,
+            "10": 0,
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.Uri lib.extensions.AppConfigurationExtensions::GetPublicMqttConnectionUrl(lib.models.configuration.AppConfiguration)": {
+          "Lines": {
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "20": 0,
+            "21": 0
+          },
+          "Branches": [
+            {
+              "Line": 15,
+              "Offset": 17,
+              "EndOffset": 19,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 15,
+              "Offset": 17,
+              "EndOffset": 37,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 56,
+              "EndOffset": 58,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 56,
+              "EndOffset": 138,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/extensions/AuthExtensions.cs": {
+      "lib.extensions.AuthExtensions": {
+        "Microsoft.Extensions.DependencyInjection.IServiceCollection lib.extensions.AuthExtensions::AddCVOpsAuth(Microsoft.Extensions.DependencyInjection.IServiceCollection,lib.models.configuration.AppConfiguration,Serilog.ILogger)": {
+          "Lines": {
+            "23": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "32": 0,
+            "33": 0,
+            "35": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0,
+            "62": 0,
+            "63": 0,
+            "64": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "73": 0,
+            "74": 0,
+            "75": 0,
+            "76": 0,
+            "77": 0,
+            "79": 0,
+            "81": 0,
+            "82": 0
+          },
+          "Branches": [
+            {
+              "Line": 54,
+              "Offset": 136,
+              "EndOffset": 138,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 54,
+              "Offset": 136,
+              "EndOffset": 160,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 54,
+              "Offset": 174,
+              "EndOffset": 176,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 54,
+              "Offset": 174,
+              "EndOffset": 198,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 54,
+              "Offset": 212,
+              "EndOffset": 214,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 54,
+              "Offset": 212,
+              "EndOffset": 236,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 54,
+              "Offset": 250,
+              "EndOffset": 252,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 54,
+              "Offset": 250,
+              "EndOffset": 274,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 54,
+              "Offset": 288,
+              "EndOffset": 290,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 54,
+              "Offset": 288,
+              "EndOffset": 314,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/extensions/DeviceExtensions.cs": {
+      "lib.extensions.DeviceExtensions": {
+        "System.String lib.extensions.DeviceExtensions::GetDataTopic(lib.models.db.Device)": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.extensions.DeviceExtensions::GetCommandTopic(lib.models.db.Device)": {
+          "Lines": {
+            "10": 0
+          },
+          "Branches": []
+        },
+        "System.String lib.extensions.DeviceExtensions::GetStatusTopic(lib.models.db.Device)": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "lib.models.dto.Device lib.extensions.DeviceExtensions::ToDto(lib.models.db.Device)": {
+          "Lines": {
+            "12": 3,
+            "13": 3,
+            "14": 3,
+            "15": 3,
+            "16": 3,
+            "17": 3,
+            "18": 3,
+            "19": 3,
+            "20": 3,
+            "21": 3,
+            "22": 3,
+            "23": 3,
+            "24": 3
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/extensions/JsonOptionsExtensions.cs": {
+      "lib.extensions.LocalJsonOptions": {
+        "System.Void lib.extensions.LocalJsonOptions::ConfigureJson(Microsoft.Extensions.DependencyInjection.IMvcBuilder)": {
+          "Lines": {
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0
+          },
+          "Branches": []
+        },
+        "System.Void lib.extensions.LocalJsonOptions::ConfigureJson(Microsoft.Extensions.DependencyInjection.IServiceCollection)": {
+          "Lines": {
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0
+          },
+          "Branches": []
+        },
+        "System.Text.Json.JsonSerializerOptions lib.extensions.LocalJsonOptions::GetOptions()": {
+          "Lines": {
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/extensions/SerilogExtensions.cs": {
+      "lib.extensions.SerilogLogger": {
+        "Serilog.ILogger lib.extensions.SerilogLogger::AddSerilogLogger(Microsoft.AspNetCore.Builder.WebApplicationBuilder,lib.models.configuration.AppConfiguration)": {
+          "Lines": {
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0
+          },
+          "Branches": []
+        },
+        "Serilog.ILogger lib.extensions.SerilogLogger::GetLoggerConfiguration(lib.models.configuration.AppConfiguration)": {
+          "Lines": {
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "44": 0,
+            "45": 0
+          },
+          "Branches": [
+            {
+              "Line": 35,
+              "Offset": 125,
+              "EndOffset": 127,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 35,
+              "Offset": 125,
+              "EndOffset": 173,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "Serilog.ILogger lib.extensions.SerilogLogger::GetSerilogLogger(Microsoft.Extensions.DependencyInjection.IServiceCollection)": {
+          "Lines": {
+            "48": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/extensions/StringHelpers.cs": {
+      "lib.extensions.StringHelpers": {
+        "System.String lib.extensions.StringHelpers::ToSnakeCase(System.String)": {
+          "Lines": {
+            "12": 0,
+            "13": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0
+          },
+          "Branches": [
+            {
+              "Line": 13,
+              "Offset": 9,
+              "EndOffset": 11,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 13,
+              "Offset": 9,
+              "EndOffset": 16,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 30,
+              "EndOffset": 32,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 30,
+              "EndOffset": 36,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.String lib.extensions.StringHelpers::Stringify(System.Text.Json.JsonDocument)": {
+          "Lines": {
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "27": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/extensions/UserExtensions.cs": {
+      "lib.extensions.UserExtensions": {
+        "lib.models.dto.User lib.extensions.UserExtensions::ToDto(lib.models.db.User)": {
+          "Lines": {
+            "9": 2,
+            "10": 2,
+            "11": 2,
+            "12": 2
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/extensions/WebApplicationBuilderExtensions.cs": {
+      "lib.extensions.WebApplicationBuilderExtensions": {
+        "lib.models.configuration.AppConfiguration lib.extensions.WebApplicationBuilderExtensions::AddAppConfiguration(Microsoft.AspNetCore.Builder.WebApplicationBuilder)": {
+          "Lines": {
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0
+          },
+          "Branches": []
+        },
+        "lib.models.configuration.AppConfiguration lib.extensions.WebApplicationBuilderExtensions::Configure(Microsoft.Extensions.Configuration.ConfigurationManager)": {
+          "Lines": {
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/extensions/WebApplicationExtensions.cs": {
+      "lib.extensions.WebApplicationExtensions": {
+        "System.Void lib.extensions.WebApplicationExtensions::Initialize(Microsoft.AspNetCore.Builder.WebApplication)": {
+          "Lines": {
+            "12": 0,
+            "13": 0,
+            "14": 0
+          },
+          "Branches": []
+        },
+        "System.Void lib.extensions.WebApplicationExtensions::CheckDatabaseConnection(Microsoft.AspNetCore.Builder.WebApplication)": {
+          "Lines": {
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/extensions/WorkspaceExtensions.cs": {
+      "lib.extensions.WorkspaceExtensions": {
+        "lib.models.dto.Workspace lib.extensions.WorkspaceExtensions::ToDto(lib.models.db.Workspace)": {
+          "Lines": {
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0
+          },
+          "Branches": []
+        },
+        "lib.models.dto.UserWorkspace lib.extensions.WorkspaceExtensions::ToUserWorkspace(lib.models.db.Workspace,lib.models.db.User)": {
+          "Lines": {
+            "22": 3,
+            "23": 3,
+            "24": 3,
+            "25": 3,
+            "26": 3,
+            "27": 3,
+            "28": 3,
+            "29": 3,
+            "30": 3,
+            "31": 3,
+            "32": 3,
+            "33": 3,
+            "34": 3,
+            "35": 3
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/lib/services/mqtt/MqttExtensions.cs": {
+      "lib.extensions.MQTTExtensions": {
+        "System.Void lib.extensions.MQTTExtensions::AddMQTTAdmin(Microsoft.Extensions.DependencyInjection.IServiceCollection,lib.models.configuration.AppConfiguration)": {
+          "Lines": {
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0
+          },
+          "Branches": []
+        },
+        "System.Void lib.extensions.MQTTExtensions::AddHubMQTTClient(Microsoft.Extensions.DependencyInjection.IServiceCollection)": {
+          "Lines": {
+            "30": 0,
+            "31": 0,
+            "32": 0
+          },
+          "Branches": []
+        }
+      }
+    }
+  },
+  "api.dll": {
+    "/home/kevin/projects/cvez/hub/api/Program.cs": {
+      "api.Program": {
+        "System.Void api.Program::Main(System.String[])": {
+          "Lines": {
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "37": 0,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "49": 0,
+            "50": 0,
+            "51": 0,
+            "52": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "62": 0,
+            "66": 0,
+            "67": 0,
+            "69": 0,
+            "70": 0,
+            "71": 0,
+            "72": 0,
+            "74": 0,
+            "76": 0,
+            "78": 0,
+            "80": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/api/services/ApiQueueBroker.cs": {
+      "api.services.ApiQueueBroker": {
+        "System.Threading.Tasks.Task api.services.ApiQueueBroker::HandleApplicationMessage(MQTTnet.MqttApplicationMessage)": {
+          "Lines": {
+            "20": 0,
+            "32": 0,
+            "33": 0
+          },
+          "Branches": []
+        },
+        "System.Void api.services.ApiQueueBroker::.ctor(Serilog.ILogger)": {
+          "Lines": {
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/api/controllers/DevicesController.cs": {
+      "api.controllers.DevicesController": {
+        "System.Void api.controllers.DevicesController::.ctor(lib.services.IDeviceService,lib.services.IWorkspaceService,Serilog.ILogger)": {
+          "Lines": {
+            "30": 20,
+            "31": 10,
+            "32": 10,
+            "33": 10,
+            "34": 10
+          },
+          "Branches": []
+        }
+      },
+      "api.controllers.DevicesController/<Delete>d__6": {
+        "System.Void api.controllers.DevicesController/<Delete>d__6::MoveNext()": {
+          "Lines": {
+            "97": 3,
+            "98": 3,
+            "100": 3,
+            "102": 3,
+            "103": 3,
+            "104": 1,
+            "105": 2,
+            "106": 1,
+            "107": 1,
+            "108": 1,
+            "109": 0,
+            "110": 0,
+            "111": 0,
+            "112": 0,
+            "113": 0,
+            "115": 3
+          },
+          "Branches": [
+            {
+              "Line": 103,
+              "Offset": 212,
+              "EndOffset": 214,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 103,
+              "Offset": 212,
+              "EndOffset": 231,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 105,
+              "Offset": 237,
+              "EndOffset": 239,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 105,
+              "Offset": 250,
+              "EndOffset": 252,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 105,
+              "Offset": 237,
+              "EndOffset": 295,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 105,
+              "Offset": 250,
+              "EndOffset": 295,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 105,
+              "Offset": 300,
+              "EndOffset": 302,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 1
+            },
+            {
+              "Line": 105,
+              "Offset": 300,
+              "EndOffset": 319,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "api.controllers.DevicesController/<Get>d__4": {
+        "System.Void api.controllers.DevicesController/<Get>d__4::MoveNext()": {
+          "Lines": {
+            "39": 3,
+            "40": 3,
+            "43": 3,
+            "46": 3,
+            "47": 3,
+            "48": 1,
+            "50": 2,
+            "52": 2,
+            "53": 1,
+            "55": 1,
+            "56": 0,
+            "58": 0,
+            "59": 0,
+            "62": 0,
+            "63": 0,
+            "65": 3
+          },
+          "Branches": [
+            {
+              "Line": 47,
+              "Offset": 212,
+              "EndOffset": 214,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 47,
+              "Offset": 212,
+              "EndOffset": 236,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 52,
+              "Offset": 386,
+              "EndOffset": 388,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 52,
+              "Offset": 399,
+              "EndOffset": 401,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 52,
+              "Offset": 386,
+              "EndOffset": 444,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 52,
+              "Offset": 399,
+              "EndOffset": 444,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 52,
+              "Offset": 449,
+              "EndOffset": 451,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 1
+            },
+            {
+              "Line": 52,
+              "Offset": 449,
+              "EndOffset": 473,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "api.controllers.DevicesController/<Put>d__5": {
+        "System.Void api.controllers.DevicesController/<Put>d__5::MoveNext()": {
+          "Lines": {
+            "72": 4,
+            "73": 4,
+            "75": 4,
+            "76": 1,
+            "78": 3,
+            "80": 3,
+            "81": 2,
+            "82": 0,
+            "83": 2,
+            "84": 1,
+            "85": 1,
+            "86": 2,
+            "87": 1,
+            "88": 0,
+            "89": 0,
+            "90": 0,
+            "92": 4
+          },
+          "Branches": [
+            {
+              "Line": 75,
+              "Offset": 51,
+              "EndOffset": 53,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 75,
+              "Offset": 51,
+              "EndOffset": 80,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            },
+            {
+              "Line": 81,
+              "Offset": 257,
+              "EndOffset": 259,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 81,
+              "Offset": 257,
+              "EndOffset": 281,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 2
+            },
+            {
+              "Line": 83,
+              "Offset": 287,
+              "EndOffset": 289,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 83,
+              "Offset": 300,
+              "EndOffset": 302,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 2
+            },
+            {
+              "Line": 83,
+              "Offset": 287,
+              "EndOffset": 345,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 83,
+              "Offset": 300,
+              "EndOffset": 345,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 83,
+              "Offset": 350,
+              "EndOffset": 352,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 1
+            },
+            {
+              "Line": 83,
+              "Offset": 350,
+              "EndOffset": 374,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 1
+            }
+          ]
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/api/controllers/ErrorController.cs": {
+      "api.controllers.ErrorController": {
+        "Microsoft.AspNetCore.Mvc.IActionResult api.controllers.ErrorController::HandleError()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/api/controllers/WorkspacesController.cs": {
+      "api.controllers.WorkspacesController": {
+        "System.Void api.controllers.WorkspacesController::.ctor(lib.services.IWorkspaceService,Serilog.ILogger)": {
+          "Lines": {
+            "33": 24,
+            "34": 24,
+            "35": 24,
+            "36": 24,
+            "37": 24
+          },
+          "Branches": []
+        }
+      },
+      "api.controllers.WorkspacesController/<AddUser>d__11": {
+        "System.Void api.controllers.WorkspacesController/<AddUser>d__11::MoveNext()": {
+          "Lines": {
+            "245": 2,
+            "247": 2,
+            "249": 2,
+            "251": 2,
+            "252": 1,
+            "253": 1,
+            "254": 1,
+            "255": 1,
+            "257": 0,
+            "258": 0,
+            "259": 0,
+            "261": 0,
+            "262": 0,
+            "263": 0,
+            "265": 0,
+            "266": 0,
+            "267": 0,
+            "268": 0,
+            "270": 2
+          },
+          "Branches": [
+            {
+              "Line": 251,
+              "Offset": 72,
+              "EndOffset": 74,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 251,
+              "Offset": 85,
+              "EndOffset": 87,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 251,
+              "Offset": 72,
+              "EndOffset": 125,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 251,
+              "Offset": 85,
+              "EndOffset": 125,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 251,
+              "Offset": 128,
+              "EndOffset": 130,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            },
+            {
+              "Line": 251,
+              "Offset": 128,
+              "EndOffset": 152,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "api.controllers.WorkspacesController/<CreateDevice>d__9": {
+        "System.Void api.controllers.WorkspacesController/<CreateDevice>d__9::MoveNext()": {
+          "Lines": {
+            "190": 2,
+            "192": 2,
+            "194": 2,
+            "196": 2,
+            "197": 2,
+            "198": 2,
+            "199": 2,
+            "200": 2,
+            "201": 1,
+            "202": 1,
+            "203": 1,
+            "204": 1,
+            "206": 0,
+            "207": 0,
+            "208": 0,
+            "209": 0,
+            "211": 2
+          },
+          "Branches": [
+            {
+              "Line": 196,
+              "Offset": 72,
+              "EndOffset": 74,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 196,
+              "Offset": 85,
+              "EndOffset": 87,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 196,
+              "Offset": 72,
+              "EndOffset": 125,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 196,
+              "Offset": 85,
+              "EndOffset": 125,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 196,
+              "Offset": 128,
+              "EndOffset": 130,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            },
+            {
+              "Line": 196,
+              "Offset": 128,
+              "EndOffset": 152,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "api.controllers.WorkspacesController/<Delete>d__7": {
+        "System.Void api.controllers.WorkspacesController/<Delete>d__7::MoveNext()": {
+          "Lines": {
+            "138": 3,
+            "140": 3,
+            "142": 3,
+            "144": 3,
+            "145": 2,
+            "146": 1,
+            "147": 1,
+            "149": 0,
+            "150": 0,
+            "151": 0,
+            "153": 0,
+            "154": 0,
+            "155": 0,
+            "156": 0,
+            "158": 3
+          },
+          "Branches": [
+            {
+              "Line": 144,
+              "Offset": 60,
+              "EndOffset": 62,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 144,
+              "Offset": 73,
+              "EndOffset": 75,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 3
+            },
+            {
+              "Line": 144,
+              "Offset": 60,
+              "EndOffset": 113,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 144,
+              "Offset": 73,
+              "EndOffset": 113,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 144,
+              "Offset": 116,
+              "EndOffset": 118,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 144,
+              "Offset": 116,
+              "EndOffset": 135,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "api.controllers.WorkspacesController/<Get>d__4": {
+        "System.Void api.controllers.WorkspacesController/<Get>d__4::MoveNext()": {
+          "Lines": {
+            "64": 3,
+            "66": 3,
+            "68": 3,
+            "70": 3,
+            "71": 2,
+            "72": 1,
+            "73": 1,
+            "75": 0,
+            "76": 0,
+            "77": 0,
+            "79": 0,
+            "80": 0,
+            "81": 0,
+            "82": 0,
+            "84": 3
+          },
+          "Branches": [
+            {
+              "Line": 70,
+              "Offset": 60,
+              "EndOffset": 62,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 70,
+              "Offset": 73,
+              "EndOffset": 75,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 3
+            },
+            {
+              "Line": 70,
+              "Offset": 60,
+              "EndOffset": 113,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 70,
+              "Offset": 73,
+              "EndOffset": 113,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 70,
+              "Offset": 116,
+              "EndOffset": 118,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 70,
+              "Offset": 116,
+              "EndOffset": 140,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "api.controllers.WorkspacesController/<List>d__3": {
+        "System.Void api.controllers.WorkspacesController/<List>d__3::MoveNext()": {
+          "Lines": {
+            "42": 2,
+            "44": 2,
+            "46": 2,
+            "48": 2,
+            "49": 1,
+            "50": 1,
+            "51": 1,
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "58": 2
+          },
+          "Branches": [
+            {
+              "Line": 48,
+              "Offset": 60,
+              "EndOffset": 62,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 48,
+              "Offset": 60,
+              "EndOffset": 78,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 48,
+              "Offset": 81,
+              "EndOffset": 83,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 48,
+              "Offset": 81,
+              "EndOffset": 105,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "api.controllers.WorkspacesController/<ListDevices>d__8": {
+        "System.Void api.controllers.WorkspacesController/<ListDevices>d__8::MoveNext()": {
+          "Lines": {
+            "167": 2,
+            "169": 2,
+            "171": 2,
+            "173": 2,
+            "174": 1,
+            "175": 1,
+            "176": 1,
+            "178": 0,
+            "179": 0,
+            "180": 0,
+            "181": 0,
+            "183": 2
+          },
+          "Branches": [
+            {
+              "Line": 173,
+              "Offset": 60,
+              "EndOffset": 62,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 173,
+              "Offset": 73,
+              "EndOffset": 75,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 173,
+              "Offset": 60,
+              "EndOffset": 113,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 173,
+              "Offset": 73,
+              "EndOffset": 113,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 173,
+              "Offset": 116,
+              "EndOffset": 118,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            },
+            {
+              "Line": 173,
+              "Offset": 116,
+              "EndOffset": 140,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "api.controllers.WorkspacesController/<ListUsers>d__10": {
+        "System.Void api.controllers.WorkspacesController/<ListUsers>d__10::MoveNext()": {
+          "Lines": {
+            "220": 2,
+            "222": 2,
+            "224": 2,
+            "226": 2,
+            "227": 1,
+            "228": 1,
+            "229": 1,
+            "230": 1,
+            "232": 0,
+            "233": 0,
+            "234": 0,
+            "235": 0,
+            "237": 2
+          },
+          "Branches": [
+            {
+              "Line": 226,
+              "Offset": 72,
+              "EndOffset": 74,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 226,
+              "Offset": 85,
+              "EndOffset": 87,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 226,
+              "Offset": 72,
+              "EndOffset": 125,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 226,
+              "Offset": 85,
+              "EndOffset": 125,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 226,
+              "Offset": 128,
+              "EndOffset": 130,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            },
+            {
+              "Line": 226,
+              "Offset": 128,
+              "EndOffset": 152,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "api.controllers.WorkspacesController/<Post>d__5": {
+        "System.Void api.controllers.WorkspacesController/<Post>d__5::MoveNext()": {
+          "Lines": {
+            "91": 1,
+            "93": 1,
+            "95": 1,
+            "97": 1,
+            "98": 0,
+            "99": 1,
+            "100": 1,
+            "102": 0,
+            "103": 0,
+            "104": 0,
+            "105": 0,
+            "107": 1
+          },
+          "Branches": [
+            {
+              "Line": 97,
+              "Offset": 60,
+              "EndOffset": 62,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 97,
+              "Offset": 60,
+              "EndOffset": 78,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 97,
+              "Offset": 81,
+              "EndOffset": 83,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 97,
+              "Offset": 81,
+              "EndOffset": 105,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "api.controllers.WorkspacesController/<Put>d__6": {
+        "System.Void api.controllers.WorkspacesController/<Put>d__6::MoveNext()": {
+          "Lines": {
+            "115": 4,
+            "117": 4,
+            "119": 4,
+            "121": 4,
+            "122": 2,
+            "123": 2,
+            "124": 1,
+            "125": 1,
+            "126": 1,
+            "128": 0,
+            "129": 0,
+            "130": 0,
+            "131": 0,
+            "133": 4
+          },
+          "Branches": [
+            {
+              "Line": 121,
+              "Offset": 60,
+              "EndOffset": 62,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 4
+            },
+            {
+              "Line": 121,
+              "Offset": 73,
+              "EndOffset": 75,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 4
+            },
+            {
+              "Line": 121,
+              "Offset": 60,
+              "EndOffset": 113,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 121,
+              "Offset": 73,
+              "EndOffset": 113,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 121,
+              "Offset": 116,
+              "EndOffset": 118,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 121,
+              "Offset": 116,
+              "EndOffset": 140,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 2
+            },
+            {
+              "Line": 123,
+              "Offset": 164,
+              "EndOffset": 166,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 1
+            },
+            {
+              "Line": 123,
+              "Offset": 164,
+              "EndOffset": 193,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "api.controllers.WorkspacesController/<RemoveUser>d__12": {
+        "System.Void api.controllers.WorkspacesController/<RemoveUser>d__12::MoveNext()": {
+          "Lines": {
+            "275": 3,
+            "277": 3,
+            "279": 3,
+            "281": 3,
+            "282": 0,
+            "283": 3,
+            "284": 1,
+            "285": 2,
+            "286": 1,
+            "288": 1,
+            "289": 1,
+            "290": 1,
+            "292": 0,
+            "293": 0,
+            "294": 0,
+            "295": 0,
+            "297": 3
+          },
+          "Branches": [
+            {
+              "Line": 281,
+              "Offset": 60,
+              "EndOffset": 62,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 281,
+              "Offset": 60,
+              "EndOffset": 78,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 281,
+              "Offset": 81,
+              "EndOffset": 83,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 281,
+              "Offset": 81,
+              "EndOffset": 100,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 3
+            },
+            {
+              "Line": 283,
+              "Offset": 133,
+              "EndOffset": 135,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            },
+            {
+              "Line": 283,
+              "Offset": 133,
+              "EndOffset": 164,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 2
+            },
+            {
+              "Line": 283,
+              "Offset": 167,
+              "EndOffset": 169,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 1
+            },
+            {
+              "Line": 283,
+              "Offset": 167,
+              "EndOffset": 186,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 2
+            }
+          ]
+        }
+      }
+    },
+    "/home/kevin/projects/cvez/hub/api/controllers/options/SlugifyUrls.cs": {
+      "api.controllers.options.SlugifyUrls": {
+        "System.String api.controllers.options.SlugifyUrls::TransformOutbound(System.Object)": {
+          "Lines": {
+            "12": 0,
+            "13": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0
+          },
+          "Branches": [
+            {
+              "Line": 13,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 13,
+              "Offset": 7,
+              "EndOffset": 14,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    }
+  }
+}

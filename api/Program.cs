@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using lib.models;
 using lib.extensions;
@@ -13,9 +12,7 @@ using Serilog;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using api.controllers.options;
 using lib.middleware;
-using lib.services.mqtt.workers;
-using lib.services.mqtt.queue;
-using api.services;
+using lib.services.mqtt;
 
 namespace api
 {
@@ -23,41 +20,49 @@ namespace api
     {
         public static void Main(string[] args)
         {
+            // Setup
+            // Requires Environment Variable: DEBUG=true
             DebuggerSetup.WaitForDebugger();
             var builder = WebApplication.CreateBuilder(args);
-            AppConfiguration config = builder.AddAppConfiguration();
-            ILogger logger = builder.AddSerilogLogger(config);
+
+            // Configuration
+            AppConfiguration appConfig = builder.AddAppConfiguration();
+            ILogger logger = builder.AddSerilogLogger(appConfig);
+
+            // Framework Services
             builder.Services.AddControllers(
                 options =>
                 {
                     options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyUrls()));
                 }
             ).ConfigureJson();
-
+            builder.Services.AddCVOpsAuth(appConfig, logger);
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(config.GetPostgresqlConnectionString()));
-            builder.Services.AddSingleton<IDeviceKeyGenerator, DeviceKeyGenerator>();
             builder.Services.AddHttpContextAccessor();
-            builder.Services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();
             builder.Services.AddHttpClient();
-            builder.Services.AddTransient<IUserService, UserService>();
-            builder.Services.AddTransient<IUserJwtTokenReader, UserJwtTokenReader>();
-            builder.Services.AddCVOpsAuth(config, logger);
             builder.Services.ConfigureJson();
-
             builder.WebHost.ConfigureKestrel(options =>
             {
-                options.ListenAnyIP(config.Hub.Api.Port);
+                options.ListenAnyIP(appConfig.Hub.Api.Port);
             });
 
-            // Conifigure MQTT
-            // Base services
-            builder.Services.AddHostedService<MqttClientWorker>();
+            // MQTT Management Services
             builder.Services.AddHubMQTTClient();
-            builder.Services.AddSingleton<IQueueBroker, ApiQueueBroker>();
+            builder.Services.AddSingleton<IMqttTopicRouter, MqttTopicRouter>();
+            builder.Services.AddHostedService<MqttClientWorker>();
 
+            // MQTT Topic Listeners
 
+            
+            // Service Layer
+            builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient<IUserJwtTokenReader, UserJwtTokenReader>();
+            builder.Services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();            
+            builder.Services.AddSingleton<IDeviceKeyGenerator, DeviceKeyGenerator>();
+            
+            // Model Layer
+            builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));
 
             var app = builder.Build();
 

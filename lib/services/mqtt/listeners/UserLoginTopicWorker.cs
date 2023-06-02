@@ -1,21 +1,23 @@
-using lib.services.mqtt.queue;
 using lib.models.mqtt;
-using lib.services.mqtt;
 using System;
 using Serilog;
 using System.Threading.Tasks;
 
 
-namespace lib.services.mqtt.workers
+namespace lib.services.mqtt.listeners
 {
-    public class UserLoginTopicWorker : MqttTopicWorker<UserLoginPayload>
+    public class UserLoginTopicListener : MqttTopicListenerWithTypedPayload<UserLoginPayload>
     {
         IHubMqttClient _mqttClient;
-        public UserLoginTopicWorker(IMqttTopicQueue<UserLoginPayload> queue, ILogger logger, IHubMqttClient mqttClient) : base(queue, logger)
+        ILogger _logger;
+        public UserLoginTopicListener(ILogger logger, IHubMqttClient mqttClient)
         {
             _mqttClient = mqttClient;
+            _logger = logger;
         }
-        protected override async Task HandlePayload(UserLoginPayload payload)
+
+        public override string TopicFilter { get => "user/#/login"; }
+        public override async Task HandlePayload(UserLoginPayload payload)
         {
             string topic = MqttTopicManager.GetUserNotificationTopic(payload.UserId);
             UserNotificationPayload userNotificationPayload = new UserNotificationPayload {
