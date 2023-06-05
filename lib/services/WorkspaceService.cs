@@ -94,17 +94,17 @@ namespace lib.services
 
         public bool IsWorkspaceViewer(Guid WorkspaceId, User user)
         {
-            return _context.WorkspaceUsers.Any(wu => wu.WorkspaceId == WorkspaceId && wu.UserId == user.Id && _viewerRoles.Contains(wu.Role));
+            return _context.WorkspaceUsers.Any(wu => wu.WorkspaceId == WorkspaceId && wu.UserId == user.Id && _viewerRoles.Contains(wu.WorkspaceUserRole));
         }
 
         public bool IsWorkspaceEditor(Guid WorkspaceId, User user)
         {
-            return _context.WorkspaceUsers.Any(wu => wu.WorkspaceId == WorkspaceId && wu.UserId == user.Id && _editorRoles.Contains(wu.Role));
+            return _context.WorkspaceUsers.Any(wu => wu.WorkspaceId == WorkspaceId && wu.UserId == user.Id && _editorRoles.Contains(wu.WorkspaceUserRole));
         }
 
         public bool IsWorkspaceOwner(Guid WorkspaceId, User user)
         {
-            return _context.WorkspaceUsers.Any(wu => wu.WorkspaceId == WorkspaceId && wu.UserId == user.Id && wu.Role == WorkspaceUserRole.Owner);
+            return _context.WorkspaceUsers.Any(wu => wu.WorkspaceId == WorkspaceId && wu.UserId == user.Id && wu.WorkspaceUserRole == WorkspaceUserRole.Owner);
         }
 
         public async Task DeleteWorkspace(Guid WorkspaceId)
@@ -135,7 +135,7 @@ namespace lib.services
                 Description = body.Description,
                 WorkspaceUsers = new List<WorkspaceUser> {
                     new WorkspaceUser {
-                        Role = WorkspaceUserRole.Owner,
+                        WorkspaceUserRole = WorkspaceUserRole.Owner,
                         User = user
                     }
                 }

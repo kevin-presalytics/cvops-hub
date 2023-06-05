@@ -42,7 +42,7 @@ namespace tests.fixtures
                 UserId = TestViewer.Id,
                 Workspace = TestWorkspace,
                 WorkspaceId = TestWorkspace.Id,
-                Role = WorkspaceUserRole.Viewer
+                WorkspaceUserRole = WorkspaceUserRole.Viewer
             };
 
                         
@@ -51,7 +51,7 @@ namespace tests.fixtures
                 UserId = TestOwner.Id,
                 Workspace = TestWorkspace,
                 WorkspaceId = TestWorkspace.Id,
-                Role = WorkspaceUserRole.Owner
+                WorkspaceUserRole = WorkspaceUserRole.Owner
             };
 
             TestWorkspace.WorkspaceUsers = new List<WorkspaceUser>() { TestWorkspaceViewer, TestWorkspaceOwner };

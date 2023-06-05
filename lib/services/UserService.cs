@@ -16,7 +16,6 @@ namespace lib.services
         Task<User> CreateUser(string jwtToken);
         Task<User> CreateUser(string email, string jwtSubject);
         Task<User> GetOrCreateUser(string jwtToken);
-        Task<Workspace> GetOrCreateDefaultWorkspace(User user);
         Task<User> InviteUser(Workspace workspace, string email, WorkspaceUserRole role);
 
         Task ActivateUser(User user, string jwtToken);
@@ -45,19 +44,13 @@ namespace lib.services
         public async Task<User> CreateUser(string email, string jwtSubject) {
             User user = new User() { 
                 Email = email,
-                JwtSubject = jwtSubject                
+                JwtSubject = jwtSubject,
+                Status = UserStatus.Active,
+                IsEmailVerified = true,       
             };
             await _context.Users.AddAsync(user);
-            Workspace Workspace = await CreateDefaultWorkspace(user);
-            WorkspaceUser wu = new WorkspaceUser() { 
-                User = user,
-                Workspace = Workspace,
-                Role = WorkspaceUserRole.Owner
-            };
-            _context.WorkspaceUsers.Add(wu);
-            Workspace.WorkspaceUsers = new List<WorkspaceUser>() { wu };
-            _context.Workspaces.Update(Workspace);
             await _context.SaveChangesAsync();
+            await CreateDefaultWorkspace(user);
             return user;
         }
 
@@ -87,27 +80,31 @@ namespace lib.services
         }
 
         private async Task<Workspace> CreateDefaultWorkspace(User user) {
-            Workspace Workspace = new Workspace() { 
-                Name = "My Workspace",
-                WorkspaceUsers = new List<WorkspaceUser>() { 
-                    new WorkspaceUser() { 
-                        User = user,
-                        Role = WorkspaceUserRole.Owner
-                    }},
+            WorkspaceUser wu = new WorkspaceUser() { 
+                User = user,
+                WorkspaceUserRole = WorkspaceUserRole.Owner
             };
-            await _context.Workspaces.AddAsync(Workspace);
-            user.DefaultWorkspace = Workspace;
-            _context.Users.Update(user);
-            // note must save changes on a later step
-            return Workspace;
+            Workspace workspace = new Workspace() { 
+                Name = "My Workspace",
+                Description = $"CVOps Workspace for ${user.Email}'s test and personal projects",
+                WorkspaceUsers = new List<WorkspaceUser>() { wu }                    
+            };
+            wu.Workspace = workspace;
+            await _context.WorkspaceUsers.AddAsync(wu);
+            await _context.Workspaces.AddAsync(workspace);
+            #pragma warning disable CS8600
+            User userToUpdate = await _context.Users.FindAsync(user.Id); 
+            #pragma warning restore CS8600
+            if (userToUpdate == null) throw new UserNotFoundException();
+            userToUpdate.DefaultWorkspaceId = workspace.Id;
+            _context.Users.Update(userToUpdate);
+            await _context.SaveChangesAsync();
+            return workspace;
         }
 
-        public async Task<Workspace> GetOrCreateDefaultWorkspace(User user) {
-            if (user.DefaultWorkspace != null) return user.DefaultWorkspace;
+        private async Task<Workspace> GetDefaultWorkspace(User user) {
             Workspace? defaultWorkspace = await _context.Workspaces.FirstOrDefaultAsync(i => i.Id == user.DefaultWorkspaceId);
-            if (defaultWorkspace == null) {
-                defaultWorkspace = await CreateDefaultWorkspace(user);
-            }
+            if (defaultWorkspace == null) throw new WorkspaceNotFoundException("user does not have a default workspace");
             return defaultWorkspace;
         }
 
@@ -121,7 +118,6 @@ namespace lib.services
                 user = new User() { 
                     Email = email,
                     JwtSubject = "",
-                    DefaultWorkspace = workspace,
                     DefaultWorkspaceId = workspace.Id,
                     Status = UserStatus.Pending
                 };
@@ -132,7 +128,7 @@ namespace lib.services
                 workspaceUser = new WorkspaceUser() { 
                     User = user,
                     Workspace = workspace,
-                    Role = role
+                    WorkspaceUserRole = role
                 };
                 _context.WorkspaceUsers.Add(workspaceUser);
                 workspace.WorkspaceUsers.Add(workspaceUser);

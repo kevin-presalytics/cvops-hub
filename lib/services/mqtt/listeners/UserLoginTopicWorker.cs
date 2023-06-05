@@ -16,7 +16,7 @@ namespace lib.services.mqtt.listeners
             _logger = logger;
         }
 
-        public override string TopicFilter { get => "user/#/login"; }
+        public override string TopicFilter { get => "user/+/login"; }
         public override async Task HandlePayload(UserLoginPayload payload)
         {
             string topic = MqttTopicManager.GetUserNotificationTopic(payload.UserId);

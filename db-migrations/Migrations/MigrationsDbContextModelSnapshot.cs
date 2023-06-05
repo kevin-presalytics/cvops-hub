@@ -138,8 +138,9 @@ namespace db_migrations.Migrations
                         .HasColumnType("text")
                         .HasColumnName("modified_by");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer")
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text")
                         .HasColumnName("status");
 
                     b.Property<Guid?>("UserCreated")
@@ -151,10 +152,7 @@ namespace db_migrations.Migrations
                         .HasColumnName("user_modified");
 
                     b.HasKey("Id")
-                        .HasName("pk_user");
-
-                    b.HasIndex("DefaultWorkspaceId")
-                        .HasDatabaseName("ix_user_default_workspace_id");
+                        .HasName("pk_cvops_user");
 
                     b.HasIndex("Email")
                         .IsUnique();
@@ -162,7 +160,7 @@ namespace db_migrations.Migrations
                     b.HasIndex("JwtSubject")
                         .IsUnique();
 
-                    b.ToTable("user", (string)null);
+                    b.ToTable("cvops_user", (string)null);
                 });
 
             modelBuilder.Entity("lib.models.db.Workspace", b =>
@@ -239,10 +237,6 @@ namespace db_migrations.Migrations
                         .HasColumnType("text")
                         .HasColumnName("modified_by");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("integer")
-                        .HasColumnName("role");
-
                     b.Property<Guid?>("UserCreated")
                         .HasColumnType("uuid")
                         .HasColumnName("user_created");
@@ -258,6 +252,11 @@ namespace db_migrations.Migrations
                     b.Property<Guid>("WorkspaceId")
                         .HasColumnType("uuid")
                         .HasColumnName("workspace_id");
+
+                    b.Property<string>("WorkspaceUserRole")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("workspace_user_role");
 
                     b.HasKey("Id")
                         .HasName("pk_workspace_user");
@@ -283,18 +282,6 @@ namespace db_migrations.Migrations
                     b.Navigation("Workspace");
                 });
 
-            modelBuilder.Entity("lib.models.db.User", b =>
-                {
-                    b.HasOne("lib.models.db.Workspace", "DefaultWorkspace")
-                        .WithMany()
-                        .HasForeignKey("DefaultWorkspaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_user_workspace_default_workspace_id");
-
-                    b.Navigation("DefaultWorkspace");
-                });
-
             modelBuilder.Entity("lib.models.db.WorkspaceUser", b =>
                 {
                     b.HasOne("lib.models.db.User", "User")
@@ -302,7 +289,7 @@ namespace db_migrations.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_workspace_user_user_user_id");
+                        .HasConstraintName("fk_workspace_user_cvops_user_user_id");
 
                     b.HasOne("lib.models.db.Workspace", "Workspace")
                         .WithMany("WorkspaceUsers")

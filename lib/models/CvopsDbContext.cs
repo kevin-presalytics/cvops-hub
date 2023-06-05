@@ -113,6 +113,7 @@ namespace lib.models
                 }
             }
 
+            // User
             // Indexes
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
@@ -122,32 +123,33 @@ namespace lib.models
                 .HasIndex(u => u.JwtSubject)
                 .IsUnique();
 
-
+            modelBuilder.Entity<User>()
+                .Property(u => u.Status)
+                .HasConversion(new EnumToStringConverter<UserStatus>());
+                
+            // Device
             modelBuilder.Entity<Device>()
                 .HasIndex(d => d.Id)
                 .IsUnique();
 
-            // Foreign Keys
+            // Workspace
             modelBuilder.Entity<Workspace>()
                 .HasMany(w => w.WorkspaceUsers)
                 .WithOne(wu => wu.Workspace);
-
-            modelBuilder.Entity<WorkspaceUser>()
-                .HasOne(wu => wu.User)
-                .WithMany();
 
             modelBuilder.Entity<Workspace>()
                 .HasMany(t => t.Devices)
                 .WithOne(d => d.Workspace)
                 .HasForeignKey(d => d.WorkspaceId);
 
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.DefaultWorkspace)
-                .WithMany()
-                .HasForeignKey(u => u.DefaultWorkspaceId);     
-            
+            // WorkspaceUser
+            modelBuilder.Entity<WorkspaceUser>()
+                .HasOne(wu => wu.User)
+                .WithMany();
 
-
+            modelBuilder.Entity<WorkspaceUser>()
+                .Property(wu => wu.WorkspaceUserRole)
+                .HasConversion(new EnumToStringConverter<WorkspaceUserRole>());
         }
 
         public override int SaveChanges()
@@ -191,6 +193,8 @@ namespace lib.models
         {
             #pragma warning disable CS8600
             string _tableName = builder.Metadata.ClrType.Name.ToSnakeCase();
+            // "user" is a reserved table name is postgres
+            if (_tableName == "user") _tableName = "cvops_user";
             #pragma warning restore CS8600
             _ = builder.ToTable(_tableName);
         }

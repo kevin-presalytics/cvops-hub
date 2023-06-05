@@ -9,7 +9,6 @@ namespace lib.models.db
         public string Email { get; set; } = default!;
         public string JwtSubject { get; set; } = default!;
         public Guid DefaultWorkspaceId { get; set; } = default!;
-        public virtual Workspace DefaultWorkspace { get; set; } = default!;
         public bool IsEmailVerified { get; set; } = default!;
         public UserStatus Status { get; set; } = default!;
     }

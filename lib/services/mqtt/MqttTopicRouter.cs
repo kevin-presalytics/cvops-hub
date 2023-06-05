@@ -50,7 +50,12 @@ namespace lib.services.mqtt
         private async Task Dispatch(MqttApplicationMessage message, Type serviceType)
         {
             try {
-                IMqttTopicListener listener = (IMqttTopicListener)_serviceProvider.GetRequiredService(serviceType);
+                #pragma warning disable CS8600
+                IMqttTopicListener listener = _serviceProvider.GetServices<IMqttTopicListener>()
+                                                    .Where(x => x.GetType() == serviceType)
+                                                    .FirstOrDefault();
+                #pragma warning restore CS8600
+                if (listener == null) throw new Exception($"Type {serviceType.ToString()} does not exist in service Registry.");
                 await listener.HandleMessage(message);
             } catch (Exception ex) {
                 _logger.Error(ex, $"Error handling message for Topic: {message.Topic}");
@@ -75,6 +80,8 @@ namespace lib.services.mqtt
                     {
                         if (!isMessageHandled) isMessageHandled = true;
                         Task.Run(async () => await Dispatch(message, topicListener.Value));
+                    } else if (compareResult == MqttTopicFilterCompareResult.FilterInvalid) {
+                        throw new Exception($"{topicListener.Key} is an invalid topic filter string.  Please rewrite the implementation of the {topicListener.Value} class.");
                     }
                 }
                 if (!isMessageHandled)
@@ -86,6 +93,7 @@ namespace lib.services.mqtt
             } catch (Exception ex) {
                 _logger.Error(ex, $"Error routing message for Topic: {message.Topic}");
             }
+
         }
     }
 }

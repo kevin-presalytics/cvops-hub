@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace lib.models.db
 {
@@ -9,7 +8,7 @@ namespace lib.models.db
         public virtual Workspace Workspace { get; set; } = default!;
         public Guid UserId { get; set; } = default!;
         public virtual User User { get; set;} = default!;
-        public WorkspaceUserRole Role { get; set; } = default!;
+        public WorkspaceUserRole WorkspaceUserRole { get; set; } = default!;
         
 
     }

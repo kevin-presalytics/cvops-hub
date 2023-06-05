@@ -31,6 +31,11 @@ namespace lib.services.mqtt
 
         public async void OnStarted()
         {
+            // This delay exists to give the MQTT Broker to run a health check on the authentication endpoint
+            // Eqmx will set an an alarm, and prevent Client Authentication if it detects the endpoint is not healthy
+            // Otherwise, the MQTT Client will fail to connect, set the alarm and entry the retry loop
+            _logger.Information("Waiting for application startup to complete before starting MQTT Client...");
+            await Task.Delay(5000);
            _logger.Information("Starting MQTT Client...");
             try {
                 _mqttClient.OnConnected += async (s, e) => await this.HandleConnected();

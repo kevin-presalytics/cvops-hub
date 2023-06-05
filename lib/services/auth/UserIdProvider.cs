@@ -1,8 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http;
 using System;
-using System.Linq;
 using lib.models.configuration;
+using lib.middleware;
 
 namespace lib.services.auth
 {
@@ -33,12 +33,12 @@ namespace lib.services.auth
             } else {
                 if (_httpContextAccessor?.HttpContext != null)
                 {
-                    if (_httpContextAccessor?.HttpContext.User.Claims.FirstOrDefault(i => i.Type == _userIdJwtClaim) != null) {
-                        #pragma warning disable CS8604, CS8629
-                        _scopedUserId = Guid.Parse(_httpContextAccessor?.HttpContext.User.Claims.First(i => i.Type == _userIdJwtClaim).Value);
-                        if (_scopedUserId != Guid.Empty) return _scopedUserId; else return null;    
-                        #pragma warning restore CS8604, CS8629
-                    }
+                    #pragma warning disable CS8600
+                    IRequestUserFeature userFeature = _httpContextAccessor.HttpContext.Features.Get<IRequestUserFeature>();
+                    #pragma warning restore CS8600
+                    if (userFeature == null || userFeature.User == null) return null;
+                    _scopedUserId = userFeature.User.Id;
+                    return userFeature.User.Id;
                 }
                 return null;
             }
