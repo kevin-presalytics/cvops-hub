@@ -42,6 +42,15 @@ namespace api
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddHttpClient();
             builder.Services.ConfigureJson();
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
             builder.WebHost.ConfigureKestrel(options =>
             {
                 options.ListenAnyIP(appConfig.Hub.Api.Port);
