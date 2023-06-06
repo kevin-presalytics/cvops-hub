@@ -71,6 +71,8 @@ namespace api
             builder.Services.AddSingleton<IDeviceKeyGenerator, DeviceKeyGenerator>();
             builder.Services.AddTransient<IDeviceKeyVerifier, DeviceKeyVerifier>();
             builder.Services.AddTransient<IInviteUserService, InviteUserService>();
+            builder.Services.AddTransient<IWorkspaceService, WorkspaceService>();
+            builder.Services.AddTransient<IDeviceService, DeviceService>();
             
             // Model Layer
             builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));

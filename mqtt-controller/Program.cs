@@ -58,6 +58,9 @@ namespace mqtt_controller
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<IUserJwtTokenReader, UserJwtTokenReader>();
             builder.Services.AddTransient<IInviteUserService, InviteUserService>();
+            builder.Services.AddTransient<IWorkspaceService, WorkspaceService>();
+            builder.Services.AddTransient<IDeviceService, DeviceService>();
+            builder.Services.AddTransient<IUserService, UserService>();
 
             // Model Layer
             builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));
