@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http.Json;
 using MvcJsonOptions = Microsoft.AspNetCore.Mvc.JsonOptions;
+using lib.models;
 
 namespace lib.extensions
 {
@@ -14,6 +15,7 @@ namespace lib.extensions
             {
                 options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
                 options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+                options.JsonSerializerOptions.Converters.Add(new PaginatedListJsonConverterFactory());
             });
         }
 
@@ -26,6 +28,7 @@ namespace lib.extensions
         public static JsonSerializerOptions GetOptions() {
             var options = new JsonSerializerOptions();
             options.Converters.Add(new JsonStringEnumConverter());
+            options.Converters.Add(new PaginatedListJsonConverterFactory());
             options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             return options;
         }
