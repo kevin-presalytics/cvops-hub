@@ -133,10 +133,6 @@ namespace lib.models
                 .IsUnique();
 
             modelBuilder.Entity<Device>()
-                .HasIndex(d => d.Name)
-                .IsUnique();
-            
-            modelBuilder.Entity<Device>()
                 .HasIndex(d => d.WorkspaceId);
             
             modelBuilder.Entity<Device>()

@@ -35,18 +35,10 @@ namespace db_migrations.Migrations
                 nullable: false,
                 defaultValue: "");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_device_name",
-                table: "device",
-                column: "name",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
-                name: "IX_device_name",
-                table: "device");
 
             migrationBuilder.DropColumn(
                 name: "activation_status",
