@@ -162,7 +162,8 @@ namespace api.controllers
         public async Task<ActionResult<PaginatedList<dto.Device>>> ListDevices(
             Guid id,
             [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 10
+            [FromQuery] int pageSize = 10,
+            [FromQuery] string? search = null
         )
         {
             try
@@ -172,7 +173,7 @@ namespace api.controllers
                 #pragma warning restore CS8600
                 if (userFeature == null || userFeature.User == null || !_workspaceService.IsWorkspaceViewer(id, userFeature.User))
                     return Unauthorized();
-                PaginatedList<dto.Device> devices = await _workspaceService.GetWorkspaceDevices(id, page, pageSize);
+                PaginatedList<dto.Device> devices = await _workspaceService.GetWorkspaceDevices(id, page, pageSize, search);
                 return Ok(devices);
             }
             catch (Exception ex)

@@ -4,7 +4,6 @@ using dto = lib.models.dto;
 using lib.models;
 using lib.models.configuration;
 using lib.services.auth;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Text.Json;
@@ -68,6 +67,8 @@ namespace lib.services
                 Hash = _key.Hash,
                 DeviceInfo = JsonDocument.Parse("{}"),
                 Workspace = workspace,
+                Name = "Unregistered Device",
+                Description = String.Empty
             };
             workspace.Devices.Add(device);
             _context.Workspaces.Update(workspace);

@@ -24,7 +24,7 @@ namespace lib.services
         Task<dto.UserWorkspace> CreateWorkspace(dto.NewWorkspaceRequestBody body, User user);
         Task<dto.UserWorkspace> UpdateWorkspace(dto.UpdateWorkspaceRequestBody body, User user);
         Task DeleteWorkspace(Guid WorkspaceId);
-        Task<PaginatedList<dto.Device>> GetWorkspaceDevices(Guid WorkspaceId, int page, int pageSize);
+        Task<PaginatedList<dto.Device>> GetWorkspaceDevices(Guid WorkspaceId, int page, int pageSize, string? search);
         Task<dto.NewDevice> CreateWorkspaceDevice(Workspace workspace);
         Task<PaginatedList<dto.User>> GetWorkspaceUsers(Workspace workspace, int page, int pageSize);
         Task<dto.User> AddWorkspaceUser(Workspace workspace, dto.NewUserRequestBody body);
@@ -162,13 +162,13 @@ namespace lib.services
             return workspace.ToUserWorkspace(user);
         }
 
-        public async Task<PaginatedList<dto.Device>> GetWorkspaceDevices(Guid WorkspaceId, int page, int pageSize)
+        public async Task<PaginatedList<dto.Device>> GetWorkspaceDevices(Guid WorkspaceId, int page, int pageSize, string? search = null)
         {
             #pragma warning disable CS8600
-            PaginatedList<Device> devices = await _context.Devices
-                .Where(d => d.WorkspaceId == WorkspaceId)
-                .OrderBy(d => d.Name)
-                .PaginateAsync(page, pageSize);
+            IQueryable<Device> query = _context.Devices.Where(d => d.WorkspaceId == WorkspaceId);
+            if (search != null) query = query.Where(d => d.Name.Contains(search) || d.Description.Contains(search));
+
+            PaginatedList<Device> devices = await query.OrderBy(d => d.Name).PaginateAsync(page, pageSize);
             #pragma warning restore CS8600
             return new PaginatedList<dto.Device>(
                 devices.Select(d => d.ToDto()).ToList(),
@@ -209,6 +209,11 @@ namespace lib.services
             if (workspaceUser == null) throw new Exception("User is not a member of this workspace");
             _context.WorkspaceUsers.Remove(workspaceUser);
             await _context.SaveChangesAsync();
+        }
+
+        public Task<PaginatedList<dto.Device>> GetWorkspaceDevices(Guid WorkspaceId, int page, int pageSize)
+        {
+            throw new NotImplementedException();
         }
     }
 }

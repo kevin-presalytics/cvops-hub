@@ -132,6 +132,17 @@ namespace lib.models
                 .HasIndex(d => d.Id)
                 .IsUnique();
 
+            modelBuilder.Entity<Device>()
+                .HasIndex(d => d.Name)
+                .IsUnique();
+            
+            modelBuilder.Entity<Device>()
+                .HasIndex(d => d.WorkspaceId);
+            
+            modelBuilder.Entity<Device>()
+                .Property(d => d.ActivationStatus)
+                .HasConversion(new EnumToStringConverter<DeviceActivationStatus>());
+
             // Workspace
             modelBuilder.Entity<Workspace>()
                 .HasMany(w => w.WorkspaceUsers)

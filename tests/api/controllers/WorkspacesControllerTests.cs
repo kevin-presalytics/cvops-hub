@@ -468,7 +468,7 @@ namespace tests.api.controllers
                 .Returns(true);
 
             mockWorkspaceService
-                .Setup(x => x.GetWorkspaceDevices(StaticFixtures.TestWorkspace.Id, It.IsAny<int>(), It.IsAny<int>()))
+                .Setup(x => x.GetWorkspaceDevices(StaticFixtures.TestWorkspace.Id, It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string?>()))
                 .Returns(Task.FromResult(expectedResult));
             
             var controller = new WorkspacesController(mockWorkspaceService.Object, _logger);
