@@ -17,6 +17,9 @@ namespace lib.models
         public int TotalPages { get; private set; }
         [JsonPropertyName("pageSize")]
         public int PageSize { get; private set;}
+        [JsonPropertyName("totalCount")]
+        public int TotalCount { get; private set;}
+
         [JsonPropertyName("type")]
         public string ListType { 
             get { 
@@ -30,12 +33,12 @@ namespace lib.models
             }
         }
 
-        public PaginatedList(List<T> items, int count, int pageIndex, int pageSize)
+        public PaginatedList(List<T> items, int totalCount, int pageIndex, int pageSize)
         {
             PageIndex = pageIndex;
             PageSize = pageSize;
-            TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-
+            TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+            TotalCount = totalCount;
             this.AddRange(items);
         }
 
@@ -57,9 +60,12 @@ namespace lib.models
 
         public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {
-            var count = await source.CountAsync();
-            var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-            return new PaginatedList<T>(items, count, pageIndex, pageSize);
+            Task<int> countTask = source.CountAsync();
+            Task<List<T>> itemsTask = source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+            await Task.WhenAll(countTask, itemsTask);
+            List<T> items = await itemsTask;
+            int totalCount = await countTask;
+            return new PaginatedList<T>(items, totalCount, pageIndex, pageSize);
         }
     }
 
@@ -79,9 +85,7 @@ namespace lib.models
             return true;
         }
 
-        public override JsonConverter CreateConverter(
-            Type type,
-            JsonSerializerOptions options)
+        public override JsonConverter CreateConverter(Type type, JsonSerializerOptions options)
         {
             Type[] listType = type.GetGenericArguments();
 
@@ -90,7 +94,8 @@ namespace lib.models
                 BindingFlags.Instance | BindingFlags.Public,
                 binder: null,
                 args: new object[] { options },
-                culture: null)!;
+                culture: null
+            )!;
 
             return converter;
         }
@@ -103,8 +108,7 @@ namespace lib.models
             public PaginatedListConverterInner(JsonSerializerOptions options)
             {
                 // For performance, use the existing converter.
-                _valueConverter = (JsonConverter<T>)options.GetConverter(typeof(T));
-                
+                _valueConverter = (JsonConverter<T>)options.GetConverter(typeof(T));  
                 // Get the type of the items in the dictionary.
                 _itemsType = typeof(T);
             }
@@ -121,10 +125,11 @@ namespace lib.models
             public override void Write(Utf8JsonWriter writer, PaginatedList<T> paginatedList, JsonSerializerOptions options)
             {
                 writer.WriteStartObject();
-                writer.WriteNumber("pageIndex", paginatedList.PageIndex);
-                writer.WriteNumber("totalPages", paginatedList.TotalPages);
-                writer.WriteNumber("pageSize", paginatedList.PageSize);
                 writer.WriteString("type", paginatedList.ListType);
+                writer.WriteNumber("pageIndex", paginatedList.PageIndex);
+                writer.WriteNumber("pageSize", paginatedList.PageSize);
+                writer.WriteNumber("totalCount", paginatedList.TotalCount);
+                writer.WriteNumber("totalPages", paginatedList.TotalPages);
                 writer.WritePropertyName("items");
                 writer.WriteStartArray();
                 foreach (var item in paginatedList)

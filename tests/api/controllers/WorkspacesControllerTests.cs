@@ -521,7 +521,7 @@ namespace tests.api.controllers
                 new List<dto.User>() {
                     StaticFixtures.TestViewer.ToDto(),
                     StaticFixtures.TestOwner.ToDto()
-                }, 1, 1, 10);
+                }, 2, 1, 10);
 
             mockWorkspaceService
                 .Setup(x => x.IsWorkspaceViewer(StaticFixtures.TestWorkspace.Id, StaticFixtures.TestViewer))
@@ -546,6 +546,7 @@ namespace tests.api.controllers
             var result = actionResult.Result as OkObjectResult;
             result.Value.Should().BeOfType<PaginatedList<dto.User>>();
             PaginatedList<dto.User> value = (PaginatedList<dto.User>)result.Value;
+            value.TotalCount.Should().Be(2);
             value.Count.Should().Be(2);
             value.Should().NotBeNull();
             value[0].Should().Be(expectedResult[0]);

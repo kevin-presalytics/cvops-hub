@@ -25,6 +25,7 @@ namespace tests.lib.models
                 JObject["items"][i].GetValue<int>().Should().Be(list[i]);
             }
             JObject["type"].GetValue<string>().Should().Be(paginatedList.ListType);
+            JObject["totalCount"].GetValue<int>().Should().Be(list.Count);
             #pragma warning restore CS8602
         }
     }
