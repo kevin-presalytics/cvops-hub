@@ -166,15 +166,22 @@ namespace lib.services
         {
             #pragma warning disable CS8600
             IQueryable<Device> query = _context.Devices.Where(d => d.WorkspaceId == WorkspaceId);
-            if (search != null) query = query.Where(d => d.Name.Contains(search) || d.Description.Contains(search));
+            if (search != null) {
+                // TODO: Research whether this generates via the FromSqlInterpolated method
+                // Need to AVOID SQL injection here with the FromSQLRaw method
+                query = query.Where(d => 
+                    EF.Functions.ILike(d.Name, $"%{search}%") || 
+                    EF.Functions.ILike(d.Description, $"%{search}%")
+                );
+            }
 
             PaginatedList<Device> devices = await query.OrderBy(d => d.Name).PaginateAsync(page, pageSize);
             #pragma warning restore CS8600
             return new PaginatedList<dto.Device>(
                 devices.Select(d => d.ToDto()).ToList(),
-                devices.Count,
+                devices.TotalCount,
                 devices.PageIndex,
-                devices.TotalPages
+                devices.PageSize
             );
         }
 
@@ -209,11 +216,6 @@ namespace lib.services
             if (workspaceUser == null) throw new Exception("User is not a member of this workspace");
             _context.WorkspaceUsers.Remove(workspaceUser);
             await _context.SaveChangesAsync();
-        }
-
-        public Task<PaginatedList<dto.Device>> GetWorkspaceDevices(Guid WorkspaceId, int page, int pageSize)
-        {
-            throw new NotImplementedException();
         }
     }
 }

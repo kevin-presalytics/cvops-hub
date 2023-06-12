@@ -27,7 +27,7 @@ namespace lib.models
             }
         }
         [JsonPropertyName("items")]
-        public List<T> items { 
+        public List<T> Items { 
             get { 
                 return this.ToList();
             }
@@ -60,11 +60,8 @@ namespace lib.models
 
         public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {
-            Task<int> countTask = source.CountAsync();
-            Task<List<T>> itemsTask = source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-            await Task.WhenAll(countTask, itemsTask);
-            List<T> items = await itemsTask;
-            int totalCount = await countTask;
+            int totalCount = await source.CountAsync();
+            List<T> items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
             return new PaginatedList<T>(items, totalCount, pageIndex, pageSize);
         }
     }
@@ -130,6 +127,7 @@ namespace lib.models
                 writer.WriteNumber("pageSize", paginatedList.PageSize);
                 writer.WriteNumber("totalCount", paginatedList.TotalCount);
                 writer.WriteNumber("totalPages", paginatedList.TotalPages);
+
                 writer.WritePropertyName("items");
                 writer.WriteStartArray();
                 foreach (var item in paginatedList)

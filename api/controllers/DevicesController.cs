@@ -1,14 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Linq;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using lib.models;
 using lib.models.db;
 using dto = lib.models.dto;
-using lib.services.auth;
 using lib.middleware;
 using System.Net.Mime;
 using lib.extensions;
@@ -82,6 +77,9 @@ namespace api.controllers
                     return NotFound();
                 if (userFeature == null || userFeature.User == null || !_workspaceService.IsWorkspaceOwner(device.WorkspaceId, userFeature.User))
                     return Unauthorized();
+                if (body.Name != null) device.Name = body.Name;
+                if (body.Description != null) device.Description = body.Description;
+                await _deviceService.UpdateDevice(device);
                 return Ok(device.ToDto());
             } catch (DeviceNotFoundException) {
                 return NotFound();
