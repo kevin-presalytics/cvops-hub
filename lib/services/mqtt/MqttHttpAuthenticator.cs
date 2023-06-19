@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Serilog;
 using lib.services.auth;
@@ -45,6 +43,8 @@ namespace lib.services.mqtt
     
         public async Task<MqttAuthResponse> Authenticate(string username, string password)
         {
+            // TODO: Remove this password from this logger
+            _logger.Debug($"Authenticating MQTT user/device {username} with password {password}");
             try {
                 if (username == _hubUsername && password == _hubPassword)
                 {
@@ -58,17 +58,17 @@ namespace lib.services.mqtt
                         Result = AuthResultOptions.Allow,
                         IsSuperuser = false,
                     };
-                }
-                if (await IsValidUser(username, password)) {
+                } else if (await IsValidUser(username, password)) {
                     return new MqttAuthResponse() {
                         Result = AuthResultOptions.Allow,
                         IsSuperuser = false,
                     };
+                } else {
+                    return new MqttAuthResponse() {
+                        Result = AuthResultOptions.Deny,
+                        IsSuperuser = false,
+                    };
                 }
-                return new MqttAuthResponse() {
-                    Result = AuthResultOptions.Deny,
-                    IsSuperuser = false,
-                };
             } catch (Exception e) {
                 _logger.Error(e, "Error authenticating MQTT user");
                 return new MqttAuthResponse() {
