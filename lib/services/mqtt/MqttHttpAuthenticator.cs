@@ -43,8 +43,6 @@ namespace lib.services.mqtt
     
         public async Task<MqttAuthResponse> Authenticate(string username, string password)
         {
-            // TODO: Remove this password from this logger
-            _logger.Debug($"Authenticating MQTT user/device {username} with password {password}");
             try {
                 if (username == _hubUsername && password == _hubPassword)
                 {

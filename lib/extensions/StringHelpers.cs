@@ -1,8 +1,8 @@
 using System.Text.RegularExpressions;
-using System;
 using System.Text.Json;
 using System.Text;
 using System.IO;
+using System.Globalization;
 
 namespace lib.extensions
 {
@@ -24,6 +24,10 @@ namespace lib.extensions
                 writer.Flush();
                 return Encoding.UTF8.GetString(stream.ToArray());
             }
+        }
+        public static string ToTitleCase(this string str)
+        {
+            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str);
         }
     }
     

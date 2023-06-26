@@ -33,3 +33,7 @@ auth:
   userIdJwtClaim: email
   oidc:
     wellKnownEndpoint: https://login2cvops.b2clogin.com/login2cvops.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1_Hub_SignInAndSignUp
+  timeSeriesDb:
+    host: http://localhost:8086
+    username: admin
+    password: Password@1

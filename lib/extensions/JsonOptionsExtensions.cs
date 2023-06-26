@@ -4,6 +4,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Http.Json;
 using MvcJsonOptions = Microsoft.AspNetCore.Mvc.JsonOptions;
 using lib.models;
+using lib.models.mqtt;
 
 namespace lib.extensions
 {
@@ -29,6 +30,7 @@ namespace lib.extensions
             var options = new JsonSerializerOptions();
             options.Converters.Add(new JsonStringEnumConverter());
             options.Converters.Add(new PaginatedListJsonConverterFactory());
+            options.Converters.Add(new MqttDataMessageJsonConverter());
             options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             return options;
         }

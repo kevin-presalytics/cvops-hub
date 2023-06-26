@@ -30,6 +30,9 @@ namespace lib.models
 
         public DbSet<Workspace> Workspaces => Set<Workspace>();
 
+        public DbSet<InferenceResult> InferenceResults => Set<InferenceResult>();
+        public DbSet<PlatformEvent> PlatformEvents => Set<PlatformEvent>();
+
 
 
         public CvopsDbContext(AppConfiguration configuration, IUserIdProvider userIdProvider)
@@ -46,6 +49,7 @@ namespace lib.models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Configure Regular Tables
              List<Type> _entityTypes = modelBuilder.Model.GetEntityTypes()
                 .Where(ent => ent.ClrType.IsSubclassOf(typeof(BaseEntity)))
                 .Select(ent => ent.ClrType)
@@ -157,6 +161,27 @@ namespace lib.models
             modelBuilder.Entity<WorkspaceUser>()
                 .Property(wu => wu.WorkspaceUserRole)
                 .HasConversion(new EnumToStringConverter<WorkspaceUserRole>());
+
+
+            // Configure HyperTables
+            // InferenceResult
+            modelBuilder.Entity<InferenceResult>()
+                .HasIndex(ir => ir.DeviceId);
+            modelBuilder.Entity<InferenceResult>()
+                .HasIndex(ir => ir.WorkspaceId);
+            modelBuilder.Entity<InferenceResult>()
+                .HasIndex(ir => ir.ResultType);
+
+            // PlatformEvent
+            modelBuilder.Entity<PlatformEvent>()
+                .HasIndex(pe => pe.DeviceId);
+            modelBuilder.Entity<PlatformEvent>()
+                .HasIndex(pe => pe.WorkspaceId);
+            modelBuilder.Entity<PlatformEvent>()
+                .HasIndex(pe => pe.EventType);
+            modelBuilder.Entity<PlatformEvent>()
+                .HasIndex(pe => pe.UserId);
+
         }
 
         public override int SaveChanges()

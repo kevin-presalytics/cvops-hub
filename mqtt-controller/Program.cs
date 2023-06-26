@@ -50,6 +50,9 @@ namespace mqtt_controller
 
             // MQTT Topic Listeners
             builder.Services.AddTransient<IMqttTopicListener, UserLoginTopicListener>();
+            builder.Services.AddSingleton<IMqttTopicListener, DeviceDataTopicListener>();
+            builder.Services.AddHostedService<DeviceRegisteredWorker>();
+            builder.Services.AddHostedService<DeviceUnregisteredWorker>();
             
             // Service Layer
             builder.Services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();
@@ -61,6 +64,7 @@ namespace mqtt_controller
             builder.Services.AddTransient<IWorkspaceService, WorkspaceService>();
             builder.Services.AddTransient<IDeviceService, DeviceService>();
             builder.Services.AddTransient<IUserService, UserService>();
+
 
             // Model Layer
             builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));

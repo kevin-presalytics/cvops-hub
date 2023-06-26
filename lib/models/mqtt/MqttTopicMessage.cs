@@ -7,7 +7,7 @@ using lib.extensions;
 
 namespace lib.models.mqtt
 {
-    public interface IMqttPayload    {
+    public interface IMqttPayload  {
         DateTimeOffset Timestamp { get; }
     }
 
