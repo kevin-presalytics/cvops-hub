@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using lib.services.mqtt.listeners;
-using lib.models.mqtt;
-using lib.services;
+using lib.models.db;
+using System.Text.Json;
+using lib.models.dto;
+using lib.services.factories;
 
 namespace mqtt_controller.workers
 {
@@ -12,19 +14,19 @@ namespace mqtt_controller.workers
     {
         IHostApplicationLifetime _appLifetime;
         ILogger _logger;
-        DeviceDataTopicListener _deviceDataTopicListener;
-        IDeviceService _deviceService;
+        PlatformEventTopicListener _platformEventTopicListener;
+        IDeviceServiceFactory _deviceServiceFactory;
         DeviceRegisteredWorker(
             ILogger logger, 
             IHostApplicationLifetime appLifetime, 
-            DeviceDataTopicListener deviceDataTopicListener,
-            IDeviceService deviceService
+            PlatformEventTopicListener platformEventTopicListener,
+            IDeviceServiceFactory deviceServiceFactory
         )
         {
             _logger = logger;
             _appLifetime = appLifetime;
-            _deviceDataTopicListener = deviceDataTopicListener;
-            _deviceService = deviceService;
+            _platformEventTopicListener = platformEventTopicListener;
+            _deviceServiceFactory = deviceServiceFactory;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -36,16 +38,25 @@ namespace mqtt_controller.workers
         public void OnStarted()
         {
             // Subscribe to device registered event
-            _deviceDataTopicListener.DeviceRegisteredEvent += async (s, e) => await this.HandleDeviceRegistered(e);
+            _platformEventTopicListener.DeviceRegisteredEvent += async (s, e) => await this.HandleDeviceRegistered(e);
 
         }
 
-        public async Task HandleDeviceRegistered(DeviceRegisteredData deviceRegisteredData)
+        public async Task HandleDeviceRegistered(PlatformEvent platformEvent)
         {
-            var device = await _deviceService.GetDevice(deviceRegisteredData.DeviceId);
-            device.Name = deviceRegisteredData.DeviceName;
-            device.Description = deviceRegisteredData.DeviceDescription;
-            await _deviceService.UpdateDevice(device);
+            var deviceRegisteredData = JsonSerializer.Deserialize<DeviceRegisteredData>(platformEvent.EventData);
+            if (deviceRegisteredData == null) {
+                _logger.Error("Failed to deserialize device registered data");
+                return;
+            }
+            using (var deviceService = _deviceServiceFactory.Create())
+            {
+                var device = await deviceService.GetDevice(deviceRegisteredData.Id);
+                if (deviceRegisteredData.Name != null) device.Name = deviceRegisteredData.Name; 
+                if (deviceRegisteredData.Description != null) device.Description =  deviceRegisteredData.Description;
+                if (deviceRegisteredData.DeviceInfo != JsonDocument.Parse("{}")) device.DeviceInfo = deviceRegisteredData.DeviceInfo;
+                await deviceService.UpdateDevice(device);
+            }
         }
     }
 }

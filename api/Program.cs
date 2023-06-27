@@ -58,7 +58,6 @@ namespace api
 
             // MQTT Management Services
             builder.Services.AddHubMQTTClient();
-            builder.Services.AddSingleton<IMqttTopicRouter, MqttTopicRouter>();
             builder.Services.AddHostedService<MqttClientWorker>();
 
             // MQTT Topic Listeners
@@ -76,7 +75,7 @@ namespace api
             
             // Model Layer
             builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));
-
+            builder.Services.AddDbContextFactory<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

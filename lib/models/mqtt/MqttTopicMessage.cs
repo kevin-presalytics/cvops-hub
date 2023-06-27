@@ -8,14 +8,14 @@ using lib.extensions;
 namespace lib.models.mqtt
 {
     public interface IMqttPayload  {
-        DateTimeOffset Timestamp { get; }
+        DateTimeOffset Time { get; }
     }
 
     public abstract class MqttPayload : IMqttPayload
     {
 
-        [JsonPropertyName("timestamp")]
-        public DateTimeOffset Timestamp { get; set;}
+        [JsonPropertyName("time")]
+        public DateTimeOffset Time { get; set;}
 
     }
 

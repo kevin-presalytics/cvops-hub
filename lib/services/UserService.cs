@@ -17,7 +17,6 @@ namespace lib.services
         Task<User> CreateUser(string email, string jwtSubject);
         Task<User> GetOrCreateUser(string jwtToken);
         Task<User> InviteUser(Workspace workspace, string email, WorkspaceUserRole role);
-
         Task ActivateUser(User user, string jwtToken);
     }
 

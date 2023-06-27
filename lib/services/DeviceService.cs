@@ -12,7 +12,7 @@ using lib.extensions;
 
 namespace lib.services
 {
-    public interface IDeviceService
+    public interface IDeviceService : IDisposable
     {
         Task<Device> GetDevice(Guid deviceId);
         Task<Device> UpdateDevice(Device device);
@@ -92,6 +92,11 @@ namespace lib.services
         {
             Device device = await GetDevice(deviceId);
             return _keyVerifier.Verify(secretKey, device.Hash, device.Salt);
+        }
+
+        void IDisposable.Dispose()
+        {
+            _context.Dispose();
         }
     }
 }

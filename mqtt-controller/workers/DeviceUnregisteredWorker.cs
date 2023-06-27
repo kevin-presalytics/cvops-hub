@@ -3,8 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using lib.services.mqtt.listeners;
-using lib.models.mqtt;
-using lib.services;
+using lib.models.db;
+using System;
+using lib.services.factories;
 
 namespace mqtt_controller.workers
 {
@@ -12,19 +13,19 @@ namespace mqtt_controller.workers
     {
         IHostApplicationLifetime _appLifetime;
         ILogger _logger;
-        DeviceDataTopicListener _deviceDataTopicListener;
-        IDeviceService _deviceService;
+        PlatformEventTopicListener _platformEventTopicListener;
+        IDeviceServiceFactory _deviceServiceFactory;
         DeviceUnregisteredWorker(
             ILogger logger, 
             IHostApplicationLifetime appLifetime, 
-            DeviceDataTopicListener deviceDataTopicListener,
-            IDeviceService deviceService
+            PlatformEventTopicListener platformEventTopicListener,
+            IDeviceServiceFactory deviceServiceFactory
         )
         {
             _logger = logger;
             _appLifetime = appLifetime;
-            _deviceDataTopicListener = deviceDataTopicListener;
-            _deviceService = deviceService;
+            _platformEventTopicListener = platformEventTopicListener;
+            _deviceServiceFactory = deviceServiceFactory;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -36,15 +37,20 @@ namespace mqtt_controller.workers
         public void OnStarted()
         {
             // Subscribe to device registered event
-            _deviceDataTopicListener.DeviceUnregisteredEvent += async (s, e) => await this.HandleDeviceUnregistered(e);
+            _platformEventTopicListener.DeviceUnregisteredEvent += async (s, e) => await this.HandleDeviceUnregistered(e);
 
         }
 
-        public async Task HandleDeviceUnregistered(DeviceUnregisteredData deviceUnregisteredData)
+        public async Task HandleDeviceUnregistered(PlatformEvent platformEvent)
         {
-
-            var device = await _deviceService.GetDevice(deviceUnregisteredData.DeviceId);
-            await _deviceService.DeleteDevice(device);
+            if (platformEvent.DeviceId == null) {
+                throw new System.Exception("Device id is null");
+            }
+            using (var _deviceService = _deviceServiceFactory.Create()) 
+            {
+                var device = await _deviceService.GetDevice((Guid)platformEvent.DeviceId);
+                await _deviceService.DeleteDevice(device);
+            }
         }
     }
 }

@@ -19,7 +19,9 @@ namespace lib.services.mqtt
         Task Unsubscribe(string topic);
         Task Publish(string topic, string payload, MqttQualityOfServiceLevel qos);
         Task Publish(MqttApplicationMessage message);
-        event EventHandler OnConnected;
+        bool isConnected { get; }
+        public event EventHandler OnConnected;
+        public event EventHandler<MqttApplicationMessage> OnMessage;
     }
     public class HubMqttClient : IDisposable, IHubMqttClient
     {
@@ -30,12 +32,12 @@ namespace lib.services.mqtt
         private string _password;
         private int _mqttPort;
 
-        private IMqttTopicRouter _mqttTopicRouter;
         public event EventHandler OnConnected;
+        public event EventHandler<MqttApplicationMessage> OnMessage;
         
 
         #pragma warning disable CS8618
-        public HubMqttClient(ILogger logger, AppConfiguration configuration, IMqttTopicRouter mqttTopicRouter)
+        public HubMqttClient(ILogger logger, AppConfiguration configuration)
         {
             _logger = logger;
             _mqttUri = configuration.MQTT.Host;
@@ -44,9 +46,15 @@ namespace lib.services.mqtt
             _password = configuration.MQTT.AdminPassword;
             var mqttFactory = new MqttFactory();
             _mqttClient = mqttFactory.CreateMqttClient();
-            _mqttTopicRouter = mqttTopicRouter;
         }
         #pragma warning restore CS8618
+
+        public bool isConnected {
+            get {
+                if (_mqttClient == null) return false;
+                return _mqttClient.IsConnected;
+            }
+        }
 
         public async Task Disconnect()
         {
@@ -60,6 +68,8 @@ namespace lib.services.mqtt
                 _logger.Debug("The MQTT client is disconnected.");
             }
         }
+
+       
         
         public async Task PingServer()
         {
@@ -94,7 +104,7 @@ namespace lib.services.mqtt
             
             _mqttClient.ApplicationMessageReceivedAsync += e => {
                 _logger.Debug("Application Message Received. Topic: {topic}", e.ApplicationMessage.Topic);
-                _mqttTopicRouter.RouteMessage(e.ApplicationMessage);
+                OnMessage?.Invoke(this, e.ApplicationMessage);
                 return Task.CompletedTask;
             };
 

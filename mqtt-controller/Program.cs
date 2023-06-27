@@ -11,6 +11,7 @@ using lib.services.auth;
 using Serilog;
 using mqtt_controller.workers;
 using lib.services.mqtt.listeners;
+using lib.services.factories;
 
 namespace mqtt_controller
 {
@@ -43,14 +44,15 @@ namespace mqtt_controller
             // MQTT Management Services
             builder.Services.AddHostedService<MqttAdminSetupWorker>();
             builder.Services.AddHostedService<ControllerMqttClientWorker>();
-            builder.Services.AddSingleton<IMqttTopicRouter, MqttTopicRouter>();
             builder.Services.AddScoped<IMqttHttpAuthenticator, MqttHttpAuthenticator>();
             builder.Services.AddMQTTAdmin(appConfig);
             builder.Services.AddHubMQTTClient();
 
             // MQTT Topic Listeners
-            builder.Services.AddTransient<IMqttTopicListener, UserLoginTopicListener>();
-            builder.Services.AddSingleton<IMqttTopicListener, DeviceDataTopicListener>();
+            builder.Services.AddSingleton<DeviceDataTopicListener>();
+            builder.Services.AddSingleton<PlatformEventTopicListener>();
+
+            // Platform Event Handling Threads
             builder.Services.AddHostedService<DeviceRegisteredWorker>();
             builder.Services.AddHostedService<DeviceUnregisteredWorker>();
             
@@ -65,10 +67,13 @@ namespace mqtt_controller
             builder.Services.AddTransient<IDeviceService, DeviceService>();
             builder.Services.AddTransient<IUserService, UserService>();
 
+            // Service Factories to support scoped and Transient services from Singletons / Background Services
+            builder.Services.AddSingleton<IDeviceServiceFactory, DeviceServiceFactory>();
+
 
             // Model Layer
             builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));
-
+            builder.Services.AddDbContextFactory<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));
             var app = builder.Build();
 
             app.UseSerilogRequestLogging();

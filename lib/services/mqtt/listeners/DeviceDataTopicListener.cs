@@ -1,56 +1,30 @@
-using lib.models.mqtt;
 using System.Threading.Tasks;
 using lib.models.db;
 using Serilog;
 using System;
+using Microsoft.Extensions.Hosting;
 
 namespace lib.services.mqtt.listeners
 {
-    public class DeviceDataTopicListener : MqttTopicListenerWithTypedPayload<MqttDataMessage<IDeviceData>>
+    public class DeviceDataTopicListener : MqttTopicListenerWithTypedPayload<InferenceResult>
     {
-        private ITimeSeriesDBService _timeSeriesDBService;
-        private IDeviceService _deviceService;
-        private ILogger _logger;
-        public DeviceDataTopicListener(ITimeSeriesDBService timeSeriesDBService, IDeviceService deviceService, ILogger logger) : base()
+        private IInferenceResultService _inferenceResultService;
+        public DeviceDataTopicListener(
+            IInferenceResultService inferenceResultService, 
+            IHubMqttClient mqttClient,
+            IHostApplicationLifetime applicationLifetime,
+            ILogger logger) 
+            : base(mqttClient, applicationLifetime, logger)
         {
-            _timeSeriesDBService = timeSeriesDBService;
-            _deviceService = deviceService;
-            _logger = logger;
+            _inferenceResultService = inferenceResultService;
         }
         public override string TopicFilter { get => "device/+/data"; }
+        public event EventHandler<InferenceResult>? InferenceResultEvent;
 
-        public event EventHandler<DeviceRegisteredData>? DeviceRegisteredEvent;
-        public event EventHandler<DeviceUnregisteredData>? DeviceUnregisteredEvent;
-        public event EventHandler<InferenceResultData>? InferenceResultEvent;
-
-        public override async Task HandlePayload(MqttDataMessage<IDeviceData> payload)
+        public override async Task HandlePayload(InferenceResult payload)
         {
-            Device device = await _deviceService.GetDevice(payload.Data.DeviceId);
-            string bucketName = GetTimeSeriesDBBucketName(payload.DataType);
-            _timeSeriesDBService.Write(payload.Data, bucketName, device.WorkspaceId);
-            switch (payload.DataType) {
-                case MqttDataMessageType.DeviceRegistered:
-                    DeviceRegisteredEvent?.Invoke(this, (DeviceRegisteredData)payload.Data);
-                    break;
-                case MqttDataMessageType.DeviceUnregistered:
-                    DeviceUnregisteredEvent?.Invoke(this, (DeviceUnregisteredData)payload.Data);
-                    break;
-                case MqttDataMessageType.InferenceResult:
-                    InferenceResultEvent?.Invoke(this, (InferenceResultData)payload.Data);
-                    break;
-                default:
-                    _logger.Warning("DeviceDataTopicListener received unknown data type: {DataType}", payload.DataType);
-                    break;
-            }
-        }
-
-        private string GetTimeSeriesDBBucketName(MqttDataMessageType dataType)
-        {
-            if (dataType == MqttDataMessageType.InferenceResult) {
-                return "inference";
-            } else {
-                return "events";
-            }
+            await _inferenceResultService.Write(payload);
+            InferenceResultEvent?.Invoke(this, payload);
         }
     }
 }
