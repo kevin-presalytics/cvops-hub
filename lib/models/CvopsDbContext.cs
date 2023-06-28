@@ -172,9 +172,6 @@ namespace lib.models
             modelBuilder.Entity<InferenceResult>()
                 .HasIndex(ir => ir.ResultType);
 
-            modelBuilder.Entity<InferenceResult>()
-                .ToTable<InferenceResult>("inference_results", t => t.ExcludeFromMigrations());
-
             // PlatformEvent
             modelBuilder.Entity<PlatformEvent>()
                 .HasIndex(pe => pe.DeviceId);
@@ -184,9 +181,6 @@ namespace lib.models
                 .HasIndex(pe => pe.EventType);
             modelBuilder.Entity<PlatformEvent>()
                 .HasIndex(pe => pe.UserId);
-            
-            modelBuilder.Entity<InferenceResult>()
-                .ToTable<InferenceResult>("platform_events", t => t.ExcludeFromMigrations());
 
         }
 

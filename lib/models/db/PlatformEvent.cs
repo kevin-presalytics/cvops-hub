@@ -7,6 +7,7 @@ using lib.models.mqtt;
 namespace lib.models.db
 {
     [Keyless]
+    [Table("platform_events")]
     public class PlatformEvent : EventArgs, IMqttPayload
     {
         public DateTimeOffset Time {get; set;} = DateTimeOffset.UtcNow;

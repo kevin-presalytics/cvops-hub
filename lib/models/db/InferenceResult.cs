@@ -7,6 +7,7 @@ using lib.models.mqtt;
 namespace lib.models.db
 {
     [Keyless]
+    [Table("inference_results")]
     public class InferenceResult : EventArgs, IMqttPayload
     {
         public DateTimeOffset Time {get; set;} = DateTimeOffset.UtcNow;
