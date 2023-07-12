@@ -6,6 +6,7 @@ using MQTTnet.Client;
 using MQTTnet.Formatter;
 using MQTTnet.Protocol;
 using Serilog;
+using System.Linq;
 using lib.models.configuration;
 
 namespace lib.services.mqtt
@@ -19,9 +20,10 @@ namespace lib.services.mqtt
         Task Unsubscribe(string topic);
         Task Publish(string topic, string payload, MqttQualityOfServiceLevel qos);
         Task Publish(MqttApplicationMessage message);
-        bool isConnected { get; }
-        public event EventHandler OnConnected;
-        public event EventHandler<MqttApplicationMessage> OnMessage;
+        bool IsConnected { get; }
+
+        event EventHandler<MqttApplicationMessage> OnMessage;
+        event EventHandler OnConnected;
     }
     public class HubMqttClient : IDisposable, IHubMqttClient
     {
@@ -32,12 +34,15 @@ namespace lib.services.mqtt
         private string _password;
         private int _mqttPort;
 
-        public event EventHandler OnConnected;
         public event EventHandler<MqttApplicationMessage> OnMessage;
+        public event EventHandler OnConnected;
         
 
         #pragma warning disable CS8618
-        public HubMqttClient(ILogger logger, AppConfiguration configuration)
+        public HubMqttClient(
+            ILogger logger, 
+            AppConfiguration configuration
+        )
         {
             _logger = logger;
             _mqttUri = configuration.MQTT.Host;
@@ -49,7 +54,7 @@ namespace lib.services.mqtt
         }
         #pragma warning restore CS8618
 
-        public bool isConnected {
+        public bool IsConnected {
             get {
                 if (_mqttClient == null) return false;
                 return _mqttClient.IsConnected;
@@ -64,7 +69,6 @@ namespace lib.services.mqtt
                 // This will send the DISCONNECT packet. Calling _Dispose_ without DisconnectAsync the 
                 // connection is closed in a "not clean" way. See MQTT specification for more details.
                 await this._mqttClient.DisconnectAsync(new MqttClientDisconnectOptionsBuilder().WithReason(MqttClientDisconnectOptionsReason.NormalDisconnection).Build());
-
                 _logger.Debug("The MQTT client is disconnected.");
             }
         }
@@ -85,7 +89,6 @@ namespace lib.services.mqtt
             }
 
             await this._mqttClient.PingAsync(CancellationToken.None);
-
             Console.WriteLine("The MQTT server replied to the ping request.");
         }
 
@@ -102,7 +105,8 @@ namespace lib.services.mqtt
                 .WithCredentials(_username, _password)
                 .Build();
             
-            _mqttClient.ApplicationMessageReceivedAsync += e => {
+            _mqttClient.ApplicationMessageReceivedAsync += e =>
+            {
                 _logger.Debug("Application Message Received. Topic: {topic}", e.ApplicationMessage.Topic);
                 OnMessage?.Invoke(this, e.ApplicationMessage);
                 return Task.CompletedTask;
@@ -122,10 +126,9 @@ namespace lib.services.mqtt
                             if (!await this._mqttClient.TryPingAsync())
                             {
                                 await this._mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
-
-                                // Subscribe to topics when session is clean etc.
-                                _logger.Debug("The MQTT client is connected.");
                                 OnConnected?.Invoke(this, EventArgs.Empty);
+                                _logger.Debug("The MQTT client is connected.");
+
                             }
                         }
                         catch (Exception ex)
@@ -180,7 +183,13 @@ namespace lib.services.mqtt
                                     .WithTopicFilter(topic)
                                     .Build();
 
-            await this._mqttClient.SubscribeAsync(subscribeOptions);
+            var subscribeResult = await this._mqttClient.SubscribeAsync(subscribeOptions);
+            if (subscribeResult.Items.Any(x => x.ResultCode == MqttClientSubscribeResultCode.GrantedQoS0)) {
+                _logger.Debug("The topic {topic} is subscribed.", topic);
+            } else {
+                _logger.Debug("The topic {topic} is not subscribed.", topic);
+            }
+            
         }
 
         public async Task Unsubscribe(string topic)

@@ -3,7 +3,6 @@ using Serilog.Events;
 using Serilog.Formatting.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
 using System;
 using lib.models.configuration;
 
@@ -29,6 +28,7 @@ namespace lib.extensions
                 .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
                 .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
                 .MinimumLevel.Override("System", LogEventLevel.Information)
+                // .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Information)
                 .Enrich.FromLogContext();
                 
             

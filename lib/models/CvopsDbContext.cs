@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using lib.models.db;
 using lib.services.auth;
-using lib.models.configuration;
 using lib.extensions;
 
 namespace lib.models
@@ -18,9 +18,6 @@ namespace lib.models
 
     public class CvopsDbContext : DbContext
     {
-        private AppConfiguration _configuration { get; }
-        private IUserIdProvider _userIdProvider {get; }
-
 
         public DbSet<Device> Devices => Set<Device>();
 
@@ -34,17 +31,9 @@ namespace lib.models
         public DbSet<PlatformEvent> PlatformEvents => Set<PlatformEvent>();
 
 
-
-        public CvopsDbContext(AppConfiguration configuration, IUserIdProvider userIdProvider)
+        public CvopsDbContext(DbContextOptions<CvopsDbContext> options)
+        : base(options)
         {
-            _configuration = configuration;
-            _userIdProvider = userIdProvider;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseLazyLoadingProxies();
-            optionsBuilder.UseNpgsql(_configuration.GetPostgresqlConnectionString());
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -115,6 +104,7 @@ namespace lib.models
                 {
                     index.SetDatabaseName(index.GetDatabaseName().ToSnakeCase());
                 }
+
             }
 
             // User
@@ -164,6 +154,39 @@ namespace lib.models
 
 
             // Configure HyperTables
+            List<Microsoft.EntityFrameworkCore.Metadata.IMutableEntityType> timeSeriesEntities = modelBuilder.Model.GetEntityTypes()
+                .Where(e => e.ClrType.IsSubclassOf(typeof(TimeSeriesEntity)))
+                .ToList();
+
+            foreach (Microsoft.EntityFrameworkCore.Metadata.IMutableEntityType entity in timeSeriesEntities)
+            {
+                var tableName = entity.GetTableName();
+                #pragma warning disable CS8604
+                var storeObjectIdentifier = StoreObjectIdentifier.Table(tableName, null);
+                #pragma warning restore CS8604
+                foreach (Microsoft.EntityFrameworkCore.Metadata.IMutableProperty property in entity.GetProperties())
+                {
+                    property.SetColumnName(((IProperty)property).GetColumnName(storeObjectIdentifier).ToSnakeCase());
+                }
+                foreach (Microsoft.EntityFrameworkCore.Metadata.IMutableKey key in entity.GetKeys())
+                {
+                    #pragma warning disable CS8600
+                    key.SetName((string)key.GetName().ToSnakeCase());
+                    #pragma warning restore CS8600
+                }
+
+                foreach (Microsoft.EntityFrameworkCore.Metadata.IMutableForeignKey key in entity.GetForeignKeys())
+                {
+                    key.SetConstraintName(key.GetConstraintName().ToSnakeCase());
+                }
+
+                foreach (Microsoft.EntityFrameworkCore.Metadata.IMutableIndex index in entity.GetIndexes())
+                {
+                    index.SetDatabaseName(index.GetDatabaseName().ToSnakeCase());
+                }
+            }
+
+
             // InferenceResult
             modelBuilder.Entity<InferenceResult>()
                 .HasIndex(ir => ir.DeviceId);
@@ -200,6 +223,7 @@ namespace lib.models
         {
             IEnumerable<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry> entities = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
 
+            var _userIdProvider = this.GetService<IUserIdProvider>();
             Guid? userId = _userIdProvider.GetUserId();
             EditorTypes editorType = EditorTypes.User;
             if (userId == Guid.Empty || userId == null) editorType = EditorTypes.System;

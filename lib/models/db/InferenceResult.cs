@@ -8,9 +8,8 @@ namespace lib.models.db
 {
     [Keyless]
     [Table("inference_results")]
-    public class InferenceResult : EventArgs, IMqttPayload
+    public class InferenceResult : TimeSeriesEntity, IMqttPayload
     {
-        public DateTimeOffset Time {get; set;} = DateTimeOffset.UtcNow;
         public Guid WorkspaceId {get; set;}
         public Guid DeviceId {get; set;}
         public InferenceResultTypes ResultType {get; set;}

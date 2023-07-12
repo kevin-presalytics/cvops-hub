@@ -1,10 +1,9 @@
-﻿using System;
-using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using lib.models.configuration;
 using lib.extensions;
 using lib.services;
+using lib.models;
 
 namespace db_migrations
 {
@@ -18,8 +17,9 @@ namespace db_migrations
 
             var serviceProvider = Services.ConfigureServices();
             var appConfiguration = serviceProvider.GetRequiredService<AppConfiguration>();
+            var contextFactory = serviceProvider.GetRequiredService<IDbContextFactory<CvopsDbContext>>();
 
-            using (var context = serviceProvider.GetRequiredService<MigrationsDbContext>())
+            using (var context = contextFactory.CreateDbContext())
             {
                 
                 Console.WriteLine("Checking for Database Existence...");

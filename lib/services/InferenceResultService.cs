@@ -1,5 +1,4 @@
 using lib.models.db;
-using lib.models;
 using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
@@ -7,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Text.Json;
 using System.Globalization;
+using lib.models;
 
 namespace lib.services
 {
@@ -25,11 +25,11 @@ namespace lib.services
 
     public class InferenceResultService : IInferenceResultService
     {
-        private readonly CvopsDbContext _context;
+        private readonly IDbContextFactory<CvopsDbContext> _contextFactory;
 
-        public InferenceResultService(CvopsDbContext context)
+        public InferenceResultService(IDbContextFactory<CvopsDbContext> contextFactory)
         {
-            _context = context;
+            _contextFactory = contextFactory;
         }
 
         public async Task Write(InferenceResult dataPoint)
@@ -42,24 +42,27 @@ namespace lib.services
             string meshes = dataPoint.Meshes == null ? "NULL" : JsonSerializer.Serialize(dataPoint.Meshes);
             string labels = dataPoint.Labels == null ? "NULL" : JsonSerializer.Serialize(dataPoint.Labels);
 
-            await _context.Database.ExecuteSqlInterpolatedAsync($@"
-                INSERT INTO inference_results (
-                    workspace_id,
-                    device_id,
-                    time,
-                    result_type,
-                    boxes,
-                    meshes,
-                    labels
-                ) VALUES (
-                    {workspaceId},
-                    {deviceId},
-                    {time}::timestamp,
-                    {resultType},
-                    {boxes},
-                    {meshes},
-                    {labels}
-                )");
+            using (var _context = _contextFactory.CreateDbContext()) 
+            {
+                await _context.Database.ExecuteSqlInterpolatedAsync($@"
+                    INSERT INTO inference_results (
+                        workspace_id,
+                        device_id,
+                        time,
+                        result_type,
+                        boxes,
+                        meshes,
+                        labels
+                    ) VALUES (
+                        {workspaceId},
+                        {deviceId},
+                        {time}::timestamp,
+                        {resultType},
+                        {boxes},
+                        {meshes},
+                        {labels}
+                    )");
+            }
         }
 
         public async Task<List<InferenceResult>> Query(
@@ -70,15 +73,18 @@ namespace lib.services
             int? limit
         )
         {
-            var query = _context.InferenceResults
-                .Where(x => x.WorkspaceId == workspaceId);
+            using (var _context = _contextFactory.CreateDbContext()) 
+            {
+                var query = _context.InferenceResults
+                    .Where(x => x.WorkspaceId == workspaceId);
 
-            if (deviceId != null) query = query.Where(x => x.DeviceId == deviceId);
-            if (start != null) query = query.Where(x => x.Time >= start);
-            if (end != null) query = query.Where(x => x.Time <= end);
-            if (limit != null) query = query.Take(limit.Value);
+                if (deviceId != null) query = query.Where(x => x.DeviceId == deviceId);
+                if (start != null) query = query.Where(x => x.Time >= start);
+                if (end != null) query = query.Where(x => x.Time <= end);
+                if (limit != null) query = query.Take(limit.Value);
 
-            return await query.ToListAsync();
+                return await query.ToListAsync();
+            }
         }
 
         public Task<List<InferenceResult>> Read(Guid workspaceId, Guid? deviceId, DateTimeOffset? start, DateTimeOffset? end, int? limit)

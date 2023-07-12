@@ -2,10 +2,9 @@ using lib.models.configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 using lib.services.auth;
-using Utility.Extensions.Configuration.Yaml;
 using lib.extensions;
+using lib.models;
 
 namespace db_migrations
 {
@@ -15,11 +14,12 @@ namespace db_migrations
         {
             AppConfiguration appConfiguration = new ConfigurationManager().Configure();
             IServiceCollection services = new ServiceCollection();
-            services.AddDbContext<MigrationsDbContext>(options => options.UseNpgsql(appConfiguration.GetPostgresqlConnectionString()));
+            services.AddDbContextFactory<CvopsDbContext>(options => {
+                options.UseNpgsql(appConfiguration.GetPostgresqlConnectionString(), b => b.MigrationsAssembly("db-migrations"));
+            });
             services.AddSingleton<AppConfiguration>(appConfiguration);
             services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();
             services.AddHttpContextAccessor();
-
             IServiceProvider serviceProvider = services.BuildServiceProvider();
             return serviceProvider;
         }

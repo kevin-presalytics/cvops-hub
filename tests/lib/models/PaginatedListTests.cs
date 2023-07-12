@@ -16,7 +16,7 @@ namespace tests.lib.models
         {
             var list = new List<int> { 1, 2, 3 };
             var paginatedList = new PaginatedList<int>(list, list.Count, 1, list.Count);
-            var json = System.Text.Json.JsonSerializer.Serialize(paginatedList, LocalJsonOptions.GetOptions());
+            var json = System.Text.Json.JsonSerializer.Serialize(paginatedList, LocalJsonOptions.DefaultOptions);
             #pragma warning disable CS8602
             var JObject = JsonNode.Parse(json).AsObject();
             JObject["pageIndex"].GetValue<int>().Should().Be(paginatedList.PageIndex);

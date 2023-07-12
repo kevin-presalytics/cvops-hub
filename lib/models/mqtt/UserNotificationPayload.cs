@@ -11,6 +11,8 @@ namespace lib.models.mqtt
     }
     public class UserNotificationPayload : MqttPayload
     {
+        [JsonPropertyName("notificationId")]
+        public Guid NotificationId { get; set;} = default!;
 
         [JsonPropertyName("userId")]
         public Guid UserId { get; set;} = default!;

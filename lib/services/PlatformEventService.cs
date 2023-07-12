@@ -1,12 +1,11 @@
 using lib.models.db;
-using lib.models;
 using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Text.Json;
-using System.Globalization;
+using lib.models;
+using Serilog;
 
 namespace lib.services
 {
@@ -27,44 +26,56 @@ namespace lib.services
     public class PlatformEventService : IPlatformEventService
     {
         private readonly IDbContextFactory<CvopsDbContext> _contextFactory;
+        private readonly ILogger _logger;
 
 
-        public PlatformEventService(IDbContextFactory<CvopsDbContext> contextFactory)
+        public PlatformEventService(IDbContextFactory<CvopsDbContext> contextFactory, ILogger logger)
         {
             _contextFactory = contextFactory;
+            _logger = logger;
         }
 
         public async Task Write(PlatformEvent dataPoint)
         {
-            string workspaceId = dataPoint.WorkspaceId.ToString();
-            # pragma warning disable CS8600
-            string deviceId = dataPoint.DeviceId == null ? "NULL" : dataPoint.DeviceId.ToString();
-            string userId = dataPoint.UserId == null ? "NULL" : dataPoint.UserId.ToString();
-            # pragma warning restore CS8600
-            string time = dataPoint.Time.DateTime.ToString("o", CultureInfo.InvariantCulture);
-            int eventType = (int)dataPoint.EventType;
-            string eventData = JsonSerializer.Serialize(dataPoint.EventData);
+            _logger.Debug("Writing platform event for workspace {workspaceId}");
+            try {
+                using (var _context = _contextFactory.CreateDbContext())
+                {
+                    Guid workspaceId = dataPoint.WorkspaceId;
+                    if (dataPoint.WorkspaceId == Guid.Empty)
+                    {
+                        if (dataPoint.DeviceId != null && dataPoint.DeviceId != Guid.Empty)
+                        {
+                            workspaceId = await _context.Devices
+                                .Where(d => d.Id == dataPoint.DeviceId)
+                                .Select(d => d.WorkspaceId)
+                                .FirstOrDefaultAsync();
+                        } else {
+                            throw new Exception("Cannot write a user platform event without workspace id");
+                        }
+                    }
+                    int eventType = (int)dataPoint.EventType;
 
-            using (var _context = _contextFactory.CreateDbContext())
-            {
-
-                await _context.Database.ExecuteSqlInterpolatedAsync($@"
-                    INSERT INTO platform_events (
-                        workspace_id,
-                        device_id,
-                        user_id,
-                        time,
-                        event_type,
-                        event_data
-                    ) VALUES (
-                        {workspaceId},
-                        {deviceId},
-                        {userId},
-                        {time}::timestamp,
-                        {eventType},
-                        {eventData}
-                    )");
-            }
+                    await _context.Database.ExecuteSqlInterpolatedAsync($@"
+                        INSERT INTO platform_events (
+                            workspace_id,
+                            device_id,
+                            user_id,
+                            time,
+                            event_type,
+                            event_data
+                        ) VALUES (
+                            {workspaceId},
+                            {dataPoint.DeviceId},
+                            {dataPoint.UserId},
+                            {dataPoint.Time},
+                            {dataPoint.EventType},
+                            {dataPoint.EventData}
+                        )");
+                }
+            } catch (Exception e) {
+                _logger.Error(e, "Error writing platform event");
+            }   
         }
 
         public async Task<List<PlatformEvent>> Query(

@@ -15,7 +15,7 @@ namespace lib.models.mqtt
     {
 
         [JsonPropertyName("time")]
-        public DateTimeOffset Time { get; set;}
+        public DateTimeOffset Time { get; } = DateTimeOffset.UtcNow;
 
     }
 
@@ -29,7 +29,8 @@ namespace lib.models.mqtt
             } else {
                 # pragma warning disable CS8600
                 try {
-                    payload =  JsonSerializer.Deserialize<T>(message.PayloadSegment, LocalJsonOptions.GetOptions());
+                    // Use data annotations and customer JsonConverters to Validate the payload 
+                    payload =  JsonSerializer.Deserialize<T>(message.PayloadSegment, LocalJsonOptions.DefaultOptions);
                 } catch (Exception) {
                     throw new Exception($"Unable to deserialize ApplicationMessage payload: {message.ConvertPayloadToString()}");
                 }
@@ -42,24 +43,29 @@ namespace lib.models.mqtt
             }
         }
 
-        public static byte[] AsPayload<T>(this T payload) where T : IMqttPayload
+        // public static byte[] AsPayload<T>(this T payload) where T : IMqttPayload
+        // {
+        //     return JsonSerializer.SerializeToUtf8Bytes(payload, LocalJsonOptions.GetOptions());
+        // }
+
+        public static byte[] AsPayload(this IMqttPayload payload)
         {
-            return JsonSerializer.SerializeToUtf8Bytes(payload, LocalJsonOptions.GetOptions());
+            return JsonSerializer.SerializeToUtf8Bytes(payload, payload.GetType(), LocalJsonOptions.DefaultOptions);
         }
 
         public static string ToJsonString<T>(this T payload) where T : IMqttPayload
         {
-            return JsonSerializer.Serialize(payload, LocalJsonOptions.GetOptions());
+            return JsonSerializer.Serialize(payload, LocalJsonOptions.DefaultOptions);
         }
 
-        public static MqttApplicationMessage AsApplicationMessage<T>(
-            this T payload, 
+        public static MqttApplicationMessage AsApplicationMessage(
+            this IMqttPayload payload, 
             string topic, 
-            MqttQualityOfServiceLevel qos = MqttQualityOfServiceLevel.AtLeastOnce) where T : IMqttPayload
+            MqttQualityOfServiceLevel qos = MqttQualityOfServiceLevel.AtLeastOnce)
         {
             return new MqttApplicationMessageBuilder()
                 .WithTopic(topic)
-                .WithPayload(payload.AsPayload<T>())
+                .WithPayload(payload.AsPayload())
                 .WithQualityOfServiceLevel(qos)
                 .Build();
         }

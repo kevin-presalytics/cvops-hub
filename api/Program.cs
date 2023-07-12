@@ -12,7 +12,7 @@ using Serilog;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using api.controllers.options;
 using lib.middleware;
-using lib.services.mqtt;
+using lib.services.factories;
 
 namespace api
 {
@@ -58,7 +58,6 @@ namespace api
 
             // MQTT Management Services
             builder.Services.AddHubMQTTClient();
-            builder.Services.AddHostedService<MqttClientWorker>();
 
             // MQTT Topic Listeners
 
@@ -72,10 +71,19 @@ namespace api
             builder.Services.AddTransient<IInviteUserService, InviteUserService>();
             builder.Services.AddTransient<IWorkspaceService, WorkspaceService>();
             builder.Services.AddTransient<IDeviceService, DeviceService>();
+
+
+            // Service Factories
+            builder.Services.AddSingleton<IScopedServiceFactory<IDeviceService>, ScopedServiceFactory<IDeviceService>>();
+            builder.Services.AddSingleton<IScopedServiceFactory<IUserService>, ScopedServiceFactory<IUserService>>();
+
             
             // Model Layer
-            builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));
-            builder.Services.AddDbContextFactory<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));
+            builder.Services.AddDbContextFactory<CvopsDbContext>(options => {   
+                options.UseLazyLoadingProxies();
+                options.UseNpgsql(appConfig.GetPostgresqlConnectionString());
+            });
+            // Build DI Container
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

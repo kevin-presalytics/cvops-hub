@@ -30,13 +30,13 @@ namespace lib.services
         IDeviceKeyVerifier _keyVerifier;
 
         public DeviceService(            
-            CvopsDbContext context, 
+            IDbContextFactory<CvopsDbContext> contextFactory, 
             IDeviceKeyGenerator keyGenerator, 
             AppConfiguration configuration,
             IDeviceKeyVerifier keyVerifier
         )
         {
-            _context = context;
+            _context = contextFactory.CreateDbContext();
             _configuration = configuration;
             _keyGenerator = keyGenerator;
             _keyVerifier =  keyVerifier;

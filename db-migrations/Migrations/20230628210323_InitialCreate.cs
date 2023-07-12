@@ -33,6 +33,37 @@ namespace db_migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "inference_results",
+                columns: table => new
+                {
+                    workspace_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    device_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    result_type = table.Column<int>(type: "integer", nullable: false),
+                    boxes = table.Column<JsonDocument>(type: "jsonb", nullable: true),
+                    meshes = table.Column<JsonDocument>(type: "jsonb", nullable: true),
+                    labels = table.Column<JsonDocument>(type: "jsonb", nullable: false),
+                    time = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                });
+
+            migrationBuilder.CreateTable(
+                name: "platform_events",
+                columns: table => new
+                {
+                    event_type = table.Column<int>(type: "integer", nullable: false),
+                    workspace_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: true),
+                    device_id = table.Column<Guid>(type: "uuid", nullable: true),
+                    event_data = table.Column<JsonDocument>(type: "jsonb", nullable: false),
+                    time = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                });
+
+            migrationBuilder.CreateTable(
                 name: "workspace",
                 columns: table => new
                 {
@@ -56,12 +87,13 @@ namespace db_migrations.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: true),
-                    description = table.Column<string>(type: "text", nullable: true),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    description = table.Column<string>(type: "text", nullable: false),
                     device_info = table.Column<JsonDocument>(type: "jsonb", nullable: false),
                     salt = table.Column<byte[]>(type: "bytea", nullable: false),
                     hash = table.Column<string>(type: "text", nullable: false),
                     workspace_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    activation_status = table.Column<string>(type: "text", nullable: false),
                     date_created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     user_created = table.Column<Guid>(type: "uuid", nullable: true),
                     created_by = table.Column<string>(type: "text", nullable: false),
@@ -136,6 +168,41 @@ namespace db_migrations.Migrations
                 column: "workspace_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_inference_results_device_id",
+                table: "inference_results",
+                column: "device_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_inference_results_result_type",
+                table: "inference_results",
+                column: "result_type");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_inference_results_workspace_id",
+                table: "inference_results",
+                column: "workspace_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_platform_events_device_id",
+                table: "platform_events",
+                column: "device_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_platform_events_event_type",
+                table: "platform_events",
+                column: "event_type");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_platform_events_user_id",
+                table: "platform_events",
+                column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_platform_events_workspace_id",
+                table: "platform_events",
+                column: "workspace_id");
+
+            migrationBuilder.CreateIndex(
                 name: "ix_workspace_user_user_id",
                 table: "workspace_user",
                 column: "user_id");
@@ -150,6 +217,12 @@ namespace db_migrations.Migrations
         {
             migrationBuilder.DropTable(
                 name: "device");
+
+            migrationBuilder.DropTable(
+                name: "inference_results");
+
+            migrationBuilder.DropTable(
+                name: "platform_events");
 
             migrationBuilder.DropTable(
                 name: "workspace_user");

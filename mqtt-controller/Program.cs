@@ -43,21 +43,21 @@ namespace mqtt_controller
 
             // MQTT Management Services
             builder.Services.AddHostedService<MqttAdminSetupWorker>();
-            builder.Services.AddHostedService<ControllerMqttClientWorker>();
             builder.Services.AddScoped<IMqttHttpAuthenticator, MqttHttpAuthenticator>();
             builder.Services.AddMQTTAdmin(appConfig);
             builder.Services.AddHubMQTTClient();
 
             // MQTT Topic Listeners
-            builder.Services.AddSingleton<DeviceDataTopicListener>();
-            builder.Services.AddSingleton<PlatformEventTopicListener>();
+            builder.Services.AddDeviceDataTopicListener();
+            builder.Services.AddPlatformEventTopicListener();
 
             // Platform Event Handling Threads
-            builder.Services.AddHostedService<DeviceRegisteredWorker>();
-            builder.Services.AddHostedService<DeviceUnregisteredWorker>();
+            builder.Services.AddHostedService<DeviceRegistrationWorker>();
+            builder.Services.AddHostedService<UserEventsWorker>();
             
             // Service Layer
             builder.Services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();
+            builder.Services.AddSingleton<IUserNotificationService, UserNotificationService>();
             builder.Services.AddTransient<IDeviceKeyVerifier, DeviceKeyVerifier>();
             builder.Services.AddTransient<IDeviceKeyGenerator, DeviceKeyGenerator>();
             builder.Services.AddTransient<IUserService, UserService>();
@@ -66,14 +66,19 @@ namespace mqtt_controller
             builder.Services.AddTransient<IWorkspaceService, WorkspaceService>();
             builder.Services.AddTransient<IDeviceService, DeviceService>();
             builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient<IPlatformEventService, PlatformEventService>();
+            builder.Services.AddTransient<IInferenceResultService, InferenceResultService>();
 
             // Service Factories to support scoped and Transient services from Singletons / Background Services
-            builder.Services.AddSingleton<IDeviceServiceFactory, DeviceServiceFactory>();
-
+            builder.Services.AddSingleton<IScopedServiceFactory<IDeviceService>, ScopedServiceFactory<IDeviceService>>();
+            builder.Services.AddSingleton<IScopedServiceFactory<IUserService>, ScopedServiceFactory<IUserService>>();
 
             // Model Layer
-            builder.Services.AddDbContext<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));
-            builder.Services.AddDbContextFactory<CvopsDbContext>(options => options.UseNpgsql(appConfig.GetPostgresqlConnectionString()));
+            builder.Services.AddDbContextFactory<CvopsDbContext>(options => {   
+                options.UseLazyLoadingProxies();
+                options.UseNpgsql(appConfig.GetPostgresqlConnectionString());
+            });
+            // Builds DI Container
             var app = builder.Build();
 
             app.UseSerilogRequestLogging();
@@ -81,7 +86,6 @@ namespace mqtt_controller
             app.MapControllers();
 
             logger.Information("Launching MQTT Controller...");
-            logger.Debug("Launching MQTT Controller on in Debug mode.");
             await app.RunAsync();
         }
     }

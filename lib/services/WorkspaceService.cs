@@ -13,7 +13,7 @@ using Serilog;
 
 namespace lib.services
 {
-    public interface IWorkspaceService
+    public interface IWorkspaceService : IDisposable
     {
         bool IsWorkspaceViewer(Guid WorkspaceId, User user);
         bool IsWorkspaceOwner(Guid WorkspaceId, User user);
@@ -37,13 +37,13 @@ namespace lib.services
         private IDeviceService _deviceService;
         private ILogger _logger;
         public WorkspaceService(
-            CvopsDbContext context,
+            IDbContextFactory<CvopsDbContext> contextFactory,
             IUserService userService,
             IDeviceService deviceService,
             ILogger logger
         )
         {
-            _context = context;
+            _context = contextFactory.CreateDbContext();
             _userService = userService;
             _deviceService = deviceService;
             _logger = logger;
@@ -216,6 +216,11 @@ namespace lib.services
             if (workspaceUser == null) throw new Exception("User is not a member of this workspace");
             _context.WorkspaceUsers.Remove(workspaceUser);
             await _context.SaveChangesAsync();
+        }
+
+        void IDisposable.Dispose()
+        {
+            _context.Dispose();
         }
     }
 }

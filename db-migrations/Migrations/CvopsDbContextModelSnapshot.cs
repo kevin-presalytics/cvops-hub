@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using db_migrations;
+using lib.models;
 
 #nullable disable
 
 namespace db_migrations.Migrations
 {
-    [DbContext(typeof(MigrationsDbContext))]
-    partial class MigrationsDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(CvopsDbContext))]
+    partial class CvopsDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -105,26 +105,33 @@ namespace db_migrations.Migrations
             modelBuilder.Entity("lib.models.db.InferenceResult", b =>
                 {
                     b.Property<JsonDocument>("Boxes")
-                        .HasColumnType("jsonb");
+                        .HasColumnType("jsonb")
+                        .HasColumnName("boxes");
 
                     b.Property<Guid>("DeviceId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("device_id");
 
                     b.Property<JsonDocument>("Labels")
                         .IsRequired()
-                        .HasColumnType("jsonb");
+                        .HasColumnType("jsonb")
+                        .HasColumnName("labels");
 
                     b.Property<JsonDocument>("Meshes")
-                        .HasColumnType("jsonb");
+                        .HasColumnType("jsonb")
+                        .HasColumnName("meshes");
 
                     b.Property<int>("ResultType")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("result_type");
 
                     b.Property<DateTimeOffset>("Time")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("time");
 
                     b.Property<Guid>("WorkspaceId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("workspace_id");
 
                     b.HasIndex("DeviceId");
 
@@ -138,23 +145,29 @@ namespace db_migrations.Migrations
             modelBuilder.Entity("lib.models.db.PlatformEvent", b =>
                 {
                     b.Property<Guid?>("DeviceId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("device_id");
 
                     b.Property<JsonDocument>("EventData")
                         .IsRequired()
-                        .HasColumnType("jsonb");
+                        .HasColumnType("jsonb")
+                        .HasColumnName("event_data");
 
                     b.Property<int>("EventType")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("event_type");
 
                     b.Property<DateTimeOffset>("Time")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("time");
 
                     b.Property<Guid?>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
                     b.Property<Guid>("WorkspaceId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("workspace_id");
 
                     b.HasIndex("DeviceId");
 

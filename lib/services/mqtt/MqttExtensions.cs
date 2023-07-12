@@ -2,6 +2,7 @@ using System.Net.Http.Headers;
 using Microsoft.Extensions.DependencyInjection;
 using lib.models.configuration;
 using lib.services.mqtt;
+using lib.models.mqtt;
 
 namespace lib.extensions
 {
@@ -29,6 +30,9 @@ namespace lib.extensions
         public static void AddHubMQTTClient(this IServiceCollection services)
         {
             services.AddSingleton<IHubMqttClient, HubMqttClient>();
+            services.AddHostedService<MqttClientWorker>();
+            services.AddSingleConsumerChannel<MqttPublishMessage>();
+            services.AddSingleConsumerChannel<MqttSubscriptionMessage>();
         }
 
     }

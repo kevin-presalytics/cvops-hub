@@ -8,9 +8,8 @@ namespace lib.models.db
 {
     [Keyless]
     [Table("platform_events")]
-    public class PlatformEvent : EventArgs, IMqttPayload
+    public class PlatformEvent : TimeSeriesEntity, IMqttPayload
     {
-        public DateTimeOffset Time {get; set;} = DateTimeOffset.UtcNow;
         public PlatformEventTypes EventType {get; set;}
         public Guid WorkspaceId {get; set;} 
         public Guid? UserId {get; set;}
@@ -18,14 +17,13 @@ namespace lib.models.db
         
         [Column(TypeName = "jsonb")]
         public JsonDocument EventData {get; set;} =  JsonDocument.Parse("{}");
-
-        public DateTimeOffset Timestamp => throw new NotImplementedException();
     }
 
     public enum PlatformEventTypes {
         None,
         UserLogin,
         UserLogout,
+        UserNotification,
         DeviceRegistered,
         DeviceUnregistered,
     }

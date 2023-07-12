@@ -11,7 +11,8 @@ using lib.models.exceptions;
 
 namespace lib.services
 {
-    public interface IUserService {
+    public interface IUserService : IDisposable
+    {
         Task<User> GetUser(Guid userId);
         Task<User> CreateUser(string jwtToken);
         Task<User> CreateUser(string email, string jwtSubject);
@@ -26,9 +27,14 @@ namespace lib.services
         private readonly IUserJwtTokenReader _userJwtTokenReader;
         private readonly IInviteUserService _inviteUserService;
 
-        public UserService(ILogger logger, CvopsDbContext dbContext, IUserJwtTokenReader userJwtTokenReader, IInviteUserService inviteUserService) {
+        public UserService(
+            ILogger logger, 
+            IDbContextFactory<CvopsDbContext> dbContextFactory, 
+            IUserJwtTokenReader userJwtTokenReader, 
+            IInviteUserService inviteUserService
+        ) {
             _logger = logger;
-            _context = dbContext;
+            _context = dbContextFactory.CreateDbContext();
             _userJwtTokenReader = userJwtTokenReader;
             _inviteUserService = inviteUserService;
 
@@ -149,6 +155,10 @@ namespace lib.services
             }
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
+        }
+
+        void IDisposable.Dispose() {
+            _context.Dispose();
         }
     }
 }

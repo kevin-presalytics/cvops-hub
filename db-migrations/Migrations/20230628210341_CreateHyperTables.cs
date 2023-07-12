@@ -11,11 +11,11 @@ namespace db_migrations.Migrations
             migrationBuilder.Sql(@"
                 SELECT create_hypertable(
                     'inference_results',
-                    'time',
+                    'time'
                 );
                 SELECT create_hypertable(
                     'platform_events',
-                    'time',
+                    'time'
                 );
             ");
         }

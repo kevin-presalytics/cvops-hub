@@ -25,7 +25,7 @@ namespace lib.extensions
             services.Configure<MvcJsonOptions>(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
         }
 
-        public static JsonSerializerOptions GetOptions() {
+        private static JsonSerializerOptions GetOptions() {
             var options = new JsonSerializerOptions();
             options.Converters.Add(new JsonStringEnumConverter());
             options.Converters.Add(new PaginatedListJsonConverterFactory());
@@ -33,7 +33,15 @@ namespace lib.extensions
             return options;
         }
 
-        
+        private static JsonSerializerOptions? _defaultOptions = null;
 
+        public static JsonSerializerOptions DefaultOptions {
+            get {
+                if (_defaultOptions == null) {
+                    _defaultOptions = GetOptions();
+                }
+                return _defaultOptions;
+            }
+        }
     }
 }

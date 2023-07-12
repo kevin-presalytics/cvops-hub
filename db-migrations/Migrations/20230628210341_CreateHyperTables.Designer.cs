@@ -6,15 +6,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using db_migrations;
+using lib.models;
 
 #nullable disable
 
 namespace db_migrations.Migrations
 {
-    [DbContext(typeof(MigrationsDbContext))]
-    [Migration("20230605183009_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(CvopsDbContext))]
+    [Migration("20230628210341_CreateHyperTables")]
+    partial class CreateHyperTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,11 @@ namespace db_migrations.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<string>("ActivationStatus")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("activation_status");
+
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasColumnType("text")
@@ -46,6 +51,7 @@ namespace db_migrations.Migrations
                         .HasColumnName("date_modified");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("description");
 
@@ -65,6 +71,7 @@ namespace db_migrations.Migrations
                         .HasColumnName("modified_by");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("name");
 
@@ -95,6 +102,84 @@ namespace db_migrations.Migrations
                         .HasDatabaseName("ix_device_workspace_id");
 
                     b.ToTable("device", (string)null);
+                });
+
+            modelBuilder.Entity("lib.models.db.InferenceResult", b =>
+                {
+                    b.Property<JsonDocument>("Boxes")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("boxes");
+
+                    b.Property<Guid>("DeviceId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("device_id");
+
+                    b.Property<JsonDocument>("Labels")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("labels");
+
+                    b.Property<JsonDocument>("Meshes")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("meshes");
+
+                    b.Property<int>("ResultType")
+                        .HasColumnType("integer")
+                        .HasColumnName("result_type");
+
+                    b.Property<DateTimeOffset>("Time")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("time");
+
+                    b.Property<Guid>("WorkspaceId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("workspace_id");
+
+                    b.HasIndex("DeviceId");
+
+                    b.HasIndex("ResultType");
+
+                    b.HasIndex("WorkspaceId");
+
+                    b.ToTable("inference_results");
+                });
+
+            modelBuilder.Entity("lib.models.db.PlatformEvent", b =>
+                {
+                    b.Property<Guid?>("DeviceId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("device_id");
+
+                    b.Property<JsonDocument>("EventData")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("event_data");
+
+                    b.Property<int>("EventType")
+                        .HasColumnType("integer")
+                        .HasColumnName("event_type");
+
+                    b.Property<DateTimeOffset>("Time")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("time");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.Property<Guid>("WorkspaceId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("workspace_id");
+
+                    b.HasIndex("DeviceId");
+
+                    b.HasIndex("EventType");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("WorkspaceId");
+
+                    b.ToTable("platform_events");
                 });
 
             modelBuilder.Entity("lib.models.db.User", b =>
