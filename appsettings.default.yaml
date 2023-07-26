@@ -37,3 +37,11 @@ auth:
     host: http://localhost:8086
     username: admin
     password: Password@1
+storage:
+  useTls: false
+  host: localhost 
+  port: 9000
+  accessKey: hub
+  secret: Password@1
+  publicHost: storage.local.cvops.io
+  presignedExpirySeconds: 3600

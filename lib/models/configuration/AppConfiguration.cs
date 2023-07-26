@@ -10,5 +10,6 @@ namespace lib.models.configuration
         public HubConfiguration Hub { get; set; } = default!;
         public Auth Auth { get; set; } = default!;
         public string Domain { get; set; } = default!;
+        public Storage Storage { get; set;} = default!;
     }
 }

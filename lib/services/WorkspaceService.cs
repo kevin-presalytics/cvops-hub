@@ -9,6 +9,9 @@ using System.Linq;
 using lib.extensions;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.Text.Json;
+using lib.models.mqtt;
+using System.Threading.Channels;
 
 
 namespace lib.services
@@ -36,17 +39,20 @@ namespace lib.services
         private IUserService _userService;
         private IDeviceService _deviceService;
         private ILogger _logger;
+        private ChannelWriter<MqttPublishMessage> _publishChannel;
         public WorkspaceService(
             IDbContextFactory<CvopsDbContext> contextFactory,
             IUserService userService,
             IDeviceService deviceService,
-            ILogger logger
+            ILogger logger, 
+            ChannelWriter<MqttPublishMessage> publishChannel
         )
         {
             _context = contextFactory.CreateDbContext();
             _userService = userService;
             _deviceService = deviceService;
             _logger = logger;
+            _publishChannel = publishChannel;
         }
 
         private static WorkspaceUserRole[] _viewerRoles = new WorkspaceUserRole[] {
@@ -142,6 +148,16 @@ namespace lib.services
             };
             _context.Workspaces.Add(newWorkspace);
             await _context.SaveChangesAsync();
+            var createWorkspaceEvent = new PlatformEvent() {
+                EventType = PlatformEventTypes.WorkspaceCreated,
+                EventData = JsonSerializer.SerializeToDocument(newWorkspace),
+                UserId = user.Id,
+                WorkspaceId = newWorkspace.Id
+            };
+            await _publishChannel.WriteAsync(new MqttPublishMessage {
+                Topic = $"events/workspace/{newWorkspace.Id}",
+                Payload = createWorkspaceEvent
+            });
             return newWorkspace.ToUserWorkspace(user);
         }
 

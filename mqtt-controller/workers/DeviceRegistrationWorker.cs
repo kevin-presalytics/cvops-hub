@@ -9,7 +9,7 @@ using System;
 
 namespace mqtt_controller.workers
 {
-    public class DeviceRegistrationWorker : ChannelListener<PlatformEvent>, IChannelOwner<PlatformEvent>
+    public class DeviceRegistrationWorker : ChannelListener<PlatformEvent>
     {
         IScopedServiceFactory<IDeviceService> _deviceServiceFactory;
         public DeviceRegistrationWorker(

@@ -26,6 +26,13 @@ namespace lib.models.db
         UserNotification,
         DeviceRegistered,
         DeviceUnregistered,
+        WorkspaceCreated,
+        WorkspaceDeleted,
+        WorkspaceUpdated,
+        WorkspaceUserAdded,
+        WorkspaceUserRemoved,
+        DeviceAdded,
+        DeviceRemoved,
     }
 }
 

@@ -12,6 +12,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.16" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.30.0" />
+    <PackageReference Include="Minio" Version="5.0.0" />
     <PackageReference Include="MQTTNet" Version="4.2.0.706" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.8" />
     <PackageReference Include="Serilog" Version="2.12.0" />

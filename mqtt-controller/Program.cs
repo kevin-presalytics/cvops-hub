@@ -54,6 +54,7 @@ namespace mqtt_controller
             // Platform Event Handling Threads
             builder.Services.AddHostedService<DeviceRegistrationWorker>();
             builder.Services.AddHostedService<UserEventsWorker>();
+            builder.Services.AddHostedService<WorkspaceEventWorker>();
             
             // Service Layer
             builder.Services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();
