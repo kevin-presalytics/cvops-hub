@@ -55,6 +55,7 @@ namespace mqtt_controller
             builder.Services.AddHostedService<DeviceRegistrationWorker>();
             builder.Services.AddHostedService<UserEventsWorker>();
             builder.Services.AddHostedService<WorkspaceEventWorker>();
+            builder.Services.AddHostedService<DeploymentTopicListener>();
             
             // Service Layer
             builder.Services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();
@@ -67,12 +68,15 @@ namespace mqtt_controller
             builder.Services.AddTransient<IWorkspaceService, WorkspaceService>();
             builder.Services.AddTransient<IDeviceService, DeviceService>();
             builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient<IDeploymentService, DeploymentService>();
+            builder.Services.AddTransient<IStorageService, MinioStorageService>();
             builder.Services.AddTransient<IPlatformEventService, PlatformEventService>();
             builder.Services.AddTransient<IInferenceResultService, InferenceResultService>();
 
             // Service Factories to support scoped and Transient services from Singletons / Background Services
             builder.Services.AddSingleton<IScopedServiceFactory<IDeviceService>, ScopedServiceFactory<IDeviceService>>();
             builder.Services.AddSingleton<IScopedServiceFactory<IUserService>, ScopedServiceFactory<IUserService>>();
+            builder.Services.AddSingleton<IScopedServiceFactory<IDeploymentService>, ScopedServiceFactory<IDeploymentService>>();
 
             // Model Layer
             builder.Services.AddDbContextFactory<CvopsDbContext>(options => {   

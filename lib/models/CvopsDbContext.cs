@@ -27,6 +27,10 @@ namespace lib.models
 
         public DbSet<Workspace> Workspaces => Set<Workspace>();
 
+        public DbSet<Deployment> Deployments => Set<Deployment>();
+
+        // HyperTables
+
         public DbSet<InferenceResult> InferenceResults => Set<InferenceResult>();
         public DbSet<PlatformEvent> PlatformEvents => Set<PlatformEvent>();
 
@@ -151,6 +155,24 @@ namespace lib.models
             modelBuilder.Entity<WorkspaceUser>()
                 .Property(wu => wu.WorkspaceUserRole)
                 .HasConversion(new EnumToStringConverter<WorkspaceUserRole>());
+
+            // Deployment
+            modelBuilder.Entity<Deployment>()
+                .Property(d => d.Status)
+                .HasConversion(new EnumToStringConverter<DeploymentStatus>());
+            
+            modelBuilder.Entity<Deployment>()
+                .Property(d => d.ModelType)
+                .HasConversion(new EnumToStringConverter<ModelTypes>());
+            
+            modelBuilder.Entity<Deployment>()
+                .Property(d => d.Source)
+                .HasConversion(new EnumToStringConverter<DeploymentSources>());
+        
+            modelBuilder.Entity<Deployment>()
+                .HasOne(d => d.Workspace)
+                .WithMany(w => w.Deployments)
+                .HasForeignKey(d => d.WorkspaceId);
 
 
             // Configure HyperTables

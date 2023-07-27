@@ -33,6 +33,9 @@ namespace lib.models.db
         WorkspaceUserRemoved,
         DeviceAdded,
         DeviceRemoved,
+        DeploymentCreated,
+        DeploymentUpdated,
+        DeploymentDeleted,
     }
 }
 
