@@ -15,13 +15,16 @@ namespace api.controllers
     public class MqttController : Controller
     {
         IMqttHttpAuthenticator _mqttHttpAuthenticator;
+        IMqttHttpAuthorizer _mqttHttpAuthorizer;
         ILogger _logger;
         public MqttController(
             IMqttHttpAuthenticator mqttHttpAuthenticator,
+            IMqttHttpAuthorizer mqttHttpAuthorizer,
             ILogger logger
         ) : base()
         { 
             _mqttHttpAuthenticator = mqttHttpAuthenticator;
+            _mqttHttpAuthorizer = mqttHttpAuthorizer;
             _logger = logger;
         }
 
@@ -34,6 +37,17 @@ namespace api.controllers
             var response = await _mqttHttpAuthenticator.Authenticate(body.Username, body.Password);
             _logger.Debug($"MQTT Auth result for {body.Username}: {response.Result}");
             return response;   
+        }
+
+        [HttpPost]
+        [Route("auth/acl")]
+        [Produces("application/json")]
+        public async Task<ActionResult<EqmxAuthorizeResponse>> Post([FromBody] EqmxAuthorizeBody body)
+        {
+            _logger.Debug($"MQTT ACL request for {body.Username}");
+            var response = await _mqttHttpAuthorizer.Authorize(body.Username, body.Topic, body.Action);
+            _logger.Debug($"MQTT ACL result for {body.Username}: {response.Result}");
+            return response;
         }
     }
 }

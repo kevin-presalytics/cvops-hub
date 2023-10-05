@@ -166,7 +166,7 @@ namespace lib.models
                 .HasConversion(new EnumToStringConverter<ModelTypes>());
             
             modelBuilder.Entity<Deployment>()
-                .Property(d => d.Source)
+                .Property(d => d.ModelSource)
                 .HasConversion(new EnumToStringConverter<DeploymentSources>());
         
             modelBuilder.Entity<Deployment>()

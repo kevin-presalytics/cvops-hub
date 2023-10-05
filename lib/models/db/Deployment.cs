@@ -5,7 +5,9 @@ namespace lib.models.db
 {
     public class Deployment : BaseEntity
     {
-        public DeploymentSources Source {get; set;} = DeploymentSources.LocalS3Bucket;
+        public Guid DeploymentInitiatorId { get; set;} = default!;
+        public EditorTypes DeploymentInitiatorType { get; set;} = EditorTypes.User;
+        public DeploymentSources ModelSource {get; set;} = DeploymentSources.LocalFile;
         public Guid WorkspaceId {get; set;} = default!;
         public virtual Workspace Workspace {get; set;} = default!;
         public string BucketName {get; set;} = default!;
@@ -18,7 +20,7 @@ namespace lib.models.db
 
     public enum DeploymentSources
     {
-        LocalS3Bucket,
+        LocalFile,
         RemoteS3Bucket, // Not Implemented
         WeightsAndBiases, // Not Implemented
         MlFlow, // Not Implemented
@@ -37,8 +39,10 @@ namespace lib.models.db
     {
         None,
         Created,
+        ModelUploading,
         ModelUploaded,
         ModelValidated,
+        ModelDeploying,
         ModelDeployed,
         Active,
         Failed,

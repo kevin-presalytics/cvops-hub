@@ -17,6 +17,9 @@ namespace lib.extensions
             UserCreated = workspace.UserCreated,
             UserModified = workspace.UserModified,
             Description = workspace.Description,
+            Users = workspace.GetUserDTOs(),
+            Deployments = workspace.Deployments.ToList(),
+            Devices = workspace.Devices.Select(d => d.ToDto()).ToList()
         };
 
         public static dto.UserWorkspace ToUserWorkspace(this Workspace workspace, User currentUser) {

@@ -3,10 +3,11 @@ using lib.models.configuration;
 using Minio;
 using lib.models.exceptions;
 using System.Net;
+using System;
 
 namespace lib.services
 {
-    public interface IStorageService
+    public interface IStorageService : IDisposable
     {
         Task CreateBucket(string bucketName);
         Task DeleteBucket(string bucketName);
@@ -119,5 +120,7 @@ namespace lib.services
             }
             
         }
+
+        public void Dispose() {}
     }
 }

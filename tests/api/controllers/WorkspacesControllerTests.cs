@@ -519,8 +519,8 @@ namespace tests.api.controllers
 
             var expectedResult = new PaginatedList<dto.User>(
                 new List<dto.User>() {
-                    StaticFixtures.TestViewer.ToDto(),
-                    StaticFixtures.TestOwner.ToDto()
+                    StaticFixtures.TestViewer.ToDto(WorkspaceUserRole.Viewer),
+                    StaticFixtures.TestOwner.ToDto(WorkspaceUserRole.Owner)
                 }, 2, 1, 10);
 
             mockWorkspaceService

@@ -44,6 +44,7 @@ namespace mqtt_controller
             // MQTT Management Services
             builder.Services.AddHostedService<MqttAdminSetupWorker>();
             builder.Services.AddScoped<IMqttHttpAuthenticator, MqttHttpAuthenticator>();
+            builder.Services.AddScoped<IMqttHttpAuthorizer, MqttHttpAuthorizer>();
             builder.Services.AddMQTTAdmin(appConfig);
             builder.Services.AddHubMQTTClient();
 
@@ -72,12 +73,16 @@ namespace mqtt_controller
             builder.Services.AddTransient<IStorageService, MinioStorageService>();
             builder.Services.AddTransient<IPlatformEventService, PlatformEventService>();
             builder.Services.AddTransient<IInferenceResultService, InferenceResultService>();
+            builder.Services.AddTransient<IWorkspaceService, WorkspaceService>();
+
 
             // Service Factories to support scoped and Transient services from Singletons / Background Services
             builder.Services.AddSingleton<IScopedServiceFactory<IDeviceService>, ScopedServiceFactory<IDeviceService>>();
             builder.Services.AddSingleton<IScopedServiceFactory<IUserService>, ScopedServiceFactory<IUserService>>();
             builder.Services.AddSingleton<IScopedServiceFactory<IDeploymentService>, ScopedServiceFactory<IDeploymentService>>();
-
+            builder.Services.AddSingleton<IScopedServiceFactory<IWorkspaceService>, ScopedServiceFactory<IWorkspaceService>>();
+            builder.Services.AddSingleton<IScopedServiceFactory<IStorageService>, ScopedServiceFactory<IStorageService>>();
+            
             // Model Layer
             builder.Services.AddDbContextFactory<CvopsDbContext>(options => {   
                 options.UseLazyLoadingProxies();

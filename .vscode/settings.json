@@ -2,9 +2,11 @@
     "cSpell.words": [
         "appsettings",
         "ASPNETCORE",
+        "clientid",
         "Cvops",
         "emqx",
         "Eqmx",
+        "Minio",
         "mqtt",
         "mqtts",
         "Npgsql",

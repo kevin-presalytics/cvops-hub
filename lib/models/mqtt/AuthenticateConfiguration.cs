@@ -1,6 +1,4 @@
 using System;
-using System.Globalization;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 // Default Configuration
@@ -28,7 +26,7 @@ using System.Text.Json.Serialization;
 namespace lib.models.mqtt
 {
 
-    public class EqmxAuthConfiguration
+    public class EqmxAuthenticateConfiguration
     {
         [JsonPropertyName("method")]
         public string Method { get; set; } = "post";

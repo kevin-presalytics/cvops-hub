@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using lib.models.db;
+using db = lib.models.db;
+using System.Collections.Generic;
+using lib.models.mqtt;
 
 namespace lib.models.dto
 {
@@ -8,6 +10,9 @@ namespace lib.models.dto
     {
         public string Name { get; set; } = default!;
         public string Description { get; set; } = default!;
+        public List<User> Users { get; set;} = default!;
+        public List<db.Deployment> Deployments { get; set;} = default!;
+        public List<Device> Devices { get; set;} = default!;
     }
 
     public class UserWorkspace : Workspace
@@ -31,11 +36,25 @@ namespace lib.models.dto
     {
         [EmailAddress]
         public string Email { get; set; } = default!;
-        public WorkspaceUserRole Role { get; set; } = WorkspaceUserRole.Viewer;
+        public db.WorkspaceUserRole Role { get; set; } = db.WorkspaceUserRole.Viewer;
     }
 
-    public class User : NewUserRequestBody
+    public class User
     {
         public Guid Id { get; set;} = default!;
+        [EmailAddress]
+        public string Email { get; set; } = default!;
+        public db.WorkspaceUserRole? Role { get; set; } = null;
+    }
+
+    public class WorkspaceDetails : IMqttPayload
+    {
+        public DateTimeOffset Time => DateTimeOffset.UtcNow;
+        public Guid Id { get; set;} = default!;
+        public string Name { get; set; } = default!;
+        public string Description { get; set; } = default!;
+        public List<User> Users { get; set;} = default!;
+        public List<Deployment> Deployments { get; set;} = default!;
+        public List<Device> Devices { get; set;} = default!;
     }
 }

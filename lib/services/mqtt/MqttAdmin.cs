@@ -6,10 +6,8 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Collections.Generic;
 using System.Text.Json.Nodes;
-using System.IO;
-using Microsoft.Extensions.Http;
-using lib.models.mqtt;
 using Serilog;
+using lib.models.mqtt;
 
 namespace lib.services.mqtt
 {
@@ -32,17 +30,23 @@ namespace lib.services.mqtt
         public async Task Setup()
         {
             try {
-                if (!(await MQTTAuthIsConfigured()))
+                if (!(await MQTTAuthenticateIsConfigured()))
                 {
                     _logger.Debug("MQTT authentication is not configured. Configuring...");
-                    await ConfigureMqttAuth();
+                    await ConfigureMqttAuthentication();
                     _logger.Debug("MQTT authentication configured.");
+                }
+                if (!(await MqttAclIsConfigured()))
+                {
+                    _logger.Debug("MQTT ACL is not configured. Configuring...");
+                    await ConfigureMqttAcl();
+                    _logger.Debug("MQTT ACL configured.");
                 }
             } catch (Exception ex) {
                 _logger.Error(ex, "Error configuring MQTT authentication.");
             }
         }
-        private async Task<bool> MQTTAuthIsConfigured()
+        private async Task<bool> MQTTAuthenticateIsConfigured()
         {
             //var authenticators = await _httpClient.GetFromJsonAsync<List<JsonObject>>("/authentication");
             HttpResponseMessage msg = await _httpClient.GetAsync("authentication");
@@ -59,21 +63,49 @@ namespace lib.services.mqtt
            
         }
 
-        private async Task<bool> ConfigureMqttAuth()
+        private async Task<bool> ConfigureMqttAuthentication()
         {
-            var authConfiguration = new EqmxAuthConfiguration();
-            authConfiguration.Url = _authUri;
-            _logger.Debug($"Configuration MQTT Server to Authenticate via HTTp at URL: {authConfiguration.Url}");
-            HttpResponseMessage msg = await _httpClient.PostAsJsonAsync("authentication", authConfiguration);
-            if (msg.IsSuccessStatusCode)
-            {
-                return true;
-            }
-            else
+            var authenticateConfiguration = new EqmxAuthenticateConfiguration();
+            authenticateConfiguration.Url = _authUri;
+            _logger.Debug($"Configuration MQTT Server to Authenticate via HTTp at URL: {authenticateConfiguration.Url}");
+            HttpResponseMessage msg = await _httpClient.PostAsJsonAsync("authentication", authenticateConfiguration);
+            if (!msg.IsSuccessStatusCode)
             {
                 throw new Exception($"Could not configure MQTT authentication. Status code: {msg.StatusCode}");
             }
 
+            return true;
+
+        }
+
+        private async Task<bool> MqttAclIsConfigured()
+        {
+            HttpResponseMessage msg = await _httpClient.GetAsync("authorization/sources");
+            var aclsResponse = await msg.Content.ReadFromJsonAsync<JsonObject>();
+            if (aclsResponse == null)
+            {
+                throw new Exception("Could not retrieve ACLs from MQTT server.");
+            }
+            var sources = aclsResponse["sources"];
+            #pragma warning disable CS8602
+            bool hasHttpAuthorizer = sources.AsArray().Any(s => s["type"].ToString() == "http");
+            #pragma warning restore CS8602
+            _logger.Debug($"Http authorized found: {hasHttpAuthorizer}");
+            return hasHttpAuthorizer;
+        }
+
+        private async Task<bool> ConfigureMqttAcl()
+        {
+             var authorizeConfiguration = new EqmxAuthorizeConfiguration();
+            authorizeConfiguration.Url = new Uri(_authUri.AbsoluteUri + "/acl");
+            _logger.Debug($"Configuration MQTT Server to Authenticate via HTTp at URL: {authorizeConfiguration.Url}");
+            HttpResponseMessage msg = await _httpClient.PostAsJsonAsync("authorization/sources", authorizeConfiguration);
+            if (!msg.IsSuccessStatusCode)
+            {
+                throw new Exception($"Could not configure MQTT authentication. Status code: {msg.StatusCode}");
+            }
+
+            return true;
         }
         
     }

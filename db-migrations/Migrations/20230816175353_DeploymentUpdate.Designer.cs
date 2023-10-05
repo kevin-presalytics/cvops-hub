@@ -3,6 +3,7 @@ using System;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using lib.models;
@@ -12,9 +13,10 @@ using lib.models;
 namespace db_migrations.Migrations
 {
     [DbContext(typeof(CvopsDbContext))]
-    partial class CvopsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230816175353_DeploymentUpdate")]
+    partial class DeploymentUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -24,10 +24,10 @@ namespace lib.services
 
     public class DeviceService : IDeviceService
     {
-        CvopsDbContext _context;
-        AppConfiguration _configuration;
-        IDeviceKeyGenerator _keyGenerator;
-        IDeviceKeyVerifier _keyVerifier;
+        private readonly CvopsDbContext _context;
+        private readonly AppConfiguration _configuration;
+        private readonly IDeviceKeyGenerator _keyGenerator;
+        private readonly IDeviceKeyVerifier _keyVerifier;
 
         public DeviceService(            
             IDbContextFactory<CvopsDbContext> contextFactory, 
@@ -44,10 +44,7 @@ namespace lib.services
 
         public async Task<Device> GetDevice(Guid deviceId)
         {
-            Device? device = await _context.Devices.FirstOrDefaultAsync(d => d.Id == deviceId);
-            if (device == null)
-                throw new DeviceNotFoundException();
-            return device;
+            return await _context.Devices.FirstOrDefaultAsync(d => d.Id == deviceId) ?? throw new DeviceNotFoundException();
         }
 
         public async Task<Device> UpdateDevice(Device device)

@@ -11,42 +11,58 @@ namespace lib.models.mqtt
         DateTimeOffset Time { get; }
     }
 
+    public interface IMqttDto :  IMqttPayload
+    {
+        string ResponseTopic { get; set; }
+    }
+
     public abstract class MqttPayload : IMqttPayload
     {
 
         [JsonPropertyName("time")]
         public DateTimeOffset Time { get; } = DateTimeOffset.UtcNow;
+    }
+    
 
+    public abstract class MqttDto<T> : MqttPayload where T : class
+    {
+        [JsonPropertyName("responseTopic")]
+        public string ResponseTopic { get; set; } = null!;
+        [JsonPropertyName("payload")]
+        public T Payload { get; set; } = null!;
+    }
+
+    public abstract class MqttDto : MqttDto<object>
+    {
     }
 
     public static class MqttPayloadExtensions
     {
         public static T AsMqttPayload<T>(this MqttApplicationMessage message) where T : IMqttPayload
         {
-            T? payload = default(T);
+            T? payload;
             if (message?.PayloadSegment == null) {
                 throw new Exception("Unable to deserialize ApplicationMessage payload");
             } else {
-                # pragma warning disable CS8600
                 try {
                     // Use data annotations and customer JsonConverters to Validate the payload 
                     payload =  JsonSerializer.Deserialize<T>(message.PayloadSegment, LocalJsonOptions.DefaultOptions);
+                    if (payload != null) {                        
+                        if (payload is IMqttDto && message.ResponseTopic != null && payload != null) {
+                            #pragma warning disable CS8602
+                            (payload as IMqttDto).ResponseTopic = message.ResponseTopic;
+                            #pragma warning restore CS8602
+                        }
+                    }
                 } catch (Exception) {
                     throw new Exception($"Unable to deserialize ApplicationMessage payload: {message.ConvertPayloadToString()}");
                 }
-
-                # pragma warning restore CS8600
                 if (payload == null) {
                     throw new Exception($"Unable to deserialize ApplicationMessage payload: {message.ConvertPayloadToString()}");
                 }
                 return payload;
             }
         }
-
-        // public static byte[] AsPayload<T>(this T payload) where T : IMqttPayload
-        // {
-        //     return JsonSerializer.SerializeToUtf8Bytes(payload, LocalJsonOptions.GetOptions());
-        // }
 
         public static byte[] AsPayload(this IMqttPayload payload)
         {
@@ -63,11 +79,18 @@ namespace lib.models.mqtt
             string topic, 
             MqttQualityOfServiceLevel qos = MqttQualityOfServiceLevel.AtLeastOnce)
         {
-            return new MqttApplicationMessageBuilder()
+            if (payload == null) throw new ArgumentNullException(nameof(payload));
+            var builder = new MqttApplicationMessageBuilder()
                 .WithTopic(topic)
                 .WithPayload(payload.AsPayload())
-                .WithQualityOfServiceLevel(qos)
-                .Build();
+                .WithQualityOfServiceLevel(qos);
+            
+            if (payload is IMqttDto) {
+                #pragma warning disable CS8602
+                builder.WithResponseTopic((payload as IMqttDto).ResponseTopic);
+                #pragma warning restore CS8602
+            }
+            return builder.Build();
         }
     }
     

@@ -17,6 +17,27 @@ namespace lib.services.mqtt
 
         public static MqttTopicType GetTopicType(this MqttApplicationMessage message) => MqttTopicExtensions.GetTopicType(message.Topic);
 
+        public static Guid GetWorkspaceIdFromTopic(string topic)
+        {
+            return GetIdFromTopic(topic, "workspace");          
+        }
+
+        public static Guid GetIdFromTopic(string topic, string indicator)
+        {
+            var topicParts = topic.Split("/");
+            var indicatorIndex = Array.IndexOf(topicParts, indicator);
+            if (indicatorIndex == -1)
+            {
+                return Guid.Empty;
+            }
+            var id = topicParts[indicatorIndex + 1];
+            return Guid.Parse(id);
+        }
+
+        public static Guid GetDeviceIdFromTopic(string topic)
+        {
+            return GetIdFromTopic(topic, "device");
+        }
     }
 
     public static class MqttTopicExtensions
@@ -42,5 +63,5 @@ namespace lib.services.mqtt
                 throw new Exception("Invalid topic type");
             }
         }
-    }
+    }   
 }

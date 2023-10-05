@@ -34,8 +34,6 @@ namespace lib.services
 
         public async Task Write(InferenceResult dataPoint)
         {
-            string workspaceId = dataPoint.WorkspaceId.ToString();
-            string deviceId = dataPoint.DeviceId.ToString();
             string time = dataPoint.Time.DateTime.ToString("o", CultureInfo.InvariantCulture);
             int resultType = (int)dataPoint.ResultType;
             string boxes = dataPoint.Boxes == null ? "NULL": JsonSerializer.Serialize(dataPoint.Boxes);
@@ -54,13 +52,13 @@ namespace lib.services
                         meshes,
                         labels
                     ) VALUES (
-                        {workspaceId},
-                        {deviceId},
-                        {time}::timestamp,
-                        {resultType},
-                        {boxes},
-                        {meshes},
-                        {labels}
+                        {dataPoint.WorkspaceId},
+                        {dataPoint.DeviceId},
+                        {dataPoint.Time},
+                        {dataPoint.ResultType},
+                        {dataPoint.Boxes},
+                        {dataPoint.Meshes},
+                        {dataPoint.Labels}
                     )");
             }
         }

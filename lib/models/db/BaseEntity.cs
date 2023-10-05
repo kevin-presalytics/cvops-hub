@@ -30,6 +30,7 @@ namespace lib.models
     public enum EditorTypes
     {
         System,
+        Device,
         User
     }
     

@@ -3,6 +3,7 @@ using System;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using lib.models;
@@ -12,9 +13,10 @@ using lib.models;
 namespace db_migrations.Migrations
 {
     [DbContext(typeof(CvopsDbContext))]
-    partial class CvopsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230809190922_Add_ResponseTopic")]
+    partial class Add_ResponseTopic
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,14 +50,6 @@ namespace db_migrations.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("date_modified");
 
-                    b.Property<Guid>("DeploymentInitiatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("deployment_initiator_id");
-
-                    b.Property<int>("DeploymentInitiatorType")
-                        .HasColumnType("integer")
-                        .HasColumnName("deployment_initiator_type");
-
                     b.Property<JsonDocument>("DevicesStatus")
                         .IsRequired()
                         .HasColumnType("jsonb")
@@ -65,11 +59,6 @@ namespace db_migrations.Migrations
                         .IsRequired()
                         .HasColumnType("jsonb")
                         .HasColumnName("model_metadata");
-
-                    b.Property<string>("ModelSource")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("model_source");
 
                     b.Property<string>("ModelType")
                         .IsRequired()
@@ -85,6 +74,11 @@ namespace db_migrations.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("object_name");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source");
 
                     b.Property<string>("Status")
                         .IsRequired()

@@ -13,7 +13,6 @@ using System.Text.Json;
 using lib.models.mqtt;
 using System.Threading.Channels;
 
-
 namespace lib.services
 {
     public interface IWorkspaceService : IDisposable
@@ -32,6 +31,7 @@ namespace lib.services
         Task<PaginatedList<dto.User>> GetWorkspaceUsers(Workspace workspace, int page, int pageSize);
         Task<dto.User> AddWorkspaceUser(Workspace workspace, dto.NewUserRequestBody body);
         Task RemoveWorkspaceUser(Guid WorkspaceId, Guid UserId);
+        Task<dto.WorkspaceDetails> GetDetails(Guid WorkspaceId);
     }
     public class WorkspaceService : IWorkspaceService
     {
@@ -55,13 +55,13 @@ namespace lib.services
             _publishChannel = publishChannel;
         }
 
-        private static WorkspaceUserRole[] _viewerRoles = new WorkspaceUserRole[] {
+        private static readonly WorkspaceUserRole[] _viewerRoles = new WorkspaceUserRole[] {
             WorkspaceUserRole.Owner, 
             WorkspaceUserRole.Editor,
             WorkspaceUserRole.Viewer 
         };
 
-        private static WorkspaceUserRole[] _editorRoles = new WorkspaceUserRole[] {
+        private static readonly WorkspaceUserRole[] _editorRoles = new WorkspaceUserRole[] {
             WorkspaceUserRole.Owner, 
             WorkspaceUserRole.Editor,
         };
@@ -87,7 +87,11 @@ namespace lib.services
         public async Task<dto.User> AddWorkspaceUser(Workspace workspace, dto.NewUserRequestBody body)
         {
             User user = await _userService.InviteUser(workspace, body.Email, body.Role);
-            return user.ToDto();
+            return new dto.User() {
+                Id = user.Id,
+                Email = user.Email,
+                Role = body.Role
+            };
         }
 
         public async Task<List<dto.UserWorkspace>> GetWorkspaces(User user)
@@ -208,19 +212,8 @@ namespace lib.services
 
         public async Task<PaginatedList<dto.User>> GetWorkspaceUsers(Workspace workspace, int page, int pageSize)
         {
-             #pragma warning disable CS8600
-            PaginatedList<WorkspaceUser> devices = await _context.WorkspaceUsers
-                .Include(wu => wu.User)
-                .Where(wu => wu.WorkspaceId == workspace.Id)
-                .OrderBy(wu => wu.User.Email)
-                .PaginateAsync(page, pageSize);
-            #pragma warning restore CS8600
-            return new PaginatedList<dto.User>(
-                devices.Select(u => u.User.ToDto()).ToList(),
-                devices.Count,
-                devices.PageIndex,
-                devices.TotalPages
-            );
+            List<dto.User> users = workspace.GetUserDTOs().OrderBy(u => u.Email).ToList();
+            return await users.AsQueryable().PaginateAsync(page, pageSize);
         }
 
         public async Task RemoveWorkspaceUser(Guid WorkspaceId, Guid UserId)
@@ -237,6 +230,24 @@ namespace lib.services
         void IDisposable.Dispose()
         {
             _context.Dispose();
+        }
+
+        public async Task<dto.WorkspaceDetails> GetDetails(Guid workspaceId)
+        {
+            #pragma warning disable CS8600
+            Workspace workspace = await _context.Workspaces
+                .Include(w => w.WorkspaceUsers)
+                .FirstOrDefaultAsync(w => w.Id == workspaceId);
+            #pragma warning restore CS8600
+            if (workspace == null) throw new WorkspaceNotFoundException();
+            return new dto.WorkspaceDetails() {
+                Id = workspace.Id,
+                Name = workspace.Name,
+                Description = workspace.Description,
+                Users = workspace.GetUserDTOs(),
+                Devices = workspace.Devices.Select(d => d.ToDto()).ToList(),
+                Deployments = workspace.Deployments.Select(d => d.ToDto()).ToList()
+            };
         }
     }
 }

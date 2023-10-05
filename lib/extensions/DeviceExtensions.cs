@@ -20,7 +20,8 @@ namespace lib.extensions
             ModifiedBy = device.ModifiedBy,
             DateModified = device.DateModified,
             UserCreated = device.UserCreated,
-            UserModified = device.UserModified
+            UserModified = device.UserModified,
+            ActivationStatus = device.ActivationStatus,
         };
     }
 }
