@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "db-migrations", "db-migrations\db-migrations.csproj", "{F407F00A-78E2-41FF-AF59-7D1B2806B0E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "auth", "auth\auth.csproj", "{85178437-A067-45A3-A897-A4B97209F4E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,5 +48,9 @@ Global
 		{22F3652A-2D4B-4CE7-AB7C-52B593524CB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22F3652A-2D4B-4CE7-AB7C-52B593524CB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22F3652A-2D4B-4CE7-AB7C-52B593524CB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85178437-A067-45A3-A897-A4B97209F4E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85178437-A067-45A3-A897-A4B97209F4E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85178437-A067-45A3-A897-A4B97209F4E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85178437-A067-45A3-A897-A4B97209F4E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

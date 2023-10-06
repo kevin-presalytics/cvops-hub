@@ -5,10 +5,11 @@ using lib.models.configuration;
 using System.Reflection;
 using System.IO;
 using Utility.Extensions.Configuration.Yaml;
+using Microsoft.Extensions.Hosting;
 
 namespace lib.extensions
 {
-    public static class WebApplicationBuilderExtensions
+    public static class BuilderExtensions
     {
         public static AppConfiguration AddAppConfiguration(this WebApplicationBuilder builder)
         {
@@ -17,8 +18,27 @@ namespace lib.extensions
             return appConfiguration;
         }
 
-        public static AppConfiguration Configure(this ConfigurationManager configManager)
+        public static AppConfiguration AddAppConfiguration(this IHostBuilder builder)
+        {
+            var workingDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddYamlFile(Path.Join(workingDir, "appsettings.default.yaml"), optional: false, reloadOnChange: true)
+                .AddYamlFile(Path.Join(workingDir, "appsettings.yaml"), optional: true, reloadOnChange: true)
+                .AddYamlFile(Path.Join(workingDir, "appsettings.local.yaml"), optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
+            
+            AppConfiguration appConfiguration = new AppConfiguration();
+            configuration.Bind(appConfiguration);
+            
+            builder.ConfigureAppConfiguration((hostingContext, config) =>
+            {
+                config.AddConfiguration(configuration);
+            });
+            return appConfiguration;
+        }
 
+        public static AppConfiguration Configure(this ConfigurationManager configManager)
         {
             var workingDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             configManager.AddYamlFile(Path.Join(workingDir, "appsettings.default.yaml"), optional: false, reloadOnChange: true);

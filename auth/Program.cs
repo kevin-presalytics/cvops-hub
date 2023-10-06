@@ -9,11 +9,9 @@ using lib.services;
 using lib.services.mqtt;
 using lib.services.auth;
 using Serilog;
-using mqtt_controller.workers;
-using lib.services.mqtt.listeners;
-using lib.services.factories;
 
-namespace mqtt_controller
+
+namespace auth
 {
     public class Program
     {
@@ -27,8 +25,7 @@ namespace mqtt_controller
             // App Configuration
             var appConfig = builder.AddAppConfiguration();
             ILogger logger = builder.AddSerilogLogger(appConfig);
-            logger.Information("Starting MQTT Controller...");
-            logger.Information("Adding MQTT Controller services...");
+            logger.Information("Starting Hub HTTP Auth Service...");
 
             // Framework Services
             builder.Services.AddControllers().ConfigureJson();
@@ -42,47 +39,21 @@ namespace mqtt_controller
             });
 
             // MQTT Management Services
-            builder.Services.AddHostedService<MqttAdminSetupWorker>();
             builder.Services.AddScoped<IMqttHttpAuthenticator, MqttHttpAuthenticator>();
             builder.Services.AddScoped<IMqttHttpAuthorizer, MqttHttpAuthorizer>();
+            builder.Services.AddHostedService<MqttAdminSetupWorker>();
             builder.Services.AddMQTTAdmin(appConfig);
-            builder.Services.AddHubMQTTClient();
-
-            // MQTT Topic Listeners
-            builder.Services.AddDeviceDataTopicListener();
-            builder.Services.AddPlatformEventTopicListener();
-
-            // Platform Event Handling Threads
-            builder.Services.AddHostedService<DeviceRegistrationWorker>();
-            builder.Services.AddHostedService<UserEventsWorker>();
-            builder.Services.AddHostedService<WorkspaceEventWorker>();
-            builder.Services.AddHostedService<DeploymentTopicListener>();
             
             // Service Layer
             builder.Services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();
-            builder.Services.AddSingleton<IUserNotificationService, UserNotificationService>();
             builder.Services.AddTransient<IDeviceKeyVerifier, DeviceKeyVerifier>();
             builder.Services.AddTransient<IDeviceKeyGenerator, DeviceKeyGenerator>();
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<IUserJwtTokenReader, UserJwtTokenReader>();
             builder.Services.AddTransient<IInviteUserService, InviteUserService>();
-            builder.Services.AddTransient<IWorkspaceService, WorkspaceService>();
-            builder.Services.AddTransient<IDeviceService, DeviceService>();
             builder.Services.AddTransient<IUserService, UserService>();
-            builder.Services.AddTransient<IDeploymentService, DeploymentService>();
-            builder.Services.AddTransient<IStorageService, MinioStorageService>();
-            builder.Services.AddTransient<IPlatformEventService, PlatformEventService>();
-            builder.Services.AddTransient<IInferenceResultService, InferenceResultService>();
-            builder.Services.AddTransient<IWorkspaceService, WorkspaceService>();
 
 
-            // Service Factories to support scoped and Transient services from Singletons / Background Services
-            builder.Services.AddSingleton<IScopedServiceFactory<IDeviceService>, ScopedServiceFactory<IDeviceService>>();
-            builder.Services.AddSingleton<IScopedServiceFactory<IUserService>, ScopedServiceFactory<IUserService>>();
-            builder.Services.AddSingleton<IScopedServiceFactory<IDeploymentService>, ScopedServiceFactory<IDeploymentService>>();
-            builder.Services.AddSingleton<IScopedServiceFactory<IWorkspaceService>, ScopedServiceFactory<IWorkspaceService>>();
-            builder.Services.AddSingleton<IScopedServiceFactory<IStorageService>, ScopedServiceFactory<IStorageService>>();
-            
             // Model Layer
             builder.Services.AddDbContextFactory<CvopsDbContext>(options => {   
                 options.UseLazyLoadingProxies();
@@ -95,7 +66,7 @@ namespace mqtt_controller
 
             app.MapControllers();
 
-            logger.Information("Launching MQTT Controller...");
+            logger.Information("Internal Auth Service application build.  Launching...");
             await app.RunAsync();
         }
     }

@@ -8,7 +8,7 @@ using System.Threading.Channels;
 using MQTTnet;
 using dto = lib.models.dto;
 
-namespace mqtt_controller.workers
+namespace mqtt.workers
 {
     public class DeploymentTopicListener : MqttTopicListener
     {

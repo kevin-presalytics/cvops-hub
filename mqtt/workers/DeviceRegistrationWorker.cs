@@ -11,7 +11,7 @@ using lib.models.mqtt;
 using dto = lib.models.dto;
 using lib.extensions;
 
-namespace mqtt_controller.workers
+namespace mqtt.workers
 {
     public class DeviceRegistrationWorker : ChannelListener<PlatformEvent>
     {

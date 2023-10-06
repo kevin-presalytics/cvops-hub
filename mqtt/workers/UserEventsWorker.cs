@@ -7,7 +7,7 @@ using lib.services.factories;
 using lib.services;
 
 
-namespace mqtt_controller.workers
+namespace mqtt.workers
 {
     public class UserEventsWorker : ChannelListener<PlatformEvent>
     {

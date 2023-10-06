@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using System;
 using System.Linq;
 using lib.models.configuration;
+using lib.models;
+using lib.models.db;
+using System.Collections.Generic;
 
 namespace lib.services.mqtt
 {
@@ -13,15 +16,15 @@ namespace lib.services.mqtt
 
     public class MqttHttpAuthorizer : IMqttHttpAuthorizer
     {
-        private readonly IWorkspaceService _workspaceService;
+        private readonly CvopsDbContext _dbContext;
         private readonly AppConfiguration _appConfiguration;
         
         public MqttHttpAuthorizer(
-            IWorkspaceService workspaceService,
+            CvopsDbContext dbContext,
             AppConfiguration appConfiguration
         )
         {
-            _workspaceService = workspaceService;
+            _dbContext = dbContext;
             _appConfiguration = appConfiguration;
         }
 
@@ -81,7 +84,7 @@ namespace lib.services.mqtt
         {
             Guid topicWorkspaceId = MqttTopicManager.GetWorkspaceIdFromTopic(topic);
             Guid authenticateUserId = Guid.Parse(username);
-            var workspace = await _workspaceService.GetWorkspace(topicWorkspaceId);
+            var workspace = await GetWorkspace(topicWorkspaceId);
             if (workspace == null)
             {
                 return new EqmxAuthorizeResponse() {
@@ -103,7 +106,7 @@ namespace lib.services.mqtt
                                     .Where(wu => wu.UserId == authenticateUserId)
                                     .Select(wu => wu.User)
                                     .First();
-                   if (_workspaceService.IsWorkspaceEditor(workspace.Id, user))
+                   if (IsWorkspaceEditor(workspace, user))
                    {
                        return new EqmxAuthorizeResponse() {
                            Result = AuthResultOptions.Allow,
@@ -123,6 +126,26 @@ namespace lib.services.mqtt
                 };
             }
         }
-        
+
+        private async Task<Workspace> GetWorkspace(Guid workspaceId)
+        {
+            var workspace = await _dbContext.Workspaces.FindAsync(workspaceId);
+            if (workspace != null)
+            {
+                return workspace;
+            }
+            throw new Exception($"Workspace {workspaceId} not found");
+        }
+
+        private static readonly WorkspaceUserRole[] _editorRoles = new WorkspaceUserRole[] {
+            WorkspaceUserRole.Owner, 
+            WorkspaceUserRole.Editor,
+        };
+
+        private bool IsWorkspaceEditor(Workspace workspace, User user)
+        {
+            var workspaceUser = workspace.WorkspaceUsers.Where(wu => wu.UserId == user.Id).First();
+            return _editorRoles.Contains(workspaceUser.WorkspaceUserRole);
+        }
     }
 }

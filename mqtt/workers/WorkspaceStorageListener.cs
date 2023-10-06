@@ -9,7 +9,7 @@ using lib.services;
 using System;
 using lib.models.dto;
 
-namespace mqtt_controller.workers
+namespace mqtt.workers
 {
     public class WorkspaceStorageListener : MqttTopicListener
     {

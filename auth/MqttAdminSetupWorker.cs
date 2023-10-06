@@ -5,13 +5,12 @@ using System;
 using Serilog;
 using lib.services.mqtt;
 
-namespace mqtt_controller.workers
+namespace auth
 {
 
     public class MqttAdminSetupWorker : BackgroundService
     {
         IMqttAdmin _mqttAdmin;
-
         ILogger _logger;
         public MqttAdminSetupWorker(ILogger logger, IMqttAdmin mqttAdmin)
         {

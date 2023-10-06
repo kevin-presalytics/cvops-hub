@@ -9,7 +9,7 @@ using System.Text.Json;
 using lib.extensions;
 using System;
 
-namespace mqtt_controller.workers
+namespace mqtt.workers
 {
     public class WorkspaceEventWorker : ChannelListener<PlatformEvent>
     {

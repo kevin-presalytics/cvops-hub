@@ -4,7 +4,7 @@ using Serilog;
 using lib.models.mqtt;
 using lib.services.mqtt;
 
-namespace api.controllers
+namespace auth.controllers
 {
 
     // Authorizes devices on when sending a CONNECT packet to the MQTT broker
