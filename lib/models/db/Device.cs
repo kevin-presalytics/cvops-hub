@@ -2,6 +2,7 @@
 // Contains fields for id, name, description, and device_type_id, salt, and hash
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace lib.models.db
@@ -15,6 +16,7 @@ namespace lib.models.db
         public byte[] Salt { get; set; } = default!;
         public string Hash { get; set; } = default!;
         public Guid WorkspaceId { get; set; } = default!;
+        [JsonIgnore]
         public virtual Workspace Workspace { get; set; } = default!;
         public DeviceActivationStatus ActivationStatus { get; set; } = DeviceActivationStatus.Inactive;
     }

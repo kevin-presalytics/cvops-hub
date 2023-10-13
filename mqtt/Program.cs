@@ -48,6 +48,14 @@ namespace mqtt
                     services.AddDeviceDataTopicListener();
                     services.AddPlatformEventTopicListener();
 
+                    // Platform Event Handling Threads
+                    services.AddHostedService<DeviceRegistrationWorker>();
+                    services.AddHostedService<UserEventsWorker>();
+                    services.AddHostedService<WorkspaceEventWorker>();
+                    services.AddHostedService<DeploymentTopicListener>();
+                    services.AddHostedService<WorkspaceStorageListener>();
+
+
                     // Service Layer
                     services.AddSingleton<IUserIdProvider, ScopedUserIdProvider>();
                     services.AddSingleton<IUserNotificationService, UserNotificationService>();
@@ -65,12 +73,6 @@ namespace mqtt
                     services.AddTransient<IInferenceResultService, InferenceResultService>();
                     services.AddTransient<IWorkspaceService, WorkspaceService>();
                     
-                    // Platform Event Handling Threads
-                    services.AddHostedService<DeviceRegistrationWorker>();
-                    services.AddHostedService<UserEventsWorker>();
-                    services.AddHostedService<WorkspaceEventWorker>();
-                    services.AddHostedService<DeploymentTopicListener>();
-
                     // Service Factories to support scoped and Transient services from Singletons / Background Services
                     services.AddSingleton<IScopedServiceFactory<IDeviceService>, ScopedServiceFactory<IDeviceService>>();
                     services.AddSingleton<IScopedServiceFactory<IUserService>, ScopedServiceFactory<IUserService>>();

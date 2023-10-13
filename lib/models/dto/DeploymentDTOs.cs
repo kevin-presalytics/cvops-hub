@@ -47,7 +47,7 @@ namespace lib.models.dto
 
     public class Deployment : BaseEntity
     {
-        public db.DeploymentSources Source {get; set;} = db.DeploymentSources.LocalFile;
+        public db.DeploymentSources ModelSource {get; set;} = db.DeploymentSources.LocalFile;
         public Guid WorkspaceId {get; set;} = default!;
         public string BucketName {get; set;} = default!;
         public string ObjectName {get; set;} = default!;
@@ -81,5 +81,18 @@ namespace lib.models.dto
         public List<DeviceDeploymentStatus> Devices { get; set;} = new List<DeviceDeploymentStatus>();
     }
 
-    
+    public class DeploymentMessage<T> : MqttDto<T> where T : class
+    {
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        [JsonPropertyName("type")]
+        public DeploymentMessageTypes MessageType { get; set;} = DeploymentMessageTypes.None;
+    }
+
+    public class DeploymentCreatedMessage : DeploymentMessage<DeploymentCreatedPayload> {}
+
+    public class DeploymentDeletedMessage : DeploymentMessage<DeploymentDeletedPayload> {}
+
+    public class DeploymentUpdatedMessage : DeploymentMessage<Deployment> {}
+
+    public class DeploymentDeviceStatusUpdatedMessage : DeploymentMessage<DeviceDeploymentStatus> {}
 }

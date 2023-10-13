@@ -1,5 +1,6 @@
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace lib.models.db
 {
@@ -9,6 +10,7 @@ namespace lib.models.db
         public EditorTypes DeploymentInitiatorType { get; set;} = EditorTypes.User;
         public DeploymentSources ModelSource {get; set;} = DeploymentSources.LocalFile;
         public Guid WorkspaceId {get; set;} = default!;
+        [JsonIgnore]
         public virtual Workspace Workspace {get; set;} = default!;
         public string BucketName {get; set;} = default!;
         public string ObjectName {get; set;} = default!;

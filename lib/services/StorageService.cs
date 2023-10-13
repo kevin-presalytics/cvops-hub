@@ -11,9 +11,11 @@ namespace lib.services
     {
         Task CreateBucket(string bucketName);
         Task DeleteBucket(string bucketName);
-        Task<string> CreatePresignedPutUrl(string bucketName, string objectName);
-        Task<string> CreatePresignedGetUrl(string bucketName, string objectName);
+        Task<string> CreatePresignedPutUrl(string objectName, string bucketName);
+        Task<string> CreatePresignedGetUrl(string objectName, string bucketName);
         Task DeleteObject(string bucketName, string objectName);
+        Task CreateObjectIfNotExists(string objectName, string bucketName);
+        Task<bool> ObjectExists(string bucketName, string objectName);
 
     }
 
@@ -56,20 +58,36 @@ namespace lib.services
             }
         }
 
+        public async Task CreateObjectIfNotExists(string objectName, string bucketName)
+        {
+            await CreateBucket(bucketName);
+            bool exists = await ObjectExists(bucketName, objectName);
+            // if (!exists)
+            // {
+            //     var putObjectArgs = new PutObjectArgs().WithBucket(bucketName).WithObject(objectName).IsBucketCreationRequest(true));
+            //     await _client.PutObjectAsync(putObjectArgs);
+            // }
+        }
+
         private async Task<bool> BucketExists(string bucketName)
         {
             var bucketExistsArgs = new BucketExistsArgs().WithBucket(bucketName);
             return await _client.BucketExistsAsync(bucketExistsArgs);
         }
 
-        private async Task<bool> ObjectExists(string bucketName, string objectName)
+        public async Task<bool> ObjectExists(string bucketName, string objectName)
         {
-            var statObjectArgs = new StatObjectArgs().WithBucket(bucketName).WithObject(objectName);
-            var statResult = await _client.StatObjectAsync(statObjectArgs);
-            return statResult.Size > 0;
+            try {
+                var statObjectArgs = new StatObjectArgs().WithBucket(bucketName).WithObject(objectName);
+                var statResult = await _client.StatObjectAsync(statObjectArgs);
+                return statResult.Size > 0;
+            } catch (Exception) {
+                return false;
+            }
         }
 
-        public async Task<string> CreatePresignedGetUrl(string bucketName, string objectName)
+
+        public async Task<string> CreatePresignedGetUrl(string objectName, string bucketName)
         {
             var bucketExists = await BucketExists(bucketName);
             if (bucketExists) {
@@ -85,7 +103,7 @@ namespace lib.services
             throw new StorageException($"Object {objectName} does not exist in bucket {bucketName}");
         }
 
-        public async Task<string> CreatePresignedPutUrl(string bucketName, string objectName)
+        public async Task<string> CreatePresignedPutUrl(string objectName, string bucketName)
         {
             var bucketExists = await BucketExists(bucketName);
             if (!bucketExists) {
@@ -118,9 +136,7 @@ namespace lib.services
                     await _client.RemoveObjectAsync(removeObjectArgs);
                 }
             }
-            
         }
-
         public void Dispose() {}
     }
 }

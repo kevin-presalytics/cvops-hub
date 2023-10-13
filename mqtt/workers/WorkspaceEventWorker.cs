@@ -16,17 +16,20 @@ namespace mqtt.workers
         private readonly IStorageService _storageService;
         private readonly IScopedServiceFactory<IWorkspaceService> _workspaceServiceFactory;
         private readonly ChannelWriter<MqttPublishMessage> _publishMessageWriter;
+        private readonly IScopedServiceFactory<IDeploymentService> _deploymentServiceFactory;
 
         public WorkspaceEventWorker(
             IStorageService storageService, 
             ILogger logger,
             IScopedServiceFactory<IWorkspaceService> workspaceServiceFactory,
-            ChannelWriter<MqttPublishMessage> publishMessageWriter
+            ChannelWriter<MqttPublishMessage> publishMessageWriter,
+            IScopedServiceFactory<IDeploymentService> deploymentServiceFactory
         ) : base(logger)
         {
             _storageService = storageService;
             _workspaceServiceFactory = workspaceServiceFactory;
             _publishMessageWriter = publishMessageWriter;
+            _deploymentServiceFactory = deploymentServiceFactory;
         }
 
         public override async Task HandleMessage(PlatformEvent platformEvent)
@@ -40,6 +43,9 @@ namespace mqtt.workers
                     break;
                 case PlatformEventTypes.WorkspaceDetailsRequest:
                     await ReplyWithWorkspaceDetails(platformEvent);
+                    break;
+                case PlatformEventTypes.DeploymentUpdated:
+                    await HandleUpdatedDeployment(platformEvent);
                     break;
                 default:
                     break;
@@ -79,6 +85,12 @@ namespace mqtt.workers
             }
         }
 
-
+        private async Task HandleUpdatedDeployment(PlatformEvent platformEvent)
+        {
+            using (var deploymentService = _deploymentServiceFactory.Create())
+            {
+                await deploymentService.HandleDeploymentUpdateEvent(platformEvent);
+            }
+        }
     }
 }

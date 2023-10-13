@@ -7,11 +7,22 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/db-migrations/db-migrations.csproj",
+                "${workspaceFolder}",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "auth-service-start",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "run",
+                "--project",
+                "auth",
+            ],
+            "problemMatcher": "$msCompile",
         },
         {
             "label": "publish",

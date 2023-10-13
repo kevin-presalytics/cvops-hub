@@ -1,3 +1,4 @@
+using System;
 using lib.models.mqtt;
 
 namespace lib.models.dto
@@ -12,6 +13,7 @@ namespace lib.models.dto
     {
         public StorageMessageType Type { get; set; }
         public string? Url { get; set;} = default!;
+        public string? ObjectName { get; set; } = default!;
     }
     public class WorkspaceStorageMessage : MqttDto<WorkspaceStoragePayload>
     {

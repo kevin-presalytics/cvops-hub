@@ -7,20 +7,24 @@ using System.Threading.Tasks;
 using System.Threading.Channels;
 using MQTTnet;
 using dto = lib.models.dto;
+using lib.extensions;
 
 namespace mqtt.workers
 {
     public class DeploymentTopicListener : MqttTopicListener
     {
         private readonly IScopedServiceFactory<IDeploymentService> _deploymentServiceFactory;
+        private readonly ChannelWriter<MqttPublishMessage> _publishMessageWriter;
 
         public DeploymentTopicListener(
             ILogger logger,
             ChannelWriter<MqttSubscriptionMessage> subscriptionWriter,
-            IScopedServiceFactory<IDeploymentService> deploymentServiceFactory
+            IScopedServiceFactory<IDeploymentService> deploymentServiceFactory,
+            ChannelWriter<MqttPublishMessage> publishMessageWriter
         ) : base(logger, subscriptionWriter)
         {
             _deploymentServiceFactory = deploymentServiceFactory;
+            _publishMessageWriter = publishMessageWriter;
         }
 
         public override string TopicFilter => "$share/g/workspace/+/deployments";
@@ -31,19 +35,19 @@ namespace mqtt.workers
             switch (deploymentMessage.MessageType)
             {
                 case dto.DeploymentMessageTypes.Created:
-                    dto.DeploymentCreatedPayload created = (dto.DeploymentCreatedPayload)deploymentMessage.Payload;
-                    await HandleDeploymentCreated(created);
+                    dto.DeploymentCreatedMessage created = message.AsMqttPayload<dto.DeploymentCreatedMessage>();
+                    await HandleDeploymentCreated(created.Payload);
                     break;
                 case dto.DeploymentMessageTypes.Updated:
-                    dto.Deployment updated = (dto.Deployment)deploymentMessage.Payload;
+                    dto.Deployment updated = message.AsMqttPayload<dto.DeploymentUpdatedMessage>().Payload;
                     await HandleDeploymentUpdated(updated);
                     break;
                 case dto.DeploymentMessageTypes.DeviceStatus:
-                    dto.DeviceDeploymentStatus deviceStatus = (dto.DeviceDeploymentStatus)deploymentMessage.Payload;
+                    dto.DeviceDeploymentStatus deviceStatus = message.AsMqttPayload<dto.DeploymentDeviceStatusUpdatedMessage>().Payload;
                     await HandleDeviceStatusUpdate(deviceStatus);
                     break;
                 case dto.DeploymentMessageTypes.Deleted:
-                    dto.DeploymentDeletedPayload deleted = (dto.DeploymentDeletedPayload)deploymentMessage.Payload;
+                    dto.DeploymentDeletedPayload deleted = message.AsMqttPayload<dto.DeploymentDeletedMessage>().Payload;
                     await HandleDeploymentDeleted(deleted);
                     break;
                 default:
@@ -56,16 +60,23 @@ namespace mqtt.workers
         {
             using (IDeploymentService deploymentService = _deploymentServiceFactory.Create())
             {
-                await deploymentService.CreateDeployment(payload);
+                var deployment = await deploymentService.CreateDeployment(payload);
             }
         }
 
-        private async Task HandleDeploymentUpdated(dto.Deployment deploymentDTO)
+        private async Task HandleDeploymentUpdated(dto.Deployment dto)
         {
             using (IDeploymentService deploymentService = _deploymentServiceFactory.Create())
             {
-                var deployment = await deploymentService.GetDeployment(deploymentDTO.Id);
-                deployment.DevicesStatus = deploymentDTO.DevicesStatus ;
+                var deployment = await deploymentService.GetDeployment(dto.Id);
+                deployment.DevicesStatus = dto.DevicesStatus;
+                deployment.Status = dto.Status;
+                deployment.ModelMetadata = dto.ModelMetadata;
+                deployment.ModelSource = dto.ModelSource;
+                deployment.BucketName = dto.BucketName;
+                deployment.ObjectName = dto.ObjectName;
+                deployment.ModelType = dto.ModelType;
+                deployment.DevicesStatus = dto.DevicesStatus;
                 await deploymentService.UpdateDeployment(deployment);
             }
         }
@@ -82,7 +93,7 @@ namespace mqtt.workers
         {
             using (IDeploymentService deploymentService = _deploymentServiceFactory.Create())
             {
-                await deploymentService.UpdateDeviceStatus(deviceStatus);
+                var updatedDeployment = await deploymentService.UpdateDeviceStatus(deviceStatus);
             }
         }
     }

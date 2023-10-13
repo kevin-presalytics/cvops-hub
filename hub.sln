@@ -7,13 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lib", "lib\lib.csproj", "{E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api", "api\api.csproj", "{DD1A9C95-145C-48FD-8CA3-680877D644FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mqtt-controller", "mqtt-controller\mqtt-controller.csproj", "{B62C7C63-0137-48DE-944D-F560EC5C40A0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{CAEC5CC6-7AFA-4B3F-8799-4FB446B02B3A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "db-migrations", "db-migrations\db-migrations.csproj", "{F407F00A-78E2-41FF-AF59-7D1B2806B0E1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "auth", "auth\auth.csproj", "{85178437-A067-45A3-A897-A4B97209F4E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mqtt", "mqtt\mqtt.csproj", "{FE6A598F-ECBF-44AC-A15B-C6560F4CF32C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,5 +52,9 @@ Global
 		{85178437-A067-45A3-A897-A4B97209F4E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85178437-A067-45A3-A897-A4B97209F4E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85178437-A067-45A3-A897-A4B97209F4E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE6A598F-ECBF-44AC-A15B-C6560F4CF32C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE6A598F-ECBF-44AC-A15B-C6560F4CF32C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE6A598F-ECBF-44AC-A15B-C6560F4CF32C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE6A598F-ECBF-44AC-A15B-C6560F4CF32C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

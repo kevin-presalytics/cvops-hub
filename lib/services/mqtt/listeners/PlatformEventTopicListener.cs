@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using Microsoft.Extensions.Hosting;
 using System.Threading;
+using MQTTnet;
+using MQTTnet.Protocol;
 
 namespace lib.services.mqtt.listeners
 {
@@ -17,15 +19,18 @@ namespace lib.services.mqtt.listeners
         private IPlatformEventService _platformEventService;
         private IServiceProvider _serviceProvider;
         private List<ChannelWriter<PlatformEvent>> _platformEventWriters = new List<ChannelWriter<PlatformEvent>>();
+        private ChannelWriter<MqttPublishMessage> _publishMessageWriter;
         
         public PlatformEventTopicListener(
             IPlatformEventService platformEventService,
             ILogger logger,
             ChannelWriter<MqttSubscriptionMessage> subscriptionWriter,
-            IServiceProvider serviceProvider 
+            IServiceProvider serviceProvider,
+            ChannelWriter<MqttPublishMessage> publishMessageWriter
         ) : base(logger, subscriptionWriter) {
             _platformEventService = platformEventService;
             _serviceProvider = serviceProvider;
+            _publishMessageWriter = publishMessageWriter;
         }
         public override string TopicFilter { get => "$share/g/events/#"; }
 
@@ -39,6 +44,7 @@ namespace lib.services.mqtt.listeners
         {
             await _platformEventService.Write(platformEvent);
             await DispatchPlatformEvents(platformEvent);
+            // await SendEventToResponseTopic(platformEvent);
         }
 
         private async Task DispatchPlatformEvents(PlatformEvent platformEvent)
@@ -57,6 +63,20 @@ namespace lib.services.mqtt.listeners
                                         .ToList();
             _logger.Debug("Discovered {count} platform event channels to writer to.", _platformEventWriters.Count);
         }
+
+        // private async Task SendEventToResponseTopic(PlatformEvent platformEvent)
+        // {
+        //     if (platformEvent.ResponseTopic != null)
+        //     {
+        //         var responseMessage = new MqttPublishMessage() {
+        //             Topic = platformEvent.ResponseTopic,
+        //             Payload = platformEvent,
+        //             Qos = MqttQualityOfServiceLevel.ExactlyOnce,
+        //             Retain = true
+        //         };
+        //         await _publishMessageWriter.WriteAsync(responseMessage);
+        //     }
+        // }
     }
 
     public static class PlatformEventTopicListenerExtensions

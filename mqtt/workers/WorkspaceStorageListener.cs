@@ -27,21 +27,27 @@ namespace mqtt.workers
             _publishMessageWriter = publishMessageWriter;
         }
 
-        public override string TopicFilter => "$share/g/workspace/+/storage";
+        public override string TopicFilter => "$share/g/workspace/+/storage"; 
 
         public override async Task HandleMessage(MqttApplicationMessage message)
         {
             var storageMessage = message.AsMqttPayload<WorkspaceStorageMessage>();
             Guid workspaceId = MqttTopicManager.GetWorkspaceIdFromTopic(message.Topic);
+            
             string responseTopic = storageMessage.ResponseTopic;
             switch (storageMessage.Payload.Type)
             {
                 case StorageMessageType.PutUrlRequest:
-                    string putUrl = await CreatePutUrl(workspaceId);
+                    string objectName = storageMessage.Payload.ObjectName ?? Guid.NewGuid().ToString();
+                    await CreateBucketIfNotExists(objectName, workspaceId);
+                    string putUrl = await CreatePutUrl(objectName, workspaceId);
                     await SendUrlResponse(putUrl, responseTopic, StorageMessageType.PutUrlResponse);
                     break;
-                case lib.models.dto.StorageMessageType.GetUrlRequest:
-                    string getUrl = await CreateGetUrl(workspaceId);
+                case StorageMessageType.GetUrlRequest:
+                    if (storageMessage.Payload.ObjectName == null) {
+                        throw new Exception("Object name is required for GetUrlRequest");
+                    }
+                    string getUrl = await CreateGetUrl(storageMessage.Payload.ObjectName, workspaceId);
                     await SendUrlResponse(getUrl, responseTopic, StorageMessageType.GetUrlResponse);
                     break;
                 default:
@@ -65,22 +71,32 @@ namespace mqtt.workers
             await _publishMessageWriter.WriteAsync(publishMessage);
         }
 
-        private async Task<string> CreatePutUrl(Guid workspaceId)
+        private async Task<string> CreatePutUrl(string objectName, Guid workspaceId)
         {
             using (var storageService = _storageServiceFactory.Create())
             {
-                return await storageService.CreatePresignedPutUrl(workspaceId.ToString(), Guid.NewGuid().ToString());
+                await storageService.CreateObjectIfNotExists(objectName, workspaceId.ToString());
+                return await storageService.CreatePresignedPutUrl(objectName, workspaceId.ToString());
             }
         }
-        private async Task<string> CreateGetUrl(Guid workspaceId)
+        private async Task<string> CreateGetUrl(string objectName, Guid workspaceId)
         {
             using (var storageService = _storageServiceFactory.Create())
             {
+                var exists = await storageService.ObjectExists(objectName, workspaceId.ToString());
+                if (!exists)  {
+                    throw new Exception($"Object {objectName} does not exist in bucket {workspaceId}");
+                }  
                 return await storageService.CreatePresignedGetUrl(workspaceId.ToString(), Guid.NewGuid().ToString());
             }
         }
 
-
-
+        private async Task CreateBucketIfNotExists(string objectName, Guid workspaceId)
+        {
+            using (var storageService = _storageServiceFactory.Create())
+            {
+                await storageService.CreateObjectIfNotExists(objectName, workspaceId.ToString());
+            }
+        }
     }
 }
